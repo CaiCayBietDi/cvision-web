@@ -1,0 +1,152 @@
+
+/* =========================================
+   WORKFLOW 3D - CINEMATIC REFACTOR
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+#wf-3d-modal, #wf-3d-modal * {
+    font-family: 'Inter', 'Roboto', sans-serif !important;
+}
+
+#wf-3d-modal {
+    position: fixed; inset: 0; z-index: 1000;
+    background: #000; color: #fff;
+    display: none; overflow: hidden;
+    perspective: 1200px;
+    will-change: transform, opacity;
+}
+#wf-3d-modal.active { display: block; }
+
+.wf-scene {
+    position: absolute; inset: 0;
+    opacity: 0; pointer-events: none;
+    transform-style: preserve-3d;
+    /* ENTER STATE (coming from deep background) */
+    transform: translateZ(-1500px) scale(0.5);
+    filter: blur(20px);
+    transition: all 1.5s cubic-bezier(0.25, 1, 0.2, 1);
+    will-change: transform, opacity, filter;
+}
+.wf-scene.active {
+    /* ACTIVE STATE (Focus) */
+    opacity: 1; pointer-events: auto;
+    transform: translateZ(0) scale(1);
+    filter: blur(0px);
+}
+.wf-scene.exit {
+    /* EXIT STATE (Flying past camera - user extreme requested) */
+    opacity: 0;
+    transform: scale(3) translateZ(100px);
+    filter: blur(20px);
+    transition: all 1s ease-in;
+}
+
+/* Background Ken Burns Effect */
+.wf-bg-layer {
+    position: absolute; inset: -15%;
+    background-size: cover; background-position: center;
+    filter: brightness(0.3);
+    transform: translateZ(-300px) scale(1);
+    will-change: transform;
+}
+.wf-scene.active .wf-bg-layer {
+    animation: kenBurns 15s linear forwards;
+}
+@keyframes kenBurns {
+    0% { transform: translateZ(-300px) scale(1); }
+    100% { transform: translateZ(-300px) scale(1.15); }
+}
+
+/* UI Glassmorphism (Strict standard) */
+.wf-ui-layer {
+    position: absolute; inset: 0; z-index: 10;
+    display: flex; padding: 6%; align-items: center; gap: 5%;
+    transform-style: preserve-3d;
+}
+.wf-glass-panel {
+    background: rgba(15, 25, 20, 0.4);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 255, 204, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.5);
+    border-radius: 12px; padding: 40px;
+    max-width: 550px;
+    transform: translateZ(150px);
+    will-change: transform;
+}
+
+/* 3D Typography */
+.wf-text-3d {
+    font-weight: 800; font-size: 2.5rem; margin: 10px 0 20px;
+    transform: translateZ(50px);
+    text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    background: linear-gradient(90deg, #00ffcc, #fff);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.wf-text-badge {
+    color: #00ffcc; font-weight: bold; letter-spacing: 3px; font-size: 13px;
+    text-transform: uppercase;
+}
+
+/* AI Bounding Box */
+.wf-bounding-box {
+    position: absolute; border: 2px solid #00ffcc;
+    background: rgba(0,255,204,0.1); border-radius: 4px;
+    animation: pulseGlow 2s infinite;
+    transform: translateZ(100px);
+    will-change: box-shadow;
+}
+.wf-bounding-box::after {
+    content: attr(data-label); position: absolute; top: -25px; left: -2px;
+    background: #00ffcc; color: #000; font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 2px;
+}
+.wf-bounding-box.violation {
+    border-color: #ff3366; background: rgba(255,51,102,0.15);
+    animation: pulseGlowRed 1.5s infinite;
+}
+.wf-bounding-box.violation::after { background: #ff3366; color: #fff; }
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 5px rgba(0,255,204,0.2); }
+    50% { box-shadow: 0 0 25px rgba(0,255,204,0.9); }
+    100% { box-shadow: 0 0 5px rgba(0,255,204,0.2); }
+}
+@keyframes pulseGlowRed {
+    0% { box-shadow: 0 0 5px rgba(255,51,102,0.2); }
+    50% { box-shadow: 0 0 30px rgba(255,51,102,1); }
+    100% { box-shadow: 0 0 5px rgba(255,51,102,0.2); }
+}
+
+/* Blackbox Phase 2 Vignette & Lock */
+.wf-vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.95) 100%);
+    opacity: 0; transition: opacity 0.8s; z-index: 50; pointer-events: none;
+}
+.wf-padlock {
+    position: absolute; top: 50%; left: 50%; margin-top:-50px; margin-left:-50px;
+    font-size: 100px; color: #00ffcc; text-shadow: 0 0 40px #00ffcc;
+    transform: translateZ(2000px) scale(5); opacity: 0;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s;
+    z-index: 51;
+}
+.locked .wf-vignette { opacity: 1; }
+.locked .wf-padlock { transform: translateZ(300px) scale(1); opacity: 1; }
+
+/* Intro Button */
+.wf-btn-start {
+    padding: 18px 50px; font-size: 1.3rem; font-weight: 800; letter-spacing: 3px;
+    color: #00ffcc; background: rgba(0,255,204,0.05);
+    border: 1px solid rgba(0,255,204,0.5); border-radius: 50px;
+    cursor: pointer; position: relative; box-shadow: 0 0 30px rgba(0,255,204,0.2);
+    transition: all 0.3s; text-transform: uppercase; will-change: transform;
+}
+.wf-btn-start:hover { box-shadow: 0 0 50px rgba(0,255,204,0.6); transform: scale(1.05); }
+
+/* Ending Logo Glow */
+.wf-ending-glow {
+    animation: endingPulse 4s infinite alternate;
+}
+@keyframes endingPulse {
+    0% { filter: drop-shadow(0 0 20px rgba(0,255,204,0.3)); }
+    100% { filter: drop-shadow(0 0 60px rgba(0,255,204,0.8)); }
+}

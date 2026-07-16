@@ -1,0 +1,27 @@
+MÔ TẢ GIẢI PHÁP HỆ THỐNG GIAO THÔNG THÔNG MINH (ITS & ANPR)
+(Dựa trên phân tích hình ảnh giao diện phần mềm thực tế)
+
+Qua việc quan sát giao diện "Monitor" của hệ thống (logo CVISION TECH), giải pháp này không đơn thuần là đếm xe in/out mà là một Hệ thống Giao thông Thông minh (Intelligent Traffic System - ITS) giám sát vi phạm và nhận diện biển số toàn diện. Các chức năng chính bao gồm:
+
+1. Nhận diện và Bóc tách Biển số xe (ANPR - Automatic Number Plate Recognition)
+Hệ thống có khả năng tự động nhận diện các phương tiện lưu thông trên đường:
+- Khoanh vùng phương tiện: Vẽ bounding box (khung xanh) bao quanh các ô tô (car) đang di chuyển.
+- Đọc biển số tự động: Cắt ảnh biển số (crop) và dùng AI chuyển đổi thành text (Ví dụ: 9HEF853, CKV322) với độ chính xác cao, hiển thị trực tiếp cạnh xe và trên bảng log.
+
+2. Đo tốc độ phương tiện (Speed Measurement)
+- Hiển thị tốc độ Real-time: Hệ thống tính toán và hiển thị trực tiếp vận tốc di chuyển của từng phương tiện ngay trên khung theo dõi (Ví dụ: "car | 9.2 km/h", "car | 12.9 km/h").
+
+3. Giám sát trạng thái Đèn tín hiệu & Vùng vi phạm (Traffic Light & ROI Monitoring)
+- Nhận diện đèn giao thông: AI tự động bắt (track) trạng thái của cột đèn tín hiệu thực tế (Xanh, Vàng, Đỏ).
+- Đồng bộ hóa vùng ảo (Smart ROI): Khu vực ngã tư/vạch kẻ đường được thiết lập các vùng ROI ảo (ROI 1, ROI 2). Vùng ROI 1 tự động đổi màu (Xanh, Vàng, Đỏ) đồng bộ với trạng thái đèn tín hiệu thực tế để làm căn cứ bắt lỗi.
+- Xác định hướng đi: Vẽ các mũi tên vector dự đoán hướng di chuyển của xe (Ví dụ: "Straight [GREEN]", "Straight [RED]").
+
+4. Phát hiện và Xử lý Vi phạm Giao thông (ITS Violations)
+Giao diện có hẳn một module bên phải chuyên dụng cho việc xử phạt:
+- Cảnh báo Vượt đèn đỏ (Red Light Violation): Có bộ đếm riêng cho lỗi vượt đèn đỏ và tổng số lỗi.
+- Popup Chi tiết Vi phạm: Khi click vào sự kiện, hệ thống bật cửa sổ "ITS VIOLATION DETAILS" chứa đầy đủ bằng chứng: Ảnh toàn cảnh xe, Ảnh crop biển số rõ nét, Thông tin thời gian (Timestamp), Tên Camera, Tốc độ, và nút "View History (Video)" để xem lại video đoạn vi phạm.
+
+5. Nhận diện đa đối tượng (Multi-class Detection)
+- Không chỉ nhận diện ô tô, hệ thống còn nhận diện và đo tốc độ của cả Người đi bộ (pedestrian) qua đường (Ví dụ: hiển thị "person | 3.2 km/h" khi có người đi qua vạch kẻ ngang).
+
+TỔNG KẾT: Đây là một giải pháp Camera Phạt Nguội/Giám sát Giao thông toàn diện, tích hợp AI để vừa đọc biển số, vừa đo tốc độ, vừa tự động phân tích trạng thái đèn tín hiệu để lập biên bản vi phạm tự động.

@@ -1,0 +1,18 @@
+MÔ TẢ GIẢI PHÁP HỆ THỐNG AI GIÁM SÁT AN TOÀN LAO ĐỘNG (PPE COMPLIANCE)
+(Dựa trên phân tích hình ảnh thực tế)
+
+Đây là một giải pháp thị giác máy tính chuyên sâu nhằm đảm bảo an toàn tuyệt đối cho người lao động tại các công trường xây dựng, nhà máy sản xuất có mức độ rủi ro cao. Các tính năng nổi bật:
+
+1. Nhận Diện Đa Trang Thiết Bị Bảo Hộ (Multi-PPE Detection)
+- Không chỉ dừng lại ở việc nhận diện nón bảo hộ (Helmet) cơ bản, hệ thống AI (AiPi Platform / PIOSYS) còn được huấn luyện để phát hiện đồng thời nhiều loại trang bị an toàn phức tạp khác như: Dây đai an toàn toàn thân (Safety strap), Áo phản quang (Safety vest), Móc dây an toàn (Wire hook).
+
+2. Đánh Giá Trạng Thái An Toàn Tức Thời (Safe/Unsafe Classification)
+- Ngay khi một công nhân (Worker) bước vào khung hình, AI sẽ quét toàn bộ trang bị trên người họ.
+- Nếu đầy đủ chuẩn quy định, hệ thống gán nhãn xanh "SAFE".
+- Nếu thiếu bất kỳ một trang bị nào (Ví dụ: có đội mũ nhưng không móc dây an toàn khi đứng trên giàn giáo cao), lập tức chuyển sang nhãn đỏ "UNSAFE".
+
+3. Cảnh Báo Trực Quan và Lập Hồ Sơ Vi Phạm (Incident Logging)
+- Khi phát hiện vi phạm (UNSAFE), bảng điều khiển "LOGS EVENT" sẽ lưu lại ngay lập tức: Ảnh chụp toàn thân, ảnh cắt cận mặt công nhân để nhận diện danh tính.
+- Hệ thống tick rõ checklist lỗi vi phạm (Ví dụ: X Hard Hat, X Safety Strap) để làm bằng chứng xử phạt hoặc gửi thông báo về hệ thống trung tâm (Alarm Center).
+
+TỔNG KẾT: Giải pháp giúp chủ đầu tư và ban quản lý dự án tự động hóa khâu giám sát an toàn HSE, giảm thiểu tối đa rủi ro tai nạn lao động do sự bất cẩn của con người, đặc biệt hữu ích tại các môi trường làm việc trên cao (giàn giáo, cần cẩu) hoặc nhà xưởng công nghiệp nặng.

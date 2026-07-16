@@ -1,0 +1,28 @@
+MÔ TẢ CHỨC NĂNG HỆ THỐNG GIÁM SÁT VÀ ĐẾM LƯU LƯỢNG RA VÀO (AIPi PLATFORM)
+
+Dựa trên việc phân tích các hình ảnh trích xuất từ phần mềm, dưới đây là tổng hợp các chức năng cốt lõi của Hệ thống Giám sát và Đếm lưu lượng (People Counting & Monitoring) đang được vận hành:
+
+1. Đếm lưu lượng IN/OUT theo thời gian thực (Real-time IN/OUT Counting)
+Tính năng cốt lõi giúp ban quản lý cửa hàng nắm bắt được số lượng khách hàng:
+- Thống kê trực quan: Hiển thị nổi bật ngay trên màn hình camera luồng người đi vào (IN màu xanh) và đi ra (OUT màu đỏ) (VD: IN: 36, OUT: 36).
+- Cập nhật liên tục: Số liệu tự động nhảy ngay khi có người bước qua ranh giới đã thiết lập.
+
+2. Thiết lập ranh giới ảo và Vùng đếm (Virtual Tripwire & ROI)
+Hệ thống cho phép người dùng tùy biến khu vực cần đếm một cách linh hoạt:
+- Vẽ ranh giới ảo: Khả năng vẽ các đường line hoặc các vùng đa giác (polygon) màu xanh lá cây đè lên video.
+- Nhận diện hướng di chuyển: Dựa vào ranh giới ảo này, AI sẽ xác định chính xác người đi theo hướng nào là IN, hướng nào là OUT.
+
+3. Theo dõi định danh đa mục tiêu (Multi-Object Tracking & ID Assignment)
+Để đảm bảo đếm chính xác, không bị trùng lặp:
+- Cấp mã ID độc nhất: Mỗi người lọt vào khung hình sẽ được khoanh vùng (bounding box) và gán một ID duy nhất (VD: ID: 45, ID: 171, ID: 254).
+- Theo dõi liên tục: Khung nhận diện sẽ bám sát đối tượng suốt quá trình họ di chuyển trong camera, giúp hệ thống không đếm nhầm 1 người thành 2 lần. Đồng thời hiển thị nhãn phụ (như "Unknown") ngay trên khung bám.
+
+4. Tích hợp Lưu vết Sự kiện và Khuôn mặt (Event Logs & Snapshots)
+Dù là hệ thống đếm, phần mềm vẫn tích hợp module an ninh bên bảng điều khiển (LOGS EVENT):
+- Chụp ảnh tự động: Mỗi lượt khách ra/vào đều được hệ thống tự động cắt ảnh khuôn mặt hoặc dáng người và lưu lại ở cột bên phải.
+- Cảnh báo phân loại: Lưu lại thời gian (timestamp), camera ghi nhận (VD: CAMERA 2), và gán nhãn đối tượng lạ (STRANGER - Match: low) để phục vụ tra cứu an ninh về sau.
+
+5. Giao diện Quản trị Tập trung (Centralized AiPi Platform)
+Nền tảng được thiết kế chuyên nghiệp để quản lý chuỗi/cửa hàng lớn:
+- Sơ đồ Camera (Camera Tree): Khung bên trái cho phép quản lý và xem trực tiếp nhiều luồng camera cùng lúc (CAMERA 1, 2, 3, 4 đang trạng thái Playing).
+- Thanh công cụ toàn diện: Tích hợp đầy đủ các module chức năng ở thanh menu trên cùng bao gồm: Home, LIVE CAMERA (Giám sát trực tiếp), Management (Quản lý), Search (Tìm kiếm) và Analytics (Phân tích dữ liệu).

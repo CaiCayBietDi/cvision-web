@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html class="dark" lang="vi">
+<head>
+<script>
+(function(){var l=localStorage.getItem('cvision-lang');if(l==='en'){document.cookie='googtrans=/vi/en;path=/';document.cookie='googtrans=/vi/en;domain='+location.hostname+';path=/';}})();
+</script>
+  <meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CvisionAI - Giải Pháp Nhận Diện Thông Minh</title>
+  <link rel="icon" type="image/png" href="/assets/img/logo_darkmode.png?v=2">
+<meta name="description" content="CvisionAI - Tiên phong giải pháp AI và xử lý ảnh chuyên sâu. Tối ưu hoá vận hành doanh nghiệp với nhận diện thông minh."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "background": "#111318", "surface-variant": "#333539", "outline-variant": "#3b494b",
+        "primary-fixed": "#7df4ff", "surface-container-low": "#1a1c20", "primary-container": "#00f0ff",
+        "on-primary": "#00363a", "inverse-on-surface": "#2f3035", "surface-container": "#1e2024",
+        "on-primary-fixed-variant": "#004f54", "surface-container-highest": "#333539",
+        "on-secondary-container": "#ddcdff", "surface-dim": "#111318",
+        "secondary-container": "#7000ff", "on-primary-fixed": "#002022",
+        "surface-container-lowest": "#0c0e12", "surface": "#111318",
+        "on-primary-container": "#006970", "secondary-fixed-dim": "#d1bcff",
+        "surface-tint": "#00dbe9", "on-background": "#e2e2e8", "primary": "#dbfcff",
+        "secondary-fixed": "#e9ddff", "surface-container-high": "#282a2e",
+        "primary-fixed-dim": "#00dbe9", "inverse-surface": "#e2e2e8", "tertiary": "#f6f5ff",
+        "outline": "#849495", "on-surface": "#e2e2e8", "on-surface-variant": "#b9cacb",
+        "secondary": "#d1bcff", "surface-bright": "#37393e", "tertiary-container": "#d0d8ff"
+      },
+      borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+      spacing: { "stack-lg": "4rem", "container-max": "1280px", "stack-md": "2rem", "margin-x": "1.5rem", gutter: "2rem", "stack-xl": "8rem" },
+      fontFamily: { "body-md": ["Inter"], "label-caps": ["JetBrains Mono"], "headline-lg-mobile": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "body-lg": ["Inter"], "display-lg": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"] },
+      fontSize: {
+        "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+        "label-caps": ["12px", { lineHeight: "1.0", letterSpacing: "0.1em", fontWeight: "500" }],
+        "headline-lg-mobile": ["32px", { lineHeight: "1.2", fontWeight: "700" }],
+        "headline-md": ["32px", { lineHeight: "1.3", fontWeight: "600" }],
+        "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+        "display-lg": ["72px", { lineHeight: "1.1", letterSpacing: "-0.04em", fontWeight: "800" }],
+        "headline-lg": ["48px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }]
+      }
+    }
+  }
+}
+</script>
+<style>
+  body { background-color: #0c0e12; color: #e2e2e8; overflow-x: hidden; }
+  @keyframes pageEnter { from { opacity: 0; } to { opacity: 1; } }
+  body { animation: pageEnter 0.5s ease-out; }
+
+  .glass-card {
+    background: rgba(26, 28, 32, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .glass-card:hover {
+    background: rgba(30, 32, 36, 0.6);
+    border-color: rgba(0, 219, 233, 0.4);
+    box-shadow: 0 0 25px rgba(0, 219, 233, 0.12);
+    transform: translateY(-4px);
+  }
+  .grid-pattern {
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .text-gradient-cyan {
+    background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+    /* === Checkerboard card colors (true checkerboard for 3-col grid) === */
+    .grid.gap-6 > *:nth-child(odd),
+    .grid.gap-8 > *:nth-child(odd),
+    #portfolio-grid > *:nth-child(odd) {
+      background: #0d1b3a !important;
+      border-color: rgba(37, 99, 235, 0.25) !important;
+      backdrop-filter: none !important;
+    }
+    .grid.gap-6 > *:nth-child(even),
+    .grid.gap-8 > *:nth-child(even),
+    #portfolio-grid > *:nth-child(even) {
+      background: #050505 !important;
+      border-color: rgba(255, 255, 255, 0.1) !important;
+      backdrop-filter: none !important;
+    }
+    .grid.gap-6 > *:nth-child(odd):hover,
+    .grid.gap-8 > *:nth-child(odd):hover,
+    #portfolio-grid > *:nth-child(odd):hover {
+      border-color: rgba(37, 99, 235, 0.6) !important;
+      box-shadow: 0 0 30px rgba(37, 99, 235, 0.25) !important;
+    }
+    .grid.gap-6 > *:nth-child(even):hover,
+    .grid.gap-8 > *:nth-child(even):hover,
+    #portfolio-grid > *:nth-child(even):hover {
+      border-color: rgba(255, 255, 255, 0.3) !important;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.08) !important;
+    }
+    .grid.gap-6 > *:nth-child(odd) h3,
+    .grid.gap-8 > *:nth-child(odd) h3,
+    #portfolio-grid > *:nth-child(odd) h3 {
+      background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+    .grid.gap-6 > *:nth-child(even) h3,
+    .grid.gap-8 > *:nth-child(even) h3,
+    #portfolio-grid > *:nth-child(even) h3 {
+      background: linear-gradient(135deg, #fff, #fff) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+    .grid.gap-6 > * p,
+    .grid.gap-8 > * p,
+    #portfolio-grid > * p {
+      color: #b0b8c8 !important;
+    }
+    /* === END Checkerboard === */
+  .glow-icon { filter: drop-shadow(0 0 8px rgba(125, 244, 255, 0.4)); }
+  @keyframes scan {
+    0% { transform: translateY(-100%); opacity: 0; }
+    50% { opacity: 0.5; }
+    100% { transform: translateY(100vh); opacity: 0; }
+  }
+  .scan-line {
+    height: 2px;
+    background: linear-gradient(to right, transparent, #00dbe9, transparent);
+    animation: scan 8s linear infinite;
+  }
+
+  /* Marquee */
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .marquee-track {
+    display: flex;
+    animation: marquee 30s linear infinite;
+    width: max-content;
+  }
+  .marquee-track:hover { animation-play-state: paused; }
+
+  /* Counter */
+  .counter-value { font-variant-numeric: tabular-nums; }
+
+  /* Image glow */
+  .image-glow { box-shadow: 0 0 60px -15px rgba(0, 219, 233, 0.3); }
+/* Mega Dropdown navigation */
+  .nav-dropdown { position: relative; padding-bottom: 16px; margin-bottom: -16px; }
+  .nav-dropdown .dropdown-trigger {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .nav-dropdown .dropdown-trigger .expand-icon {
+    transition: transform 0.3s;
+  }
+  .nav-dropdown:hover .dropdown-trigger .expand-icon {
+    transform: rotate(180deg);
+  }
+  .nav-dropdown .mega-menu {
+    position: absolute;
+    top: calc(100%);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    width: 720px;
+    background: rgba(16, 20, 28, 0.98);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 16px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+    z-index: 100;
+  }
+  .nav-dropdown:hover .mega-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+  .mega-menu .mega-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+  .mega-menu .mega-category {
+    padding: 8px;
+  }
+  .mega-menu .mega-category-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #7df4ff;
+    margin-bottom: 8px;
+    padding: 4px 0;
+    white-space: nowrap;
+  }
+  .mega-menu .mega-category-title .material-symbols-outlined {
+    font-size: 18px;
+  }
+  .mega-menu .mega-link {
+    display: block;
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #b9cacb;
+    transition: all 0.15s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mega-menu .mega-link:hover {
+    background: rgba(0, 219, 233, 0.1);
+    color: #ffffff;
+    padding-left: 12px;
+  }
+
+  /* Feature image overlay */
+
+
+
+  
+
+
+  
+    /* Turn black icons to white while keeping blue text */
+    html:not(.light-theme) .logo-img {
+      filter: invert(1) hue-rotate(180deg) brightness(0.85) contrast(1.3);
+    }
+    html:not(.light-theme) .footer-logo {
+      filter: invert(1) hue-rotate(180deg) brightness(0.85) contrast(1.3);
+    }
+
+  
+    /* Fix Hero Video for Light Mode */
+    html:not(.light-theme) .hero-video-blend {
+      mix-blend-mode: screen;
+    }
+    html.light-theme .hero-video-blend {
+      mix-blend-mode: normal;
+      opacity: 0.9 !important;
+    }
+
+  
+    /* GLOBAL LIGHT THEME OVERRIDES */
+    /* html.light-theme body single override removed */
+    html.light-theme header { background: rgba(255, 255, 255, 0.95) !important; border-bottom-color: rgba(0,0,0,0.1) !important; }
+    html.light-theme footer { background-color: #f1f5f9 !important; border-top-color: rgba(0,0,0,0.1) !important; }
+    html.light-theme .section-dark { background-color: #f0f9ff !important; color: #0f172a !important; }
+    html.light-theme .text-white, html.light-theme .section-dark .text-white { color: #0f172a !important; }
+    html.light-theme .text-on-surface, html.light-theme .section-dark .text-on-surface { color: #0f172a !important; }
+    html.light-theme .text-on-surface-variant, html.light-theme .section-dark .text-on-surface-variant { color: #475569 !important; }
+    html.light-theme p, html.light-theme .section-dark p { color: #334155 !important; }
+    html.light-theme h1, html.light-theme h2, html.light-theme h3 { color: #0f172a !important; }
+
+
+    /* Hardcoded background overrides */
+    html.light-theme .bg-\[\#05070a\] { background-color: #f8fafc !important; }
+    html.light-theme .bg-\[\#05070a\]\/40 { background-color: rgba(248, 250, 252, 0.4) !important; }
+    html.light-theme .bg-\[\#05070a\]\/60 { background-color: rgba(248, 250, 252, 0.6) !important; }
+    html.light-theme .from-\[\#05070a\] { --tw-gradient-from: #f8fafc var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme .to-\[\#05070a\] { --tw-gradient-to: #f8fafc var(--tw-gradient-to-position) !important; }
+
+
+    /* Semantic Background Overrides for Light Theme */
+    html.light-theme .bg-background { background-color: #f8fafc !important; }
+    html.light-theme [class~="bg-background/80"] { background-color: rgba(248, 250, 252, 0.8) !important; }
+    html.light-theme [class~="bg-background/90"] { background-color: rgba(248, 250, 252, 0.9) !important; }
+    
+    html.light-theme .from-background { --tw-gradient-from: #f8fafc var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    
+    html.light-theme [class~="via-background/90"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(248, 250, 252, 0.9) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    
+    html.light-theme [class~="to-background/50"] { --tw-gradient-to: rgba(248, 250, 252, 0.5) var(--tw-gradient-to-position) !important; }
+
+    /* Semantic Surface Overrides */
+    html.light-theme .bg-surface-container-lowest { background-color: #ffffff !important; }
+    html.light-theme .from-surface-container-lowest { --tw-gradient-from: #ffffff var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme .to-surface-container-lowest { --tw-gradient-to: #ffffff var(--tw-gradient-to-position) !important; }
+    html.light-theme .via-surface-container-lowest { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), #ffffff var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="bg-surface-container-lowest/20"] { background-color: rgba(255, 255, 255, 0.2) !important; }
+    html.light-theme [class~="from-surface-container-lowest/20"] { --tw-gradient-from: rgba(255, 255, 255, 0.2) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-lowest/20"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-lowest/20"] { --tw-gradient-to: rgba(255, 255, 255, 0.2) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-lowest/30"] { background-color: rgba(255, 255, 255, 0.3) !important; }
+    html.light-theme [class~="from-surface-container-lowest/30"] { --tw-gradient-from: rgba(255, 255, 255, 0.3) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-lowest/30"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.3) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-lowest/30"] { --tw-gradient-to: rgba(255, 255, 255, 0.3) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-lowest/50"] { background-color: rgba(255, 255, 255, 0.5) !important; }
+    html.light-theme [class~="from-surface-container-lowest/50"] { --tw-gradient-from: rgba(255, 255, 255, 0.5) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-lowest/50"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.5) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-lowest/50"] { --tw-gradient-to: rgba(255, 255, 255, 0.5) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-lowest/60"] { background-color: rgba(255, 255, 255, 0.6) !important; }
+    html.light-theme [class~="from-surface-container-lowest/60"] { --tw-gradient-from: rgba(255, 255, 255, 0.6) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-lowest/60"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.6) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-lowest/60"] { --tw-gradient-to: rgba(255, 255, 255, 0.6) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-lowest/80"] { background-color: rgba(255, 255, 255, 0.8) !important; }
+    html.light-theme [class~="from-surface-container-lowest/80"] { --tw-gradient-from: rgba(255, 255, 255, 0.8) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-lowest/80"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.8) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-lowest/80"] { --tw-gradient-to: rgba(255, 255, 255, 0.8) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-lowest/90"] { background-color: rgba(255, 255, 255, 0.9) !important; }
+    html.light-theme [class~="from-surface-container-lowest/90"] { --tw-gradient-from: rgba(255, 255, 255, 0.9) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-lowest/90"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.9) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-lowest/90"] { --tw-gradient-to: rgba(255, 255, 255, 0.9) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-lowest/95"] { background-color: rgba(255, 255, 255, 0.95) !important; }
+    html.light-theme [class~="from-surface-container-lowest/95"] { --tw-gradient-from: rgba(255, 255, 255, 0.95) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-lowest/95"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.95) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-lowest/95"] { --tw-gradient-to: rgba(255, 255, 255, 0.95) var(--tw-gradient-to-position) !important; }
+    html.light-theme .bg-surface-container-low { background-color: #ffffff !important; }
+    html.light-theme .from-surface-container-low { --tw-gradient-from: #ffffff var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme .to-surface-container-low { --tw-gradient-to: #ffffff var(--tw-gradient-to-position) !important; }
+    html.light-theme .via-surface-container-low { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), #ffffff var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="bg-surface-container-low/20"] { background-color: rgba(255, 255, 255, 0.2) !important; }
+    html.light-theme [class~="from-surface-container-low/20"] { --tw-gradient-from: rgba(255, 255, 255, 0.2) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-low/20"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-low/20"] { --tw-gradient-to: rgba(255, 255, 255, 0.2) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-low/30"] { background-color: rgba(255, 255, 255, 0.3) !important; }
+    html.light-theme [class~="from-surface-container-low/30"] { --tw-gradient-from: rgba(255, 255, 255, 0.3) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-low/30"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.3) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-low/30"] { --tw-gradient-to: rgba(255, 255, 255, 0.3) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-low/50"] { background-color: rgba(255, 255, 255, 0.5) !important; }
+    html.light-theme [class~="from-surface-container-low/50"] { --tw-gradient-from: rgba(255, 255, 255, 0.5) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-low/50"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.5) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-low/50"] { --tw-gradient-to: rgba(255, 255, 255, 0.5) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-low/60"] { background-color: rgba(255, 255, 255, 0.6) !important; }
+    html.light-theme [class~="from-surface-container-low/60"] { --tw-gradient-from: rgba(255, 255, 255, 0.6) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-low/60"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.6) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-low/60"] { --tw-gradient-to: rgba(255, 255, 255, 0.6) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-low/80"] { background-color: rgba(255, 255, 255, 0.8) !important; }
+    html.light-theme [class~="from-surface-container-low/80"] { --tw-gradient-from: rgba(255, 255, 255, 0.8) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-low/80"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.8) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-low/80"] { --tw-gradient-to: rgba(255, 255, 255, 0.8) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-low/90"] { background-color: rgba(255, 255, 255, 0.9) !important; }
+    html.light-theme [class~="from-surface-container-low/90"] { --tw-gradient-from: rgba(255, 255, 255, 0.9) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-low/90"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.9) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-low/90"] { --tw-gradient-to: rgba(255, 255, 255, 0.9) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-low/95"] { background-color: rgba(255, 255, 255, 0.95) !important; }
+    html.light-theme [class~="from-surface-container-low/95"] { --tw-gradient-from: rgba(255, 255, 255, 0.95) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-low/95"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.95) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-low/95"] { --tw-gradient-to: rgba(255, 255, 255, 0.95) var(--tw-gradient-to-position) !important; }
+    html.light-theme .bg-surface-container { background-color: #ffffff !important; }
+    html.light-theme .from-surface-container { --tw-gradient-from: #ffffff var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme .to-surface-container { --tw-gradient-to: #ffffff var(--tw-gradient-to-position) !important; }
+    html.light-theme .via-surface-container { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), #ffffff var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="bg-surface-container/20"] { background-color: rgba(255, 255, 255, 0.2) !important; }
+    html.light-theme [class~="from-surface-container/20"] { --tw-gradient-from: rgba(255, 255, 255, 0.2) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container/20"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container/20"] { --tw-gradient-to: rgba(255, 255, 255, 0.2) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container/30"] { background-color: rgba(255, 255, 255, 0.3) !important; }
+    html.light-theme [class~="from-surface-container/30"] { --tw-gradient-from: rgba(255, 255, 255, 0.3) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container/30"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.3) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container/30"] { --tw-gradient-to: rgba(255, 255, 255, 0.3) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container/50"] { background-color: rgba(255, 255, 255, 0.5) !important; }
+    html.light-theme [class~="from-surface-container/50"] { --tw-gradient-from: rgba(255, 255, 255, 0.5) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container/50"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.5) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container/50"] { --tw-gradient-to: rgba(255, 255, 255, 0.5) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container/60"] { background-color: rgba(255, 255, 255, 0.6) !important; }
+    html.light-theme [class~="from-surface-container/60"] { --tw-gradient-from: rgba(255, 255, 255, 0.6) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container/60"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.6) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container/60"] { --tw-gradient-to: rgba(255, 255, 255, 0.6) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container/80"] { background-color: rgba(255, 255, 255, 0.8) !important; }
+    html.light-theme [class~="from-surface-container/80"] { --tw-gradient-from: rgba(255, 255, 255, 0.8) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container/80"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.8) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container/80"] { --tw-gradient-to: rgba(255, 255, 255, 0.8) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container/90"] { background-color: rgba(255, 255, 255, 0.9) !important; }
+    html.light-theme [class~="from-surface-container/90"] { --tw-gradient-from: rgba(255, 255, 255, 0.9) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container/90"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.9) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container/90"] { --tw-gradient-to: rgba(255, 255, 255, 0.9) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container/95"] { background-color: rgba(255, 255, 255, 0.95) !important; }
+    html.light-theme [class~="from-surface-container/95"] { --tw-gradient-from: rgba(255, 255, 255, 0.95) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container/95"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.95) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container/95"] { --tw-gradient-to: rgba(255, 255, 255, 0.95) var(--tw-gradient-to-position) !important; }
+    html.light-theme .bg-surface-container-high { background-color: #f8fafc !important; }
+    html.light-theme .from-surface-container-high { --tw-gradient-from: #f8fafc var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme .to-surface-container-high { --tw-gradient-to: #f8fafc var(--tw-gradient-to-position) !important; }
+    html.light-theme .via-surface-container-high { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), #f8fafc var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="bg-surface-container-high/20"] { background-color: rgba(248, 250, 252, 0.2) !important; }
+    html.light-theme [class~="from-surface-container-high/20"] { --tw-gradient-from: rgba(248, 250, 252, 0.2) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-high/20"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(248, 250, 252, 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-high/20"] { --tw-gradient-to: rgba(248, 250, 252, 0.2) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-high/30"] { background-color: rgba(248, 250, 252, 0.3) !important; }
+    html.light-theme [class~="from-surface-container-high/30"] { --tw-gradient-from: rgba(248, 250, 252, 0.3) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-high/30"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(248, 250, 252, 0.3) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-high/30"] { --tw-gradient-to: rgba(248, 250, 252, 0.3) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-high/50"] { background-color: rgba(248, 250, 252, 0.5) !important; }
+    html.light-theme [class~="from-surface-container-high/50"] { --tw-gradient-from: rgba(248, 250, 252, 0.5) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-high/50"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(248, 250, 252, 0.5) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-high/50"] { --tw-gradient-to: rgba(248, 250, 252, 0.5) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-high/60"] { background-color: rgba(248, 250, 252, 0.6) !important; }
+    html.light-theme [class~="from-surface-container-high/60"] { --tw-gradient-from: rgba(248, 250, 252, 0.6) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-high/60"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(248, 250, 252, 0.6) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-high/60"] { --tw-gradient-to: rgba(248, 250, 252, 0.6) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-high/80"] { background-color: rgba(248, 250, 252, 0.8) !important; }
+    html.light-theme [class~="from-surface-container-high/80"] { --tw-gradient-from: rgba(248, 250, 252, 0.8) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-high/80"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(248, 250, 252, 0.8) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-high/80"] { --tw-gradient-to: rgba(248, 250, 252, 0.8) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-high/90"] { background-color: rgba(248, 250, 252, 0.9) !important; }
+    html.light-theme [class~="from-surface-container-high/90"] { --tw-gradient-from: rgba(248, 250, 252, 0.9) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-high/90"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(248, 250, 252, 0.9) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-high/90"] { --tw-gradient-to: rgba(248, 250, 252, 0.9) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-high/95"] { background-color: rgba(248, 250, 252, 0.95) !important; }
+    html.light-theme [class~="from-surface-container-high/95"] { --tw-gradient-from: rgba(248, 250, 252, 0.95) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-high/95"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(248, 250, 252, 0.95) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-high/95"] { --tw-gradient-to: rgba(248, 250, 252, 0.95) var(--tw-gradient-to-position) !important; }
+    html.light-theme .bg-surface-variant { background-color: #f1f5f9 !important; }
+    html.light-theme .from-surface-variant { --tw-gradient-from: #f1f5f9 var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(241, 245, 249, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme .to-surface-variant { --tw-gradient-to: #f1f5f9 var(--tw-gradient-to-position) !important; }
+    html.light-theme .via-surface-variant { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), #f1f5f9 var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="bg-surface-variant/20"] { background-color: rgba(241, 245, 249, 0.2) !important; }
+    html.light-theme [class~="from-surface-variant/20"] { --tw-gradient-from: rgba(241, 245, 249, 0.2) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(241, 245, 249, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-variant/20"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(241, 245, 249, 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-variant/20"] { --tw-gradient-to: rgba(241, 245, 249, 0.2) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-variant/30"] { background-color: rgba(241, 245, 249, 0.3) !important; }
+    html.light-theme [class~="from-surface-variant/30"] { --tw-gradient-from: rgba(241, 245, 249, 0.3) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(241, 245, 249, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-variant/30"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(241, 245, 249, 0.3) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-variant/30"] { --tw-gradient-to: rgba(241, 245, 249, 0.3) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-variant/50"] { background-color: rgba(241, 245, 249, 0.5) !important; }
+    html.light-theme [class~="from-surface-variant/50"] { --tw-gradient-from: rgba(241, 245, 249, 0.5) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(241, 245, 249, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-variant/50"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(241, 245, 249, 0.5) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-variant/50"] { --tw-gradient-to: rgba(241, 245, 249, 0.5) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-variant/60"] { background-color: rgba(241, 245, 249, 0.6) !important; }
+    html.light-theme [class~="from-surface-variant/60"] { --tw-gradient-from: rgba(241, 245, 249, 0.6) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(241, 245, 249, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-variant/60"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(241, 245, 249, 0.6) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-variant/60"] { --tw-gradient-to: rgba(241, 245, 249, 0.6) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-variant/80"] { background-color: rgba(241, 245, 249, 0.8) !important; }
+    html.light-theme [class~="from-surface-variant/80"] { --tw-gradient-from: rgba(241, 245, 249, 0.8) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(241, 245, 249, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-variant/80"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(241, 245, 249, 0.8) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-variant/80"] { --tw-gradient-to: rgba(241, 245, 249, 0.8) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-variant/90"] { background-color: rgba(241, 245, 249, 0.9) !important; }
+    html.light-theme [class~="from-surface-variant/90"] { --tw-gradient-from: rgba(241, 245, 249, 0.9) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(241, 245, 249, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-variant/90"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(241, 245, 249, 0.9) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-variant/90"] { --tw-gradient-to: rgba(241, 245, 249, 0.9) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-variant/95"] { background-color: rgba(241, 245, 249, 0.95) !important; }
+    html.light-theme [class~="from-surface-variant/95"] { --tw-gradient-from: rgba(241, 245, 249, 0.95) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(241, 245, 249, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-variant/95"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(241, 245, 249, 0.95) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-variant/95"] { --tw-gradient-to: rgba(241, 245, 249, 0.95) var(--tw-gradient-to-position) !important; }
+    html.light-theme .bg-surface { background-color: #ffffff !important; }
+    html.light-theme .from-surface { --tw-gradient-from: #ffffff var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme .to-surface { --tw-gradient-to: #ffffff var(--tw-gradient-to-position) !important; }
+    html.light-theme .via-surface { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), #ffffff var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="bg-surface/20"] { background-color: rgba(255, 255, 255, 0.2) !important; }
+    html.light-theme [class~="from-surface/20"] { --tw-gradient-from: rgba(255, 255, 255, 0.2) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface/20"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface/20"] { --tw-gradient-to: rgba(255, 255, 255, 0.2) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface/30"] { background-color: rgba(255, 255, 255, 0.3) !important; }
+    html.light-theme [class~="from-surface/30"] { --tw-gradient-from: rgba(255, 255, 255, 0.3) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface/30"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.3) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface/30"] { --tw-gradient-to: rgba(255, 255, 255, 0.3) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface/50"] { background-color: rgba(255, 255, 255, 0.5) !important; }
+    html.light-theme [class~="from-surface/50"] { --tw-gradient-from: rgba(255, 255, 255, 0.5) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface/50"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.5) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface/50"] { --tw-gradient-to: rgba(255, 255, 255, 0.5) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface/60"] { background-color: rgba(255, 255, 255, 0.6) !important; }
+    html.light-theme [class~="from-surface/60"] { --tw-gradient-from: rgba(255, 255, 255, 0.6) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface/60"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.6) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface/60"] { --tw-gradient-to: rgba(255, 255, 255, 0.6) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface/80"] { background-color: rgba(255, 255, 255, 0.8) !important; }
+    html.light-theme [class~="from-surface/80"] { --tw-gradient-from: rgba(255, 255, 255, 0.8) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface/80"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.8) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface/80"] { --tw-gradient-to: rgba(255, 255, 255, 0.8) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface/90"] { background-color: rgba(255, 255, 255, 0.9) !important; }
+    html.light-theme [class~="from-surface/90"] { --tw-gradient-from: rgba(255, 255, 255, 0.9) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface/90"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.9) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface/90"] { --tw-gradient-to: rgba(255, 255, 255, 0.9) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface/95"] { background-color: rgba(255, 255, 255, 0.95) !important; }
+    html.light-theme [class~="from-surface/95"] { --tw-gradient-from: rgba(255, 255, 255, 0.95) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface/95"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.95) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface/95"] { --tw-gradient-to: rgba(255, 255, 255, 0.95) var(--tw-gradient-to-position) !important; }
+    html.light-theme .bg-surface-dim { background-color: #e2e8f0 !important; }
+    html.light-theme .from-surface-dim { --tw-gradient-from: #e2e8f0 var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(226, 232, 240, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme .to-surface-dim { --tw-gradient-to: #e2e8f0 var(--tw-gradient-to-position) !important; }
+    html.light-theme .via-surface-dim { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), #e2e8f0 var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="bg-surface-dim/20"] { background-color: rgba(226, 232, 240, 0.2) !important; }
+    html.light-theme [class~="from-surface-dim/20"] { --tw-gradient-from: rgba(226, 232, 240, 0.2) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(226, 232, 240, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-dim/20"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(226, 232, 240, 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-dim/20"] { --tw-gradient-to: rgba(226, 232, 240, 0.2) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-dim/30"] { background-color: rgba(226, 232, 240, 0.3) !important; }
+    html.light-theme [class~="from-surface-dim/30"] { --tw-gradient-from: rgba(226, 232, 240, 0.3) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(226, 232, 240, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-dim/30"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(226, 232, 240, 0.3) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-dim/30"] { --tw-gradient-to: rgba(226, 232, 240, 0.3) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-dim/50"] { background-color: rgba(226, 232, 240, 0.5) !important; }
+    html.light-theme [class~="from-surface-dim/50"] { --tw-gradient-from: rgba(226, 232, 240, 0.5) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(226, 232, 240, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-dim/50"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(226, 232, 240, 0.5) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-dim/50"] { --tw-gradient-to: rgba(226, 232, 240, 0.5) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-dim/60"] { background-color: rgba(226, 232, 240, 0.6) !important; }
+    html.light-theme [class~="from-surface-dim/60"] { --tw-gradient-from: rgba(226, 232, 240, 0.6) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(226, 232, 240, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-dim/60"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(226, 232, 240, 0.6) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-dim/60"] { --tw-gradient-to: rgba(226, 232, 240, 0.6) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-dim/80"] { background-color: rgba(226, 232, 240, 0.8) !important; }
+    html.light-theme [class~="from-surface-dim/80"] { --tw-gradient-from: rgba(226, 232, 240, 0.8) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(226, 232, 240, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-dim/80"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(226, 232, 240, 0.8) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-dim/80"] { --tw-gradient-to: rgba(226, 232, 240, 0.8) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-dim/90"] { background-color: rgba(226, 232, 240, 0.9) !important; }
+    html.light-theme [class~="from-surface-dim/90"] { --tw-gradient-from: rgba(226, 232, 240, 0.9) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(226, 232, 240, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-dim/90"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(226, 232, 240, 0.9) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-dim/90"] { --tw-gradient-to: rgba(226, 232, 240, 0.9) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-dim/95"] { background-color: rgba(226, 232, 240, 0.95) !important; }
+    html.light-theme [class~="from-surface-dim/95"] { --tw-gradient-from: rgba(226, 232, 240, 0.95) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(226, 232, 240, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-dim/95"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(226, 232, 240, 0.95) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-dim/95"] { --tw-gradient-to: rgba(226, 232, 240, 0.95) var(--tw-gradient-to-position) !important; }
+
+        /* Sequential Auto-Glow Animation (Optimized) */
+        .card-wave {
+          position: relative;
+          border-radius: 1rem;
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          transition: all 0.5s ease;
+          backdrop-filter: blur(4px); /* Reduced from 10px for performance */
+          overflow: hidden;
+          animation: sequential-glow 8s infinite;
+          animation-delay: var(--delay, 0s);
+        }
+        
+        .card-wave-border {
+          position: absolute;
+          inset: 0;
+          border-radius: 1rem;
+          padding: 2px;
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          opacity: 0;
+          pointer-events: none;
+          z-index: 10;
+          animation: sequential-border-glow 8s infinite;
+          animation-delay: var(--delay, 0s);
+        }
+
+        .card-wave-border::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 250%;
+          padding-bottom: 250%;
+          background: conic-gradient(from 0deg, transparent 60%, #2563eb 80%, #00d4ff 100%);
+          animation: rotate-wave 3s linear infinite;
+          transform: translate(-50%, -50%);
+        }
+
+        /* Performance optimization for Mobile */
+        @media (max-width: 768px) {
+          .card-wave-border {
+            animation: none !important;
+            display: none !important;
+          }
+          .card-wave {
+            backdrop-filter: none;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            animation: none !important;
+          }
+          /* Pause other heavy effects if needed */
+          #particles-js { display: none !important; }
+        }
+
+        @keyframes rotate-wave {
+          100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        @keyframes sequential-glow {
+          0%, 25%, 100% { background: rgba(255, 255, 255, 0.02); border-color: rgba(255, 255, 255, 0.05); box-shadow: none; }
+          12.5% { background: rgba(0, 212, 255, 0.05); border-color: rgba(0, 212, 255, 0.4); box-shadow: 0 0 30px rgba(0, 212, 255, 0.2); }
+        }
+        @keyframes sequential-border-glow {
+          0%, 25%, 100% { opacity: 0; }
+          5%, 20% { opacity: 1; }
+        }
+
+
+    /* ===== COMPREHENSIVE LIGHT MODE FIXES ===== */
+    html.light-theme body {
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.2), transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.15), transparent 40%),
+        linear-gradient(135deg, #ffffff 0%, #eef4ff 50%, #e0f2fe 100%) !important;
+      background-attachment: fixed !important;
+      color: #1e293b !important;
+    }
+    html.light-theme .glass-card {
+      background: rgba(255, 255, 255, 0.7) !important;
+      border-color: rgba(0, 0, 0, 0.1) !important;
+      backdrop-filter: blur(12px) !important;
+    }
+    html.light-theme .glass-card:hover {
+      background: rgba(255, 255, 255, 0.9) !important;
+      border-color: rgba(37, 99, 235, 0.4) !important;
+      box-shadow: 0 0 20px rgba(37, 99, 235, 0.1) !important;
+    }
+    /* Checkerboard cards - light mode */
+    html.light-theme section:not(:first-of-type) .grid.gap-6 > *:nth-child(odd),
+    html.light-theme section:not(:first-of-type) .grid.gap-8 > *:nth-child(odd),
+    html.light-theme #portfolio-grid > *:nth-child(odd) {
+      background: linear-gradient(135deg, #eef4ff 0%, #e8f0fe 100%) !important;
+      border-color: rgba(37, 99, 235, 0.2) !important;
+      box-shadow: 0 1px 3px rgba(37, 99, 235, 0.06) !important;
+    }
+    html.light-theme section:not(:first-of-type) .grid.gap-6 > *:nth-child(even),
+    html.light-theme section:not(:first-of-type) .grid.gap-8 > *:nth-child(even),
+    html.light-theme #portfolio-grid > *:nth-child(even) {
+      background: #ffffff !important;
+      border-color: rgba(15, 23, 42, 0.1) !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+    }
+    html.light-theme section:not(:first-of-type) .grid.gap-6 > *:nth-child(odd):hover,
+    html.light-theme section:not(:first-of-type) .grid.gap-8 > *:nth-child(odd):hover,
+    html.light-theme #portfolio-grid > *:nth-child(odd):hover {
+      border-color: rgba(37, 99, 235, 0.5) !important;
+      box-shadow: 0 8px 30px rgba(37, 99, 235, 0.15) !important;
+      transform: translateY(-2px);
+    }
+    html.light-theme section:not(:first-of-type) .grid.gap-6 > *:nth-child(even):hover,
+    html.light-theme section:not(:first-of-type) .grid.gap-8 > *:nth-child(even):hover,
+    html.light-theme #portfolio-grid > *:nth-child(even):hover {
+      border-color: rgba(15, 23, 42, 0.2) !important;
+      box-shadow: 0 8px 30px rgba(15, 23, 42, 0.1) !important;
+      transform: translateY(-2px);
+    }
+    html.light-theme section:not(:first-of-type) .grid.gap-6 > *:nth-child(odd) h3,
+    html.light-theme section:not(:first-of-type) .grid.gap-8 > *:nth-child(odd) h3,
+    html.light-theme #portfolio-grid > *:nth-child(odd) h3 {
+      background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+    html.light-theme section:not(:first-of-type) .grid.gap-6 > *:nth-child(even) h3,
+    html.light-theme section:not(:first-of-type) .grid.gap-8 > *:nth-child(even) h3,
+    html.light-theme #portfolio-grid > *:nth-child(even) h3 {
+      background: linear-gradient(135deg, #0f172a, #1e293b) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+    html.light-theme section:not(:first-of-type) .grid.gap-6 > *:nth-child(odd) p,
+    html.light-theme section:not(:first-of-type) .grid.gap-8 > *:nth-child(odd) p,
+    html.light-theme #portfolio-grid > *:nth-child(odd) p {
+      color: #3b5998 !important;
+    }
+    html.light-theme section:not(:first-of-type) .grid.gap-6 > *:nth-child(even) p,
+    html.light-theme section:not(:first-of-type) .grid.gap-8 > *:nth-child(even) p,
+    html.light-theme #portfolio-grid > *:nth-child(even) p {
+      color: #475569 !important;
+    }
+    /* Grid pattern */
+    html.light-theme .grid-pattern {
+      background-image:
+        linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px) !important;
+    }
+    /* Text gradient */
+    html.light-theme .text-gradient-cyan {
+      background: linear-gradient(135deg, #1d4ed8 0%, #0369a1 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+    /* Scrollbar */
+    html.light-theme ::-webkit-scrollbar-track { background: #f1f5f9 !important; }
+    html.light-theme ::-webkit-scrollbar-thumb { background: #cbd5e1 !important; }
+    html.light-theme ::-webkit-scrollbar-thumb:hover { background: #0369a1 !important; }
+    /* Timeline */
+    html.light-theme .timeline-line {
+      background: linear-gradient(to bottom, transparent, #2563eb 10%, #2563eb 90%, transparent) !important;
+    }
+    html.light-theme .timeline-node-pulse::before {
+      border-color: #2563eb !important;
+    }
+    html.light-theme .timeline-node-pulse::after {
+      border-color: rgba(37, 99, 235, 0.3) !important;
+    }
+    /* Scanning bar */
+    html.light-theme .scanning-bar::after {
+      background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.1), transparent) !important;
+    }
+    /* Step card */
+    html.light-theme .step-card {
+      background: #ffffff !important;
+      border-color: rgba(0, 0, 0, 0.1) !important;
+    }
+    /* Mega menu */
+    html.light-theme .mega-menu {
+      background: rgba(255, 255, 255, 0.98) !important;
+      border-color: rgba(0, 0, 0, 0.12) !important;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15) !important;
+    }
+    html.light-theme .mega-category-title { color: #0369a1 !important; }
+    html.light-theme .mega-link { color: #475569 !important; }
+    html.light-theme .mega-link:hover { background: rgba(3, 105, 161, 0.08) !important; color: #0f172a !important; }
+    /* Mobile menu */
+    html.light-theme #mobile-menu { background: rgba(255, 255, 255, 0.98) !important; border-left-color: rgba(0,0,0,0.1) !important; }
+    /* Hero section dark overlays -> lighter */
+    html.light-theme [class*="bg-[#05070a]"],
+    html.light-theme [class*="bg-[#0a0c10]"],
+    html.light-theme [class*="bg-[#0c0e12]"],
+    html.light-theme [class*="bg-[#0d1117]"],
+    html.light-theme [class*="bg-[#111318]"],
+    html.light-theme [class*="bg-[#0f1115]"],
+    html.light-theme [class*="bg-[#12141a]"],
+    html.light-theme [class*="bg-[#1a1c23]"],
+    html.light-theme [class*="bg-[#090b0f]"] {
+      background-color: #f0f4f8 !important;
+    }
+    /* Gradient overrides for hero overlays */
+    html.light-theme [class*="from-[#05070a]"],
+    html.light-theme [class*="from-[#0a0c10]"],
+    html.light-theme [class*="from-[#0c0e12]"],
+    html.light-theme [class*="from-[#111318]"] {
+      --tw-gradient-from: #f0f4f8 var(--tw-gradient-from-position) !important;
+      --tw-gradient-to: rgba(240, 244, 248, 0) var(--tw-gradient-to-position) !important;
+      --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+    }
+    html.light-theme [class*="to-[#05070a]"],
+    html.light-theme [class*="to-[#0a0c10]"],
+    html.light-theme [class*="to-[#0c0e12]"],
+    html.light-theme [class*="to-[#111318]"] {
+      --tw-gradient-to: #f0f4f8 var(--tw-gradient-to-position) !important;
+    }
+    html.light-theme [class*="via-[#05070a]"],
+    html.light-theme [class*="via-transparent"] {
+      --tw-gradient-via-position: !important;
+    }
+    /* General text color fixes */
+    html.light-theme .text-white { color: #0f172a !important; }
+    html.light-theme .text-on-surface { color: #0f172a !important; }
+    html.light-theme .text-on-surface-variant { color: #475569 !important; }
+    html.light-theme .text-on-background { color: #1e293b !important; }
+    html.light-theme [class~="text-white/50"] { color: #64748b !important; }
+    html.light-theme [class~="text-white/60"] { color: #475569 !important; }
+    html.light-theme [class~="text-white/70"] { color: #334155 !important; }
+    html.light-theme [class~="text-white/80"] { color: #1e293b !important; }
+    html.light-theme [class~="text-white/90"] { color: #0f172a !important; }
+    html.light-theme [class~="text-on-surface-variant/70"] { color: #475569 !important; }
+    html.light-theme [class~="text-on-surface-variant/80"] { color: #334155 !important; }
+    /* Border color fixes */
+    html.light-theme [class~="border-white/5"] { border-color: rgba(0,0,0,0.06) !important; }
+    html.light-theme [class~="border-white/10"] { border-color: rgba(0,0,0,0.1) !important; }
+    html.light-theme [class~="border-white/20"] { border-color: rgba(0,0,0,0.12) !important; }
+    html.light-theme [class~="border-outline-variant/30"] { border-color: rgba(0,0,0,0.1) !important; }
+    /* Fix hero overlay gradients with inline styles */
+    html.light-theme [style*="background: linear-gradient"][style*="#05070a"],
+    html.light-theme [style*="background: linear-gradient"][style*="#0a0c10"],
+    html.light-theme [style*="background:linear-gradient"][style*="#05070a"],
+    html.light-theme [style*="background:linear-gradient"][style*="#0a0c10"] {
+      background: linear-gradient(to bottom, rgba(240,244,248,0.9), transparent, rgba(240,244,248,0.9)) !important;
+    }
+    /* Form input */
+    html.light-theme .form-input { background: rgba(255,255,255,0.8) !important; border-color: rgba(0,0,0,0.2) !important; color: #0f172a !important; }
+    html.light-theme .form-input:focus { background: #ffffff !important; }
+    /* Logo inversion: UNDO dark mode inversion */
+    html.light-theme .logo-img { filter: none !important; }
+    html.light-theme .footer-logo { filter: none !important; }
+    
+    /* ===== CONTACT CARD & BLUE ACCENT LIGHT MODE FIXES ===== */
+    html.light-theme .contact-info-card {
+      background: #ffffff !important;
+      border: 1px solid rgba(37, 99, 235, 0.12) !important;
+      backdrop-filter: none !important;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
+    }
+    html.light-theme .contact-info-card:hover {
+      background: #f8faff !important;
+      border-color: rgba(37, 99, 235, 0.35) !important;
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.12) !important;
+    }
+    html.light-theme .contact-info-card:hover .icon-circle {
+      box-shadow: 0 0 16px rgba(37, 99, 235, 0.25) !important;
+    }
+    /* Stronger blue for icon backgrounds in light mode */
+    html.light-theme .icon-circle {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(3, 105, 161, 0.08)) !important;
+      border-color: rgba(37, 99, 235, 0.2) !important;
+    }
+    /* Make primary-fixed-dim color darker/more visible in light mode */
+    html.light-theme .text-primary-fixed-dim {
+      color: #0369a1 !important;
+    }
+    html.light-theme .text-primary-fixed {
+      color: #0c4a6e !important;
+    }
+    /* Make primary-container and primary colors stronger in light mode */
+    html.light-theme .bg-primary-container {
+      background-color: #0ea5e9 !important;
+    }
+    html.light-theme .text-primary {
+      color: #0369a1 !important;
+    }
+    html.light-theme .border-primary {
+      border-color: #0369a1 !important;
+    }
+    
+    /* === FIX HERO CHECKERBOARD BUG === */
+    section:first-of-type .grid > *:first-child,
+    html.light-theme section:first-of-type .grid > *:first-child {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+    }
+    
+    html.light-theme section:first-of-type .grid > *:last-child,
+    html.light-theme section:first-of-type .grid > .glass-card {
+      background: rgba(255, 255, 255, 0.7) !important;
+      border: 1px solid rgba(0,0,0,0.1) !important;
+    }
+
+
+    /* === FIX GLOBAL GRADIENT VISIBILITY === */
+    html.light-theme section.bg-surface-variant,
+    html.light-theme section.bg-surface-container-lowest,
+    html.light-theme section.bg-surface-container-low,
+    html.light-theme section.bg-surface,
+    html.light-theme section.bg-background,
+    html.light-theme section.section-dark {
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+
+
+    /* === FIX HERO BACKGROUND OVERLAY === */
+    html.light-theme section:first-of-type .absolute.from-background {
+      display: none !important;
+    }
+    
+    /* === FIX SEPARATION (CHECKERBOARD) IN LIGHT MODE === */
+    html.light-theme section .grid.gap-8 > *:not([class*="bg-"]):not([class*="glass"]),
+    html.light-theme section .grid.gap-6 > *:not([class*="bg-"]):not([class*="glass"]) {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+
+/* ===== END CONTACT & ACCENT FIXES ===== */
+
+    /* ===== END LIGHT MODE FIXES ===== */
+
+</style>
+
+<style>
+    /* Hide Google Translate UI */
+    .VIpgJd-ZVi9od-ORHb-OEVmcd, .VIpgJd-ZVi9od-aZ2wEe-wOHMyf, .goog-te-banner-frame, #goog-gt-tt, .goog-te-spinner-pos { display: none !important; }
+    body { top: 0 !important; }
+    .skiptranslate { display: none !important; }
+    font { background: transparent !important; box-shadow: none !important; }
+
+    /* GLOBAL LIGHT THEME OVERRIDES */
+    /* html.light-theme body single override removed */
+    html.light-theme header { background: rgba(255, 255, 255, 0.95) !important; border-bottom-color: rgba(0,0,0,0.1) !important; }
+    html.light-theme footer { background-color: #f1f5f9 !important; border-top-color: rgba(0,0,0,0.1) !important; }
+    html.light-theme .section-dark { background-color: #f0f9ff !important; color: #0f172a !important; }
+    html.light-theme .text-white, html.light-theme .section-dark .text-white { color: #0f172a !important; }
+    html.light-theme .text-on-surface, html.light-theme .section-dark .text-on-surface { color: #0f172a !important; }
+    html.light-theme .text-on-surface-variant, html.light-theme .section-dark .text-on-surface-variant { color: #475569 !important; }
+    html.light-theme p, html.light-theme .section-dark p { color: #334155 !important; }
+    html.light-theme h1, html.light-theme h2, html.light-theme h3 { color: #0f172a !important; }
+
+
+    /* Hardcoded background overrides */
+    html.light-theme .bg-\[\#05070a\] { background-color: #f8fafc !important; }
+    html.light-theme .bg-\[\#05070a\]\/40 { background-color: rgba(248, 250, 252, 0.4) !important; }
+    html.light-theme .bg-\[\#05070a\]\/60 { background-color: rgba(248, 250, 252, 0.6) !important; }
+    html.light-theme .from-\[\#05070a\] { --tw-gradient-from: #f8fafc var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme .to-\[\#05070a\] { --tw-gradient-to: #f8fafc var(--tw-gradient-to-position) !important; }
+
+
+    /* Semantic Background Overrides for Light Theme */
+    html.light-theme .bg-background { background-color: #f8fafc !important; }
+    html.light-theme [class~="bg-background/80"] { background-color: rgba(248, 250, 252, 0.8) !important; }
+    html.light-theme [class~="bg-background/90"] { background-color: rgba(248, 250, 252, 0.9) !important; }
+    
+    html.light-theme .from-background { --tw-gradient-from: #f8fafc var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    
+    html.light-theme [class~="via-background/90"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(248, 250, 252, 0.9) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    
+    html.light-theme [class~="to-background/50"] { --tw-gradient-to: rgba(248, 250, 252, 0.5) var(--tw-gradient-to-position) !important; }
+
+    /* Semantic Surface Overrides */
+    html.light-theme .bg-surface-container-lowest { background-color: #ffffff !important; }
+    html.light-theme .from-surface-container-lowest { --tw-gradient-from: #ffffff var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme .to-surface-container-lowest { --tw-gradient-to: #ffffff var(--tw-gradient-to-position) !important; }
+    html.light-theme .via-surface-container-lowest { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), #ffffff var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="bg-surface-container-lowest/20"] { background-color: rgba(255, 255, 255, 0.2) !important; }
+    html.light-theme [class~="from-surface-container-lowest/20"] { --tw-gradient-from: rgba(255, 255, 255, 0.2) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-lowest/20"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-lowest/20"] { --tw-gradient-to: rgba(255, 255, 255, 0.2) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-lowest/30"] { background-color: rgba(255, 255, 255, 0.3) !important; }
+    html.light-theme [class~="from-surface-container-lowest/30"] { --tw-gradient-from: rgba(255, 255, 255, 0.3) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-lowest/30"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.3) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-lowest/30"] { --tw-gradient-to: rgba(255, 255, 255, 0.3) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-lowest/50"] { background-color: rgba(255, 255, 255, 0.5) !important; }
+    html.light-theme [class~="from-surface-container-lowest/50"] { --tw-gradient-from: rgba(255, 255, 255, 0.5) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-lowest/50"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.5) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-lowest/50"] { --tw-gradient-to: rgba(255, 255, 255, 0.5) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-lowest/60"] { background-color: rgba(255, 255, 255, 0.6) !important; }
+    html.light-theme [class~="from-surface-container-lowest/60"] { --tw-gradient-from: rgba(255, 255, 255, 0.6) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-lowest/60"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.6) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-lowest/60"] { --tw-gradient-to: rgba(255, 255, 255, 0.6) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-lowest/80"] { background-color: rgba(255, 255, 255, 0.8) !important; }
+    html.light-theme [class~="from-surface-container-lowest/80"] { --tw-gradient-from: rgba(255, 255, 255, 0.8) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-lowest/80"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.8) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-lowest/80"] { --tw-gradient-to: rgba(255, 255, 255, 0.8) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-lowest/90"] { background-color: rgba(255, 255, 255, 0.9) !important; }
+    html.light-theme [class~="from-surface-container-lowest/90"] { --tw-gradient-from: rgba(255, 255, 255, 0.9) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-lowest/90"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.9) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-lowest/90"] { --tw-gradient-to: rgba(255, 255, 255, 0.9) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-lowest/95"] { background-color: rgba(255, 255, 255, 0.95) !important; }
+    html.light-theme [class~="from-surface-container-lowest/95"] { --tw-gradient-from: rgba(255, 255, 255, 0.95) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-lowest/95"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.95) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-lowest/95"] { --tw-gradient-to: rgba(255, 255, 255, 0.95) var(--tw-gradient-to-position) !important; }
+    html.light-theme .bg-surface-container-low { background-color: #ffffff !important; }
+    html.light-theme .from-surface-container-low { --tw-gradient-from: #ffffff var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme .to-surface-container-low { --tw-gradient-to: #ffffff var(--tw-gradient-to-position) !important; }
+    html.light-theme .via-surface-container-low { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), #ffffff var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="bg-surface-container-low/20"] { background-color: rgba(255, 255, 255, 0.2) !important; }
+    html.light-theme [class~="from-surface-container-low/20"] { --tw-gradient-from: rgba(255, 255, 255, 0.2) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-low/20"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-low/20"] { --tw-gradient-to: rgba(255, 255, 255, 0.2) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-low/30"] { background-color: rgba(255, 255, 255, 0.3) !important; }
+    html.light-theme [class~="from-surface-container-low/30"] { --tw-gradient-from: rgba(255, 255, 255, 0.3) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-low/30"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.3) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-low/30"] { --tw-gradient-to: rgba(255, 255, 255, 0.3) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-low/50"] { background-color: rgba(255, 255, 255, 0.5) !important; }
+    html.light-theme [class~="from-surface-container-low/50"] { --tw-gradient-from: rgba(255, 255, 255, 0.5) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-low/50"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.5) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-low/50"] { --tw-gradient-to: rgba(255, 255, 255, 0.5) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-low/60"] { background-color: rgba(255, 255, 255, 0.6) !important; }
+    html.light-theme [class~="from-surface-container-low/60"] { --tw-gradient-from: rgba(255, 255, 255, 0.6) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-low/60"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.6) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-low/60"] { --tw-gradient-to: rgba(255, 255, 255, 0.6) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-low/80"] { background-color: rgba(255, 255, 255, 0.8) !important; }
+    html.light-theme [class~="from-surface-container-low/80"] { --tw-gradient-from: rgba(255, 255, 255, 0.8) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-low/80"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.8) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-low/80"] { --tw-gradient-to: rgba(255, 255, 255, 0.8) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-low/90"] { background-color: rgba(255, 255, 255, 0.9) !important; }
+    html.light-theme [class~="from-surface-container-low/90"] { --tw-gradient-from: rgba(255, 255, 255, 0.9) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-low/90"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.9) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-low/90"] { --tw-gradient-to: rgba(255, 255, 255, 0.9) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-low/95"] { background-color: rgba(255, 255, 255, 0.95) !important; }
+    html.light-theme [class~="from-surface-container-low/95"] { --tw-gradient-from: rgba(255, 255, 255, 0.95) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-low/95"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.95) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-low/95"] { --tw-gradient-to: rgba(255, 255, 255, 0.95) var(--tw-gradient-to-position) !important; }
+    html.light-theme .bg-surface-container { background-color: #ffffff !important; }
+    html.light-theme .from-surface-container { --tw-gradient-from: #ffffff var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme .to-surface-container { --tw-gradient-to: #ffffff var(--tw-gradient-to-position) !important; }
+    html.light-theme .via-surface-container { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), #ffffff var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="bg-surface-container/20"] { background-color: rgba(255, 255, 255, 0.2) !important; }
+    html.light-theme [class~="from-surface-container/20"] { --tw-gradient-from: rgba(255, 255, 255, 0.2) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container/20"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container/20"] { --tw-gradient-to: rgba(255, 255, 255, 0.2) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container/30"] { background-color: rgba(255, 255, 255, 0.3) !important; }
+    html.light-theme [class~="from-surface-container/30"] { --tw-gradient-from: rgba(255, 255, 255, 0.3) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container/30"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.3) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container/30"] { --tw-gradient-to: rgba(255, 255, 255, 0.3) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container/50"] { background-color: rgba(255, 255, 255, 0.5) !important; }
+    html.light-theme [class~="from-surface-container/50"] { --tw-gradient-from: rgba(255, 255, 255, 0.5) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container/50"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.5) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container/50"] { --tw-gradient-to: rgba(255, 255, 255, 0.5) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container/60"] { background-color: rgba(255, 255, 255, 0.6) !important; }
+    html.light-theme [class~="from-surface-container/60"] { --tw-gradient-from: rgba(255, 255, 255, 0.6) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container/60"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.6) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container/60"] { --tw-gradient-to: rgba(255, 255, 255, 0.6) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container/80"] { background-color: rgba(255, 255, 255, 0.8) !important; }
+    html.light-theme [class~="from-surface-container/80"] { --tw-gradient-from: rgba(255, 255, 255, 0.8) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container/80"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.8) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container/80"] { --tw-gradient-to: rgba(255, 255, 255, 0.8) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container/90"] { background-color: rgba(255, 255, 255, 0.9) !important; }
+    html.light-theme [class~="from-surface-container/90"] { --tw-gradient-from: rgba(255, 255, 255, 0.9) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container/90"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.9) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container/90"] { --tw-gradient-to: rgba(255, 255, 255, 0.9) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container/95"] { background-color: rgba(255, 255, 255, 0.95) !important; }
+    html.light-theme [class~="from-surface-container/95"] { --tw-gradient-from: rgba(255, 255, 255, 0.95) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container/95"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.95) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container/95"] { --tw-gradient-to: rgba(255, 255, 255, 0.95) var(--tw-gradient-to-position) !important; }
+    html.light-theme .bg-surface-container-high { background-color: #f8fafc !important; }
+    html.light-theme .from-surface-container-high { --tw-gradient-from: #f8fafc var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme .to-surface-container-high { --tw-gradient-to: #f8fafc var(--tw-gradient-to-position) !important; }
+    html.light-theme .via-surface-container-high { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), #f8fafc var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="bg-surface-container-high/20"] { background-color: rgba(248, 250, 252, 0.2) !important; }
+    html.light-theme [class~="from-surface-container-high/20"] { --tw-gradient-from: rgba(248, 250, 252, 0.2) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-high/20"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(248, 250, 252, 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-high/20"] { --tw-gradient-to: rgba(248, 250, 252, 0.2) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-high/30"] { background-color: rgba(248, 250, 252, 0.3) !important; }
+    html.light-theme [class~="from-surface-container-high/30"] { --tw-gradient-from: rgba(248, 250, 252, 0.3) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-high/30"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(248, 250, 252, 0.3) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-high/30"] { --tw-gradient-to: rgba(248, 250, 252, 0.3) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-high/50"] { background-color: rgba(248, 250, 252, 0.5) !important; }
+    html.light-theme [class~="from-surface-container-high/50"] { --tw-gradient-from: rgba(248, 250, 252, 0.5) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-high/50"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(248, 250, 252, 0.5) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-high/50"] { --tw-gradient-to: rgba(248, 250, 252, 0.5) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-high/60"] { background-color: rgba(248, 250, 252, 0.6) !important; }
+    html.light-theme [class~="from-surface-container-high/60"] { --tw-gradient-from: rgba(248, 250, 252, 0.6) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-high/60"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(248, 250, 252, 0.6) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-high/60"] { --tw-gradient-to: rgba(248, 250, 252, 0.6) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-high/80"] { background-color: rgba(248, 250, 252, 0.8) !important; }
+    html.light-theme [class~="from-surface-container-high/80"] { --tw-gradient-from: rgba(248, 250, 252, 0.8) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-high/80"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(248, 250, 252, 0.8) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-high/80"] { --tw-gradient-to: rgba(248, 250, 252, 0.8) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-high/90"] { background-color: rgba(248, 250, 252, 0.9) !important; }
+    html.light-theme [class~="from-surface-container-high/90"] { --tw-gradient-from: rgba(248, 250, 252, 0.9) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-high/90"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(248, 250, 252, 0.9) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-high/90"] { --tw-gradient-to: rgba(248, 250, 252, 0.9) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-container-high/95"] { background-color: rgba(248, 250, 252, 0.95) !important; }
+    html.light-theme [class~="from-surface-container-high/95"] { --tw-gradient-from: rgba(248, 250, 252, 0.95) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-container-high/95"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(248, 250, 252, 0.95) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-container-high/95"] { --tw-gradient-to: rgba(248, 250, 252, 0.95) var(--tw-gradient-to-position) !important; }
+    html.light-theme .bg-surface-variant { background-color: #f1f5f9 !important; }
+    html.light-theme .from-surface-variant { --tw-gradient-from: #f1f5f9 var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(241, 245, 249, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme .to-surface-variant { --tw-gradient-to: #f1f5f9 var(--tw-gradient-to-position) !important; }
+    html.light-theme .via-surface-variant { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), #f1f5f9 var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="bg-surface-variant/20"] { background-color: rgba(241, 245, 249, 0.2) !important; }
+    html.light-theme [class~="from-surface-variant/20"] { --tw-gradient-from: rgba(241, 245, 249, 0.2) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(241, 245, 249, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-variant/20"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(241, 245, 249, 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-variant/20"] { --tw-gradient-to: rgba(241, 245, 249, 0.2) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-variant/30"] { background-color: rgba(241, 245, 249, 0.3) !important; }
+    html.light-theme [class~="from-surface-variant/30"] { --tw-gradient-from: rgba(241, 245, 249, 0.3) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(241, 245, 249, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-variant/30"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(241, 245, 249, 0.3) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-variant/30"] { --tw-gradient-to: rgba(241, 245, 249, 0.3) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-variant/50"] { background-color: rgba(241, 245, 249, 0.5) !important; }
+    html.light-theme [class~="from-surface-variant/50"] { --tw-gradient-from: rgba(241, 245, 249, 0.5) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(241, 245, 249, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-variant/50"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(241, 245, 249, 0.5) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-variant/50"] { --tw-gradient-to: rgba(241, 245, 249, 0.5) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-variant/60"] { background-color: rgba(241, 245, 249, 0.6) !important; }
+    html.light-theme [class~="from-surface-variant/60"] { --tw-gradient-from: rgba(241, 245, 249, 0.6) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(241, 245, 249, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-variant/60"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(241, 245, 249, 0.6) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-variant/60"] { --tw-gradient-to: rgba(241, 245, 249, 0.6) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-variant/80"] { background-color: rgba(241, 245, 249, 0.8) !important; }
+    html.light-theme [class~="from-surface-variant/80"] { --tw-gradient-from: rgba(241, 245, 249, 0.8) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(241, 245, 249, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-variant/80"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(241, 245, 249, 0.8) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-variant/80"] { --tw-gradient-to: rgba(241, 245, 249, 0.8) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-variant/90"] { background-color: rgba(241, 245, 249, 0.9) !important; }
+    html.light-theme [class~="from-surface-variant/90"] { --tw-gradient-from: rgba(241, 245, 249, 0.9) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(241, 245, 249, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-variant/90"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(241, 245, 249, 0.9) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-variant/90"] { --tw-gradient-to: rgba(241, 245, 249, 0.9) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-variant/95"] { background-color: rgba(241, 245, 249, 0.95) !important; }
+    html.light-theme [class~="from-surface-variant/95"] { --tw-gradient-from: rgba(241, 245, 249, 0.95) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(241, 245, 249, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-variant/95"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(241, 245, 249, 0.95) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-variant/95"] { --tw-gradient-to: rgba(241, 245, 249, 0.95) var(--tw-gradient-to-position) !important; }
+    html.light-theme .bg-surface { background-color: #ffffff !important; }
+    html.light-theme .from-surface { --tw-gradient-from: #ffffff var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme .to-surface { --tw-gradient-to: #ffffff var(--tw-gradient-to-position) !important; }
+    html.light-theme .via-surface { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), #ffffff var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="bg-surface/20"] { background-color: rgba(255, 255, 255, 0.2) !important; }
+    html.light-theme [class~="from-surface/20"] { --tw-gradient-from: rgba(255, 255, 255, 0.2) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface/20"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface/20"] { --tw-gradient-to: rgba(255, 255, 255, 0.2) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface/30"] { background-color: rgba(255, 255, 255, 0.3) !important; }
+    html.light-theme [class~="from-surface/30"] { --tw-gradient-from: rgba(255, 255, 255, 0.3) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface/30"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.3) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface/30"] { --tw-gradient-to: rgba(255, 255, 255, 0.3) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface/50"] { background-color: rgba(255, 255, 255, 0.5) !important; }
+    html.light-theme [class~="from-surface/50"] { --tw-gradient-from: rgba(255, 255, 255, 0.5) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface/50"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.5) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface/50"] { --tw-gradient-to: rgba(255, 255, 255, 0.5) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface/60"] { background-color: rgba(255, 255, 255, 0.6) !important; }
+    html.light-theme [class~="from-surface/60"] { --tw-gradient-from: rgba(255, 255, 255, 0.6) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface/60"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.6) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface/60"] { --tw-gradient-to: rgba(255, 255, 255, 0.6) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface/80"] { background-color: rgba(255, 255, 255, 0.8) !important; }
+    html.light-theme [class~="from-surface/80"] { --tw-gradient-from: rgba(255, 255, 255, 0.8) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface/80"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.8) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface/80"] { --tw-gradient-to: rgba(255, 255, 255, 0.8) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface/90"] { background-color: rgba(255, 255, 255, 0.9) !important; }
+    html.light-theme [class~="from-surface/90"] { --tw-gradient-from: rgba(255, 255, 255, 0.9) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface/90"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.9) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface/90"] { --tw-gradient-to: rgba(255, 255, 255, 0.9) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface/95"] { background-color: rgba(255, 255, 255, 0.95) !important; }
+    html.light-theme [class~="from-surface/95"] { --tw-gradient-from: rgba(255, 255, 255, 0.95) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255, 255, 255, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface/95"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.95) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface/95"] { --tw-gradient-to: rgba(255, 255, 255, 0.95) var(--tw-gradient-to-position) !important; }
+    html.light-theme .bg-surface-dim { background-color: #e2e8f0 !important; }
+    html.light-theme .from-surface-dim { --tw-gradient-from: #e2e8f0 var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(226, 232, 240, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme .to-surface-dim { --tw-gradient-to: #e2e8f0 var(--tw-gradient-to-position) !important; }
+    html.light-theme .via-surface-dim { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), #e2e8f0 var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="bg-surface-dim/20"] { background-color: rgba(226, 232, 240, 0.2) !important; }
+    html.light-theme [class~="from-surface-dim/20"] { --tw-gradient-from: rgba(226, 232, 240, 0.2) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(226, 232, 240, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-dim/20"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(226, 232, 240, 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-dim/20"] { --tw-gradient-to: rgba(226, 232, 240, 0.2) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-dim/30"] { background-color: rgba(226, 232, 240, 0.3) !important; }
+    html.light-theme [class~="from-surface-dim/30"] { --tw-gradient-from: rgba(226, 232, 240, 0.3) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(226, 232, 240, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-dim/30"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(226, 232, 240, 0.3) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-dim/30"] { --tw-gradient-to: rgba(226, 232, 240, 0.3) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-dim/50"] { background-color: rgba(226, 232, 240, 0.5) !important; }
+    html.light-theme [class~="from-surface-dim/50"] { --tw-gradient-from: rgba(226, 232, 240, 0.5) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(226, 232, 240, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-dim/50"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(226, 232, 240, 0.5) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-dim/50"] { --tw-gradient-to: rgba(226, 232, 240, 0.5) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-dim/60"] { background-color: rgba(226, 232, 240, 0.6) !important; }
+    html.light-theme [class~="from-surface-dim/60"] { --tw-gradient-from: rgba(226, 232, 240, 0.6) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(226, 232, 240, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-dim/60"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(226, 232, 240, 0.6) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-dim/60"] { --tw-gradient-to: rgba(226, 232, 240, 0.6) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-dim/80"] { background-color: rgba(226, 232, 240, 0.8) !important; }
+    html.light-theme [class~="from-surface-dim/80"] { --tw-gradient-from: rgba(226, 232, 240, 0.8) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(226, 232, 240, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-dim/80"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(226, 232, 240, 0.8) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-dim/80"] { --tw-gradient-to: rgba(226, 232, 240, 0.8) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-dim/90"] { background-color: rgba(226, 232, 240, 0.9) !important; }
+    html.light-theme [class~="from-surface-dim/90"] { --tw-gradient-from: rgba(226, 232, 240, 0.9) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(226, 232, 240, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-dim/90"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(226, 232, 240, 0.9) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-dim/90"] { --tw-gradient-to: rgba(226, 232, 240, 0.9) var(--tw-gradient-to-position) !important; }
+    html.light-theme [class~="bg-surface-dim/95"] { background-color: rgba(226, 232, 240, 0.95) !important; }
+    html.light-theme [class~="from-surface-dim/95"] { --tw-gradient-from: rgba(226, 232, 240, 0.95) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(226, 232, 240, 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="via-surface-dim/95"] { --tw-gradient-via-position:  !important; --tw-gradient-stops: var(--tw-gradient-from), rgba(226, 232, 240, 0.95) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+    html.light-theme [class~="to-surface-dim/95"] { --tw-gradient-to: rgba(226, 232, 240, 0.95) var(--tw-gradient-to-position) !important; }
+</style>
+</head>
+<body class="font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- TRANSLATION LOADER -->
+<div id="lang-loader" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#05070a;z-index:999999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.5s ease; opacity: 1;">
+  <div style="width:40px;height:40px;border:3px solid rgba(255,255,255,0.1);border-top-color:#3b82f6;border-radius:50%;animation:spin 1s linear infinite;margin-bottom:15px;"></div>
+  <div style="color:white;font-family:monospace;letter-spacing:2px;font-size:12px;">TRANSLATING...</div>
+</div>
+<script>
+  if (localStorage.getItem('cvision-lang') !== 'en') {
+    var _loader = document.getElementById('lang-loader');
+    if (_loader) _loader.style.display = 'none';
+  }
+</script>
+
+
+<!-- Background -->
+<div class="fixed inset-0 -z-10 grid-pattern pointer-events-none"></div>
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+  <div class="scan-line absolute w-full top-0 left-0"></div>
+</div>
+
+<!-- ========== HEADER ========== -->
+<header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm">
+  <nav class="flex justify-between items-center px-margin-x py-3 max-w-container-max mx-auto">
+    <a href="index.html" class="flex items-center group flex-shrink-0">
+      <img src="assets/img/logo_transparent.png" alt="Cvision AI Tech" class="logo-img h-24 w-auto transition-all">
+    </a>
+    <div class="hidden lg:flex items-center gap-8">
+      <a class="text-on-surface-variant border-b-2 border-transparent py-1 hover:text-primary transition-colors font-body-md text-body-md font-medium" href="index.html">Trang chủ</a>
+      
+      <!-- Dropdown: Giải pháp -->
+      <div class="nav-dropdown">
+        <span class="dropdown-trigger text-primary border-b-2 border-primary py-1 transition-colors font-body-md text-body-md font-semibold">
+          Giải pháp
+          <span class="material-symbols-outlined text-sm expand-icon">expand_more</span>
+        </span>
+        <div class="mega-menu">
+          <div class="mega-grid">
+            <!-- Sản Xuất & Công Nghiệp -->
+            <div class="mega-category">
+              <div class="mega-category-title"><span class="material-symbols-outlined">factory</span>Sản Xuất & Công Nghiệp</div>
+              <a href="dem-san-pham.html" class="mega-link">Đếm Sản Phẩm Băng Chuyền</a>
+              <a href="nhan-dien-khuon-mat.html" class="mega-link">Nhận Diện Khuôn Mặt (In/Out)</a>
+              <a href="kiem-tra-ngoai-quan.html" class="mega-link">Kiểm Tra Ngoại Quan QA/QC</a>
+              <a href="quan-ly-xe.html" class="mega-link">Quản Lý Xe Nhà Máy (ALPR)</a>
+            </div>
+            <!-- An Toàn Lao Động -->
+            <div class="mega-category">
+              <div class="mega-category-title"><span class="material-symbols-outlined">health_and_safety</span>An Toàn Lao Động</div>
+              <a href="giai-phap-an-toan-lao-dong.html" class="mega-link">Giám Sát Đồ Bảo Hộ (PPE)</a>
+            </div>
+            <!-- Cửa Hàng & Bán Lẻ -->
+            <div class="mega-category">
+              <div class="mega-category-title"><span class="material-symbols-outlined">storefront</span>Cửa Hàng & Bán Lẻ</div>
+              <a href="giai-phap-quan-ly-cua-hang.html" class="mega-link">Quản Lý & Phân Tích Cửa Hàng</a>
+              <a href="giai-phap-quy-trinh-lam-viec.html" class="mega-link">Giám Sát Quy Trình Phục Vụ</a>
+            </div>
+            <!-- Giao Thông -->
+            <div class="mega-category">
+              <div class="mega-category-title"><span class="material-symbols-outlined">traffic</span>Giao Thông</div>
+              <a href="giai-phap-phat-nguoi.html" class="mega-link">Phạt Nguội Thông Minh</a>
+              <a href="giai-phap-luu-luong.html" class="mega-link">Lưu Lượng & Đo Tốc Độ</a>
+              <a href="giai-phap-nhan-dien-bien-so.html" class="mega-link">Nhận Diện Biển Số (LPR)</a>
+            </div>
+            <!-- Logistics -->
+            <div class="mega-category">
+              <div class="mega-category-title"><span class="material-symbols-outlined">local_shipping</span>Logistics</div>
+              <a href="giai-phap-kiem-soat-xe.html" class="mega-link">Kiểm Soát Xe Ra Vào Bến Bãi</a>
+              <a href="giai-phap-xuat-nhap-kho.html" class="mega-link">Giám Sát Xuất Nhập Kho</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a class="text-on-surface-variant border-b-2 border-transparent py-1 hover:text-primary transition-colors font-body-md text-body-md font-medium" href="quy-trinh.html">Quy trình</a>
+      <a class="text-on-surface-variant border-b-2 border-transparent py-1 hover:text-primary transition-colors font-body-md text-body-md font-medium" href="doi-tac.html">Đối tác</a>
+      <a class="text-on-surface-variant border-b-2 border-transparent py-1 hover:text-primary transition-colors font-body-md text-body-md font-medium" href="hoat-dong.html">Hoạt động</a>
+      <a class="text-on-surface-variant border-b-2 border-transparent py-1 hover:text-primary transition-colors font-body-md text-body-md font-medium" href="lien-he.html">Liên hệ</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <button id="theme-toggle" class="w-10 h-10 rounded-lg border border-outline-variant/50 flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary/50 transition-all">
+        <span class="material-symbols-outlined text-xl">dark_mode</span>
+      </button>
+      <a href="lien-he.html" class="hidden lg:inline-flex items-center gap-2 bg-gradient-to-r from-primary-fixed-dim to-primary-container text-on-primary font-semibold text-sm px-5 py-2.5 rounded-lg hover:shadow-lg hover:shadow-primary-fixed-dim/20 transition-all hover:scale-105">
+        Nhận tư vấn
+        <span class="material-symbols-outlined text-lg">arrow_forward</span>
+      </a>
+      
+        <!-- Language Switcher Desktop -->
+        <div translate="no" class="notranslate hidden lg:flex items-center gap-2 bg-surface-container-low border border-outline-variant/30 px-3 py-1.5 rounded-full cursor-pointer hover:border-primary/50 transition-colors" onclick="toggleLanguage()">
+          <span class="lang-vi-span font-label-caps text-[11px] font-bold text-primary">VIE</span>
+          <span class="text-outline-variant/50 text-[10px]">|</span>
+          <span class="lang-en-span font-label-caps text-[11px] font-bold text-on-surface-variant hover:text-primary transition-colors">ENG</span>
+        </div>
+        <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 rounded-lg border border-outline-variant/50 flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary/50 transition-all">
+        <span class="material-symbols-outlined text-xl">menu</span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div id="menu-overlay" class="fixed inset-0 bg-black/60 z-[55] hidden backdrop-blur-sm"></div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="fixed top-0 right-0 h-full w-72 bg-surface-container-lowest z-[60] transform translate-x-full transition-transform duration-300 border-l border-outline-variant/30 shadow-2xl">
+  <div class="p-6 flex flex-col h-full">
+    <div class="flex justify-between items-center mb-10">
+      <span class="font-headline-md text-lg font-bold text-on-surface">Menu</span>
+      <button id="mobile-menu-close" class="p-2 hover:bg-surface-variant/20 rounded-lg"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div class="flex flex-col gap-2">
+
+        <!-- Language Switcher Mobile -->
+        <div translate="no" class="notranslate flex items-center justify-between bg-surface-container-low border border-outline-variant/30 px-4 py-3 rounded-lg cursor-pointer hover:border-primary/50 transition-colors mb-4 mt-2" onclick="toggleLanguage()">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-on-surface-variant text-lg">language</span>
+            <span class="font-semibold text-on-surface text-sm">Ngôn ngữ</span>
+          </div>
+          <div class="flex items-center gap-2 bg-background px-3 py-1.5 rounded-full border border-outline-variant/30 shadow-inner">
+            <span class="lang-vi-span font-label-caps text-[11px] font-bold text-primary">VIE</span>
+            <span class="text-outline-variant/30 text-[10px]">|</span>
+            <span class="lang-en-span font-label-caps text-[11px] font-bold text-on-surface-variant">ENG</span>
+          </div>
+        </div>
+
+      <a class="px-4 py-3 rounded-lg bg-primary/10 text-primary font-semibold" href="index.html">Trang chủ</a>
+      
+      <!-- Mobile Accordion: Giải pháp -->
+      <button id="mobile-solutions-toggle" class="px-4 py-3 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant transition-colors flex items-center justify-between w-full text-left">
+        <span>Giải pháp</span>
+        <span class="material-symbols-outlined text-sm transition-transform" id="mobile-solutions-arrow">expand_more</span>
+      </button>
+      <div class="mobile-accordion-content pl-4 overflow-y-auto max-h-[40vh]" id="mobile-solutions-content">
+        <div class="text-[10px] font-bold text-primary tracking-wider uppercase px-4 py-2 mt-2">Sản Xuất & Công Nghiệp</div>
+        <a class="block px-4 py-2 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant/80 text-sm transition-colors" href="giai-phap-cong-nghiep.html">Đếm Sản Phẩm Băng Chuyền</a>
+        <a class="block px-4 py-2 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant/80 text-sm transition-colors" href="nhan-dien-khuon-mat.html">Nhận Diện Khuôn Mặt</a>
+        <a class="block px-4 py-2 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant/80 text-sm transition-colors" href="kiem-tra-ngoai-quan.html">Kiểm Tra Ngoại Quan</a>
+        <a class="block px-4 py-2 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant/80 text-sm transition-colors" href="giai-phap-an-toan-lao-dong.html">An Toàn Lao Động</a>
+        <a class="block px-4 py-2 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant/80 text-sm transition-colors" href="giai-phap-xuat-nhap-kho.html">Quản Lý Nhập/Xuất Kho</a>
+        <a class="block px-4 py-2 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant/80 text-sm transition-colors" href="quan-ly-xe.html">Quản Lý Xe Ra Vào</a>
+        
+        <div class="text-[10px] font-bold text-primary tracking-wider uppercase px-4 py-2 mt-4">Giao Thông</div>
+        <a class="block px-4 py-2 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant/80 text-sm transition-colors" href="giai-phap-luu-luong.html">Lưu lượng Giao thông</a>
+        <a class="block px-4 py-2 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant/80 text-sm transition-colors" href="giai-phap-nhan-dien-bien-so.html">Nhận diện Biển số</a>
+        <a class="block px-4 py-2 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant/80 text-sm transition-colors" href="giai-phap-phat-nguoi.html">Xử Lý Vi Phạm (Phạt Nguội)</a>
+        
+        <div class="text-[10px] font-bold text-primary tracking-wider uppercase px-4 py-2 mt-4">Cửa Hàng & Bán Lẻ</div>
+        <a class="block px-4 py-2 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant/80 text-sm transition-colors" href="dem-san-pham.html">Đếm Lượng Khách Khách Hàng</a>
+        <a class="block px-4 py-2 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant/80 text-sm transition-colors" href="giai-phap-quy-trinh-lam-viec.html">Phân Tích Quy Trình Làm Việc</a>
+      </div>
+      
+      <a class="px-4 py-3 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant transition-colors" href="quy-trinh.html">Quy trình</a>
+      <a class="px-4 py-3 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant transition-colors" href="doi-tac.html">Đối tác</a>
+      <a class="px-4 py-3 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant transition-colors" href="hoat-dong.html">Hoạt động</a>
+      <a class="px-4 py-3 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant transition-colors" href="lien-he.html">Liên hệ</a>
+    </div>
+    <div class="mt-auto">
+      <a href="lien-he.html" class="w-full flex items-center justify-center gap-2 bg-primary-container text-on-primary px-6 py-3 rounded-lg font-bold shadow-[0_0_15px_rgba(0,219,233,0.3)]">
+        Nhận tư vấn
+        <span class="material-symbols-outlined text-lg">arrow_forward</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MAIN ========== -->
+<main class="relative pt-20">
+<!-- ===== DETAILED SOLUTION HERO ===== -->
+<section class="relative pt-24 pb-16 px-margin-x flex flex-col justify-center bg-surface-container-lowest border-b border-outline-variant/10" data-reveal>
+  <div class="absolute inset-0 bg-[url('https://lh3.googleusercontent.com/aida-public/AB6AXuDONIuAuBc5KV6wLsqXLMiSyQTUNL1DQkM7wWrxobDsE4tYn9ahcSv34Ss_yOX97tMn9b1AOIX7Qsky_py6lalMOGbVUrZXyAW-WqsBUbWN62KPz2xZTMxsl6BoZXdQsWwo5XqKEdVRYahqu-psz9CNEjIjgEgnHUncxgZ9ByxbrKWOUrHE_BfiSd7LfJ1-oOYXoWYp1Sromn1OcERnYGAwEev7FBA2hrd3iybUL4XQYSPx4lfWAaBEmaWixfExA7Ht2pArM-y9hrVk')] bg-cover bg-center opacity-10"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/50"></div>
+  
+  <div class="max-w-container-max mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+    <div class="space-y-6">
+      <div class="inline-flex items-center px-4 py-2 rounded-full bg-secondary-container/20 border border-secondary-container/30">
+        <span class="font-label-caps text-label-caps text-secondary-container tracking-widest uppercase">An Toàn & An Ninh</span>
+      </div>
+      <h1 class="font-display-md text-[40px] md:text-[56px] text-white font-bold leading-tight drop-shadow-lg">
+        Giám Sát Tuân Thủ <br>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary-fixed to-secondary-container">Đồ Bảo Hộ (PPE) bằng AI</span>
+      </h1>
+      <p class="font-body-lg text-sm sm:text-body-lg text-on-surface-variant leading-relaxed max-w-xl">
+        Tích hợp Công nghệ Thị giác Máy tính (Computer Vision) vào hệ thống camera CCTV hiện có để tự động phát hiện, cảnh báo khi công nhân không mặc đồ bảo hộ lao động. Đảm bảo môi trường làm việc an toàn, tuân thủ quy định và tránh rủi ro tai nạn.
+      </p>
+      <div class="flex flex-wrap gap-4 pt-4">
+        <a href="#demo-form" class="bg-gradient-to-r from-secondary-fixed to-secondary-container text-on-secondary font-bold px-5 sm:px-8 py-3 sm:py-4 rounded-xl flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(209,188,255,0.3)]">
+          <span class="material-symbols-outlined text-lg">calendar_month</span> Nhận Demo Miễn Phí
+        </a>
+      </div>
+    </div>
+    
+    <div class="relative glass-card p-2 rounded-2xl border-secondary-container/30 overflow-hidden shadow-2xl">
+      <!-- Placeholder for Video -->
+      <div class="aspect-video bg-black rounded-xl overflow-hidden relative group">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9FZ4c1GGnoVgtpJD1RkG80Edd75onC0AMVbcd4VkDcpvC-QeNuKCDCPFMbjuPIm7T-MP-LcgWW0NUv7XtcO2baSvvX4i1_XA1W_rdlfkKdtjC65NLgPtgIzbVV-zczrv8u7AcGU6-8p9-St4pBNTw1ak4WwRZNq1QZ5sGT54X7eXFkqVPHtW3QxwYwoa00_1lUWOzL5mNlVTt1LwaCxhzZmoC7h9OGG3BNMzMwfL5UJLNU8khuyRz6xPioxUxhf9tDU7fw0iYByLD" class="w-full h-full object-cover opacity-60 mix-blend-screen" alt="PPE Detection Demo">
+        <div class="absolute inset-0 flex items-center justify-center">
+          <button class="w-16 h-16 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:scale-110 transition-all">
+            <span class="material-symbols-outlined text-3xl ml-1">play_arrow</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHY WE NEED THIS ===== -->
+<section class="py-stack-xl px-margin-x max-w-container-max mx-auto" data-reveal>
+  <div class="text-center mb-8 md:mb-16">
+    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-white mb-6">Tại sao cần Giám sát PPE tự động bằng AI?</h2>
+    <p class="text-on-surface-variant max-w-2xl mx-auto font-body-lg text-body-lg">
+      Giám sát PPE chủ động không chỉ là một tiện ích — đó là sự cần thiết để hướng tới môi trường làm việc "Zero-Harm".
+    </p>
+  </div>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
+    <div class="space-y-8">
+      <div class="flex gap-4">
+        <div class="w-12 h-12 rounded-xl bg-error/10 border border-error/20 flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-error">money_off</span>
+        </div>
+        <div>
+          <h3 class="font-headline-md text-xl font-bold text-white mb-2">Tránh các khoản phạt và chi phí tốn kém</h3>
+          <p class="text-on-surface-variant">Mỗi lần vi phạm không được phát hiện đều làm tăng rủi ro tai nạn, dẫn đến gián đoạn dự án, chi phí bảo hiểm tăng và các án phạt pháp lý khổng lồ.</p>
+        </div>
+      </div>
+      <div class="flex gap-4">
+        <div class="w-12 h-12 rounded-xl bg-primary-container/10 border border-primary-container/20 flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-primary-container">shield_locked</span>
+        </div>
+        <div>
+          <h3 class="font-headline-md text-xl font-bold text-white mb-2">Củng cố văn hóa an toàn (Safety Culture)</h3>
+          <p class="text-on-surface-variant">Tuân thủ nghiêm ngặt đồ bảo hộ mang lại niềm tin cho các cơ quan quản lý, chủ đầu tư, và chính bản thân người lao động trên công trường.</p>
+        </div>
+      </div>
+      <div class="flex gap-4">
+        <div class="w-12 h-12 rounded-xl bg-secondary-container/10 border border-secondary-container/20 flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-secondary-container">speed</span>
+        </div>
+        <div>
+          <h3 class="font-headline-md text-xl font-bold text-white mb-2">Thay thế giám sát thủ công kém hiệu quả</h3>
+          <p class="text-on-surface-variant">Thay vì cắt cử hàng chục giám sát viên đi tuần tra, AI giám sát 24/7 trên 100+ camera cùng lúc. Tiết kiệm trung bình hàng trăm giờ công mỗi tháng.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-4">
+      <div class="glass-card p-6 rounded-2xl text-center border-outline-variant/10 hover:border-primary/30 transition-colors">
+        <div class="text-4xl font-bold text-white mb-2">24/7</div>
+        <div class="text-sm text-on-surface-variant font-label-caps uppercase">Giám sát liên tục</div>
+      </div>
+      <div class="glass-card p-6 rounded-2xl text-center border-outline-variant/10 hover:border-primary/30 transition-colors mt-8">
+        <div class="text-4xl font-bold text-white mb-2">>100</div>
+        <div class="text-sm text-on-surface-variant font-label-caps uppercase">Camera xử lý đồng thời</div>
+      </div>
+      <div class="glass-card p-6 rounded-2xl text-center border-outline-variant/10 hover:border-primary/30 transition-colors -mt-8">
+        <div class="text-4xl font-bold text-white mb-2">99%</div>
+        <div class="text-sm text-on-surface-variant font-label-caps uppercase">Độ chính xác AI</div>
+      </div>
+      <div class="glass-card p-6 rounded-2xl text-center border-outline-variant/10 hover:border-primary/30 transition-colors">
+        <div class="text-4xl font-bold text-white mb-2">&lt;1s</div>
+        <div class="text-sm text-on-surface-variant font-label-caps uppercase">Độ trễ cảnh báo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4 SIMPLE STEPS ===== -->
+<section class="py-stack-xl bg-surface-container-lowest/30 border-y border-outline-variant/10" data-reveal>
+  <div class="max-w-container-max mx-auto px-margin-x">
+    <div class="text-center mb-8 md:mb-16">
+      <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-white mb-4">4 Bước Cơ Bản Để Bắt Đầu</h2>
+      <p class="text-on-surface-variant max-w-2xl mx-auto font-body-lg text-body-lg">Triển khai dễ dàng, không cần thay đổi phần cứng hiện có của bạn.</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="relative group">
+        <div class="absolute top-8 left-1/2 w-full h-[2px] bg-outline-variant/20 hidden md:block"></div>
+        <div class="glass-card p-8 rounded-2xl relative z-10 border-outline-variant/20 hover:border-primary/50 transition-all flex flex-col items-center text-center h-full">
+          <div class="w-16 h-16 rounded-full bg-background border-4 border-primary-container flex items-center justify-center mb-6 font-bold text-xl text-primary-container group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(0,219,233,0.2)]">01</div>
+          <h3 class="font-bold text-white mb-3 text-lg">Lựa chọn (Choose)</h3>
+          <p class="text-on-surface-variant text-sm">Chọn các module AI phù hợp với rủi ro tại dự án (Nón, Áo, Găng tay...).</p>
+        </div>
+      </div>
+      <div class="relative group">
+        <div class="absolute top-8 left-1/2 w-full h-[2px] bg-outline-variant/20 hidden md:block"></div>
+        <div class="glass-card p-8 rounded-2xl relative z-10 border-outline-variant/20 hover:border-primary/50 transition-all flex flex-col items-center text-center h-full">
+          <div class="w-16 h-16 rounded-full bg-background border-4 border-primary-container flex items-center justify-center mb-6 font-bold text-xl text-primary-container group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(0,219,233,0.2)]">02</div>
+          <h3 class="font-bold text-white mb-3 text-lg">Kết nối (Connect)</h3>
+          <p class="text-on-surface-variant text-sm">Tích hợp vào camera IP/CCTV hiện có của bạn thông qua giao thức RTSP.</p>
+        </div>
+      </div>
+      <div class="relative group">
+        <div class="absolute top-8 left-1/2 w-full h-[2px] bg-outline-variant/20 hidden md:block"></div>
+        <div class="glass-card p-8 rounded-2xl relative z-10 border-outline-variant/20 hover:border-primary/50 transition-all flex flex-col items-center text-center h-full">
+          <div class="w-16 h-16 rounded-full bg-background border-4 border-primary-container flex items-center justify-center mb-6 font-bold text-xl text-primary-container group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(0,219,233,0.2)]">03</div>
+          <h3 class="font-bold text-white mb-3 text-lg">Thu thập (Capture)</h3>
+          <p class="text-on-surface-variant text-sm">Hệ thống AI Video Analytics lập tức phân tích và ghi nhận rủi ro từ luồng video.</p>
+        </div>
+      </div>
+      <div class="relative group">
+        <div class="glass-card p-8 rounded-2xl relative z-10 border-outline-variant/20 hover:border-primary/50 transition-all flex flex-col items-center text-center h-full">
+          <div class="w-16 h-16 rounded-full bg-background border-4 border-primary-container flex items-center justify-center mb-6 font-bold text-xl text-primary-container group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(0,219,233,0.2)]">04</div>
+          <h3 class="font-bold text-white mb-3 text-lg">Kiểm soát (Control)</h3>
+          <p class="text-on-surface-variant text-sm">Nhận cảnh báo tức thời qua loa/SMS/Zalo và quản lý báo cáo trên Dashboard.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODULE DETAILS ===== -->
+<section class="py-stack-xl px-margin-x max-w-container-max mx-auto" data-reveal>
+  <div class="text-center mb-8 md:mb-16">
+    <div class="inline-flex items-center justify-center px-4 py-2 rounded-full bg-primary-fixed-dim/10 border border-primary-fixed-dim/20 mb-6 mx-auto">
+      <span class="font-label-caps text-label-caps text-primary-fixed-dim tracking-widest uppercase">TÍNH NĂNG CHI TIẾT</span>
+    </div>
+    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-white mb-4">Các Module Nhận Diện Độc Quyền</h2>
+    <p class="text-on-surface-variant max-w-2xl mx-auto font-body-lg text-body-lg">Từ đầu đến chân, AI của chúng tôi bao phủ mọi thiết bị bảo hộ.</p>
+  </div>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="glass-card p-6 rounded-2xl border-outline-variant/15 hover:border-primary-fixed-dim/40 transition-colors group">
+      <div class="w-12 h-12 bg-surface-variant rounded-full flex items-center justify-center mb-4 group-hover:bg-primary-fixed-dim/20 transition-colors">
+        <span class="material-symbols-outlined text-primary-fixed-dim text-2xl">engineering</span>
+      </div>
+      <h3 class="text-white font-bold text-lg mb-2">Mũ Bảo Hiểm (Hard Hat)</h3>
+      <p class="text-sm text-on-surface-variant">Phòng ngừa chấn thương sọ não do vật rơi hoặc va chạm bằng cách tự động cảnh báo công nhân không đội mũ bảo hộ trong vùng đang thi công.</p>
+    </div>
+    
+    <div class="glass-card p-6 rounded-2xl border-outline-variant/15 hover:border-primary-fixed-dim/40 transition-colors group">
+      <div class="w-12 h-12 bg-surface-variant rounded-full flex items-center justify-center mb-4 group-hover:bg-primary-fixed-dim/20 transition-colors">
+        <span class="material-symbols-outlined text-primary-fixed-dim text-2xl">security</span>
+      </div>
+      <h3 class="text-white font-bold text-lg mb-2">Áo Phản Quang (Reflective Vest)</h3>
+      <p class="text-sm text-on-surface-variant">Tăng khả năng hiển thị và giảm rủi ro tai nạn trong môi trường thiếu sáng, giao thông mật độ cao hoặc xung quanh máy móc cơ giới nặng.</p>
+    </div>
+    
+    <div class="glass-card p-6 rounded-2xl border-outline-variant/15 hover:border-primary-fixed-dim/40 transition-colors group">
+      <div class="w-12 h-12 bg-surface-variant rounded-full flex items-center justify-center mb-4 group-hover:bg-primary-fixed-dim/20 transition-colors">
+        <span class="material-symbols-outlined text-primary-fixed-dim text-2xl">front_hand</span>
+      </div>
+      <h3 class="text-white font-bold text-lg mb-2">Găng Tay (Safety Gloves)</h3>
+      <p class="text-sm text-on-surface-variant">Ngăn ngừa tổn thương do hóa chất, nhiệt độ, hay dụng cụ sắc nhọn tại các cơ sở chế biến hóa chất, phòng lab hoặc dây chuyền sản xuất.</p>
+    </div>
+    
+    <div class="glass-card p-6 rounded-2xl border-outline-variant/15 hover:border-primary-fixed-dim/40 transition-colors group">
+      <div class="w-12 h-12 bg-surface-variant rounded-full flex items-center justify-center mb-4 group-hover:bg-primary-fixed-dim/20 transition-colors">
+        <span class="material-symbols-outlined text-primary-fixed-dim text-2xl">masks</span>
+      </div>
+      <h3 class="text-white font-bold text-lg mb-2">Khẩu Trang & Mặt Nạ (Face Mask)</h3>
+      <p class="text-sm text-on-surface-variant">Thúc đẩy an toàn hô hấp, chống bụi và tuân thủ vệ sinh khi phát hiện sử dụng khẩu trang tại khu vực y tế, F&B hoặc nhà máy chế biến.</p>
+    </div>
+
+    <div class="glass-card p-6 rounded-2xl border-outline-variant/15 hover:border-primary-fixed-dim/40 transition-colors group">
+      <div class="w-12 h-12 bg-surface-variant rounded-full flex items-center justify-center mb-4 group-hover:bg-primary-fixed-dim/20 transition-colors">
+        <span class="material-symbols-outlined text-primary-fixed-dim text-2xl">visibility</span>
+      </div>
+      <h3 class="text-white font-bold text-lg mb-2">Kính Bảo Hộ (Goggles)</h3>
+      <p class="text-sm text-on-surface-variant">Tránh tổn thương mắt từ khói hóa chất, tia lửa hàn và bụi vụn tại nhà máy gia công cơ khí hoặc khu bảo trì điện nước.</p>
+    </div>
+
+    <div class="glass-card p-6 rounded-2xl border-outline-variant/15 hover:border-primary-fixed-dim/40 transition-colors group">
+      <div class="w-12 h-12 bg-surface-variant rounded-full flex items-center justify-center mb-4 group-hover:bg-primary-fixed-dim/20 transition-colors">
+        <span class="material-symbols-outlined text-primary-fixed-dim text-2xl">directions_walk</span>
+      </div>
+      <h3 class="text-white font-bold text-lg mb-2">Giày Bảo Hộ (Safety Boots)</h3>
+      <p class="text-sm text-on-surface-variant">Giảm rủi ro dập nát chân do vật thể đè ép, đâm thủng hoặc trượt ngã nhờ việc giám sát giày bảo hộ tại công trường, kho bãi logistics.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MULTI-CHANNEL ALERTS ===== -->
+<section class="py-stack-xl relative overflow-hidden bg-surface-container-lowest" data-reveal>
+  <div class="absolute right-0 top-0 w-1/3 h-full bg-gradient-to-l from-primary/5 to-transparent blur-3xl"></div>
+  <div class="max-w-container-max mx-auto px-margin-x grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+    <div class="glass-card p-2 rounded-2xl border-outline-variant/20 shadow-2xl relative order-2 lg:order-1">
+      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsbazb6cr0CsKUNQYRkbtiYQbw8o_f5CTImlPtmgN0t5kDpv1pOs2bWh1WwCj3vxskSsGX_qPJB8hx-zTqJepnZWLu3RkYFb3m7UZP1j1xZ3t8Ltkbn0g47YBZikdoX6QKoYXUrwC-nhqFzG_UaAWKfOoMZesf3F9AnleDAc00VDQq6h5m7XXzD7v1-0w0ya3e76yGQvLe71Ea8HiEq27yXp7wrRGiNHLuYskippkmiawWogS3Oi0eJ5O7Pl2onHe265Oq6R9hYMp1" class="w-full rounded-xl object-cover aspect-video" alt="Multi-channel alerts">
+      <div class="absolute -right-6 -bottom-6 glass-card p-4 rounded-xl shadow-2xl flex flex-col gap-2 border-l-4 border-l-error animate-bounce">
+        <div class="flex items-center gap-2 text-white font-bold"><span class="material-symbols-outlined text-error">warning</span> VIOLATION DETECTED</div>
+        <div class="text-xs text-on-surface-variant">Cam 04 - Missing Hard Hat</div>
+      </div>
+    </div>
+    <div class="space-y-8 order-1 lg:order-2">
+      <h2 class="font-headline-lg text-3xl md:text-4xl text-white font-bold">Hệ Thống Cảnh Báo Đa Kênh</h2>
+      <p class="text-on-surface-variant text-lg">Không chỉ nhận diện, hệ thống tự động phát tín hiệu cảnh báo đến đúng người, đúng thời điểm.</p>
+      
+      <div class="space-y-4">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center shrink-0 mt-1">
+            <span class="material-symbols-outlined text-white">volume_up</span>
+          </div>
+          <div>
+            <h4 class="text-white font-bold text-lg">Loa báo động tại chỗ (Speakers)</h4>
+            <p class="text-on-surface-variant text-sm">Còi hú hoặc âm thanh cảnh báo trực tiếp trên công trường giúp công nhân nhận thức tức thời.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center shrink-0 mt-1">
+            <span class="material-symbols-outlined text-white">sms</span>
+          </div>
+          <div>
+            <h4 class="text-white font-bold text-lg">Tin nhắn SMS & Zalo / WhatsApp</h4>
+            <p class="text-on-surface-variant text-sm">Gửi tin nhắn kèm hình ảnh vi phạm thẳng đến điện thoại của giám sát an toàn hoặc quản lý dự án.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center shrink-0 mt-1">
+            <span class="material-symbols-outlined text-white">dashboard</span>
+          </div>
+          <div>
+            <h4 class="text-white font-bold text-lg">Báo cáo Email & Dashboard</h4>
+            <p class="text-on-surface-variant text-sm">Tổng hợp số liệu vi phạm hàng ngày/tuần để giám đốc an toàn (HSE) lên kế hoạch đào tạo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DEMO REQUEST FORM ===== -->
+<section id="demo-form" class="py-stack-xl px-margin-x max-w-4xl mx-auto" data-reveal>
+  <div class="glass-card rounded-[2rem] p-8 md:p-12 relative overflow-hidden border-outline-variant/30 shadow-2xl">
+    <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-secondary-fixed via-primary-container to-secondary-fixed"></div>
+    
+    <div class="text-center mb-10">
+      <h2 class="font-headline-lg text-3xl font-bold text-white mb-4">Trải Nghiệm Thực Tế Giải Pháp Này</h2>
+      <p class="text-on-surface-variant text-sm md:text-base">Vui lòng để lại thông tin, đội ngũ kỹ thuật của chúng tôi sẽ liên hệ để setup môi trường Demo Giám Sát PPE miễn phí cho doanh nghiệp của bạn.</p>
+    </div>
+    
+    <!-- Action targets Formspree or any backend. Hidden input distinguishes the form type -->
+    <form action="#" method="POST" class="space-y-6" id="demoRequestForm">
+      <!-- HIDDEN FIELD FOR CONTEXT -->
+      <input type="hidden" name="form_type" value="Demo Request">
+      <input type="hidden" name="solution_name" value="Giám sát Tuân thủ Đồ bảo hộ (PPE)">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-on-surface-variant">Họ & Tên *</label>
+          <input type="text" name="name" required placeholder="Nguyễn Văn A" class="w-full bg-surface-container border border-outline-variant/30 rounded-xl px-4 py-3 text-white placeholder-on-surface-variant/50 focus:outline-none focus:border-secondary-container transition-colors">
+        </div>
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-on-surface-variant">Số điện thoại *</label>
+          <input type="tel" name="phone" required placeholder="090 123 4567" class="w-full bg-surface-container border border-outline-variant/30 rounded-xl px-4 py-3 text-white placeholder-on-surface-variant/50 focus:outline-none focus:border-secondary-container transition-colors">
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-on-surface-variant">Email làm việc *</label>
+          <input type="email" name="email" required placeholder="email@congty.com" class="w-full bg-surface-container border border-outline-variant/30 rounded-xl px-4 py-3 text-white placeholder-on-surface-variant/50 focus:outline-none focus:border-secondary-container transition-colors">
+        </div>
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-on-surface-variant">Tên Công Ty / Cá Nhân *</label>
+          <input type="text" name="company" required placeholder="Cvision AI" class="w-full bg-surface-container border border-outline-variant/30 rounded-xl px-4 py-3 text-white placeholder-on-surface-variant/50 focus:outline-none focus:border-secondary-container transition-colors">
+        </div>
+      </div>
+      
+      <div class="space-y-2">
+        <label class="text-sm font-medium text-on-surface-variant">Nhu cầu Demo / Vấn đề cần giải quyết</label>
+        <textarea name="requirements" rows="4" placeholder="VD: Tôi muốn tích hợp AI phát hiện không đội mũ bảo hiểm vào 10 camera hiện có ở cổng công trường..." class="w-full bg-surface-container border border-outline-variant/30 rounded-xl px-4 py-3 text-white placeholder-on-surface-variant/50 focus:outline-none focus:border-secondary-container transition-colors resize-none"></textarea>
+      </div>
+      
+      <button type="submit" class="w-full bg-gradient-to-r from-secondary-fixed to-secondary-container text-on-secondary font-bold text-lg py-4 rounded-xl flex justify-center items-center gap-2 hover:shadow-[0_0_20px_rgba(209,188,255,0.3)] transition-all active:scale-[0.98]">
+        Đăng ký nhận Demo <span class="material-symbols-outlined">send</span>
+      </button>
+      
+      <p class="text-center text-xs text-on-surface-variant/70 mt-4">Thông tin của bạn sẽ được bảo mật và chuyển trực tiếp tới hộp thư sales@cvision.com.vn</p>
+    </form>
+  </div>
+</section>
+
+
+
+
+<!-- ========== FOOTER ========== -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant/20 w-full pt-16 pb-8">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-gutter px-margin-x max-w-container-max mx-auto">
+    <div class="sm:col-span-2 md:col-span-1 flex flex-col gap-4">
+                <div class="flex items-center gap-2.5 mb-4">
+            <img src="assets/img/logo_transparent.png" alt="Cvision AI Tech" class="logo-img h-24 w-auto transition-all -ml-3">
+          </div>
+      <p class="text-on-surface-variant text-body-md text-sm leading-relaxed">Tiên phong trong việc mang AI thực tế vào vận hành doanh nghiệp Việt Nam.</p>
+      <div class="space-y-2 text-sm text-on-surface-variant">
+        <p class="flex items-start gap-2"><span class="material-symbols-outlined text-primary-container text-base mt-0.5">location_on</span>357/2/5 Tân Hòa Đông, P. Bình Trị Đông, Q. Bình Tân, TP.HCM</p>
+        <p class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-container text-base">phone</span>070 4682 685</p>
+        <p class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-container text-base">mail</span>sales@cvision.com.vn</p>
+        <p class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-container text-base">badge</span>MST: 0319472342</p>
+      </div>
+      <div class="flex gap-3 mt-2">
+        <!-- Facebook -->
+        <a class="w-9 h-9 rounded-lg bg-surface-variant/20 flex items-center justify-center text-on-surface-variant hover:text-[#1877F2] hover:bg-[#1877F2]/10 transition-all" href="https://www.facebook.com/profile.php?id=61565795999453" target="_blank" aria-label="Facebook">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <!-- YouTube -->
+        <a class="w-9 h-9 rounded-lg bg-surface-variant/20 flex items-center justify-center text-on-surface-variant hover:text-[#FF0000] hover:bg-[#FF0000]/10 transition-all" href="https://www.youtube.com/@cvsionaitech" target="_blank" aria-label="YouTube">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        <!-- TikTok -->
+        <a class="w-9 h-9 rounded-lg bg-surface-variant/20 flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-white/10 transition-all" href="https://www.tiktok.com/@cvisionaitech.vi" target="_blank" aria-label="TikTok">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <h4 class="font-bold text-white mb-5 text-sm">Sản phẩm</h4>
+      <ul class="flex flex-col gap-2.5">
+        <li><a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm" href="giai-phap.html">Nhận diện khuôn mặt</a></li>
+        <li><a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm" href="giai-phap.html">Phát hiện hành vi</a></li>
+        <li><a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm" href="giai-phap.html">Số hóa dữ liệu</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-bold text-white mb-5 text-sm">Liên kết</h4>
+      <ul class="flex flex-col gap-2.5">
+        <li><a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm" href="quy-trinh.html">Quy trình</a></li>
+        <li><a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm" href="doi-tac.html">Đối tác</a></li>
+        <li><a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm" href="#">Chính sách bảo mật</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-bold text-white mb-5 text-sm">Bản tin</h4>
+      <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Đăng ký để nhận tin tức mới nhất về công nghệ AI.</p>
+      <div class="flex bg-surface-container rounded-lg p-1 border border-outline-variant/30">
+        <input class="bg-transparent border-none focus:ring-0 text-white px-3 flex-1 text-sm placeholder:text-on-surface-variant/50" placeholder="Email của bạn" type="email"/>
+        <button class="bg-primary-container text-on-primary px-4 py-2 rounded-md font-bold text-sm hover:scale-105 active:scale-95 transition-transform">Gửi</button>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-container-max mx-auto px-margin-x mt-12 pt-8 border-t border-outline-variant/15 flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="text-on-surface-variant text-sm">© 2026 CvisionAI. Tiên phong giải pháp thị giác máy tính.</p>
+    <div class="flex gap-6 text-sm">
+      <a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Điều khoản sử dụng</a>
+      <a class="text-on-surface-variant hover:text-on-surface transition-colors" href="doi-tac.html">Hệ thống đối tác</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ========== SCRIPTS ========== -->
+<script>
+// Mobile menu
+const menuBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const menuOverlay = document.getElementById('menu-overlay');
+const menuClose = document.getElementById('mobile-menu-close');
+
+function openMenu() {
+  mobileMenu.classList.remove('translate-x-full');
+  menuOverlay.classList.remove('hidden');
+}
+function closeMenu() {
+  mobileMenu.classList.add('translate-x-full');
+  menuOverlay.classList.add('hidden');
+}
+menuBtn.addEventListener('click', openMenu);
+menuOverlay.addEventListener('click', closeMenu);
+menuClose.addEventListener('click', closeMenu);
+
+// Scroll reveal
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+          entry.target.classList.add('opacity-100', 'translate-y-0');
+          entry.target.classList.remove('opacity-0', 'translate-y-8');
+        } else {
+          entry.target.classList.remove('opacity-100', 'translate-y-0');
+          entry.target.classList.add('opacity-0', 'translate-y-8');
+        }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('[data-reveal]').forEach(el => {
+  el.classList.add('opacity-0', 'translate-y-8', 'transition-all', 'duration-700');
+  revealObserver.observe(el);
+});
+
+// Counter animation
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseFloat(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const isDecimal = el.dataset.decimal === 'true';
+      const duration = 2000;
+      const startTime = performance.now();
+
+      function updateCounter(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = target * eased;
+
+        if (isDecimal) {
+          el.textContent = current.toFixed(1) + suffix;
+        } else {
+          el.textContent = Math.floor(current) + suffix;
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(updateCounter);
+        }
+      }
+      requestAnimationFrame(updateCounter);
+      counterObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.counter-value[data-target]').forEach(el => {
+  counterObserver.observe(el);
+});
+
+// Header scroll effect
+let lastScroll = 0;
+const header = document.querySelector('header');
+window.addEventListener('scroll', () => {
+  const currentScroll = window.scrollY;
+  if (currentScroll > 100) {
+    header.classList.add('shadow-lg');
+  } else {
+    header.classList.remove('shadow-lg');
+  }
+  lastScroll = currentScroll;
+});
+</script>
+
+  <!-- Google Translate & Language Toggle Script -->
+  <div id="google_translate_element" style="display:none;"></div>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      // Only include English to prevent Vietnamese-to-Vietnamese translation loops that break fonts
+      new google.translate.TranslateElement({pageLanguage: 'vi', includedLanguages: 'en', autoDisplay: false}, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script>
+    function updateLangUI(isEn) {
+      const viSpans = document.querySelectorAll('.lang-vi-span');
+      const enSpans = document.querySelectorAll('.lang-en-span');
+      if (isEn) {
+        viSpans.forEach(el => { el.classList.remove('text-primary'); el.classList.add('text-on-surface-variant'); });
+        enSpans.forEach(el => { el.classList.remove('text-on-surface-variant'); el.classList.add('text-primary'); });
+      } else {
+        viSpans.forEach(el => { el.classList.add('text-primary'); el.classList.remove('text-on-surface-variant'); });
+        enSpans.forEach(el => { el.classList.add('text-on-surface-variant'); el.classList.remove('text-primary'); });
+      }
+    }
+
+    function toggleLanguage() {
+      const isEn = document.querySelector('.lang-en-span').classList.contains('text-primary');
+      
+      if (isEn) {
+        // Switch back to Vietnamese
+        localStorage.removeItem('cvision-lang');
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=' + location.hostname + '; path=/;';
+        location.reload();
+      } else {
+        // Switch to English & persist
+        localStorage.setItem('cvision-lang', 'en');
+        const selectField = document.querySelector('.goog-te-combo');
+        if (!selectField) {
+          // Set cookie manually so next reload picks it up
+          document.cookie = 'googtrans=/vi/en; path=/;';
+          document.cookie = 'googtrans=/vi/en; domain=' + location.hostname + '; path=/;';
+          location.reload();
+          return;
+        }
+        selectField.value = 'en';
+        selectField.dispatchEvent(new Event('change'));
+        updateLangUI(true);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLang = localStorage.getItem('cvision-lang');
+      
+      function tryApplyEnglish(attempts) {
+        if (attempts <= 0) return;
+        const selectField = document.querySelector('.goog-te-combo');
+        if (selectField) {
+          if (selectField.value !== 'en') {
+            selectField.value = 'en';
+            selectField.dispatchEvent(new Event('change'));
+          }
+          updateLangUI(true);
+        } else {
+          setTimeout(() => tryApplyEnglish(attempts - 1), 500);
+        }
+      }
+
+      if (savedLang === 'en') {
+        // User previously selected English - auto-apply
+        tryApplyEnglish(10); // try up to 5 seconds
+      } else {
+        // Check if Google Translate cookie is set to English (fallback)
+        setTimeout(() => {
+          const selectField = document.querySelector('.goog-te-combo');
+          if (selectField && selectField.value === 'en') {
+            updateLangUI(true);
+          } else {
+            const cookie = document.cookie.match(/googtrans=([^;]+)/);
+            if (cookie && cookie[1].endsWith('en')) {
+              updateLangUI(true);
+            }
+          }
+        }, 1000);
+      }
+    });
+  </script>
+  
+<!-- Language: Show page once translated -->
+<script>
+(function(){
+  if (localStorage.getItem('cvision-lang') !== 'en') return;
+  var loader = document.getElementById('lang-loader');
+  function show() { if(loader) { loader.style.opacity = '0'; setTimeout(function(){if(loader.parentNode)loader.parentNode.removeChild(loader);},500); } }
+  // Watch for Google Translate class
+  var obs = new MutationObserver(function(m) {
+    if (document.documentElement.className.indexOf('translated') !== -1) { show(); obs.disconnect(); }
+  });
+  obs.observe(document.documentElement, {attributes:true, attributeFilter:['class']});
+  // Fallback: show after 3s max
+  setTimeout(show, 5000);
+})();
+</script>
+</body>
+</html>

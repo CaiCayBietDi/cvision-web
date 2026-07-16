@@ -1,0 +1,17 @@
+MÔ TẢ GIẢI PHÁP HỆ THỐNG GIÁM SÁT QUY TRÌNH XUẤT NHẬP KHO THÔNG MINH
+(Dựa trên phân tích hình ảnh giao diện phần mềm thực tế - Thư mục "Quy trình xuất nhập hàng")
+
+Hệ thống này đi sâu vào việc tối ưu hóa và số hóa các nghiệp vụ bên trong lõi của nhà kho logistics, áp dụng AI để giám sát cả con người lẫn hàng hóa. Các tính năng cốt lõi bao gồm:
+
+1. Giám Sát Tuân Thủ Quy Trình Xuất Kho (Storekeeper Workflow Monitoring)
+- AI nhận diện và theo dõi liên tục vị trí của "people" (nhân viên/thủ kho) và "product" (hàng hóa).
+- Thiết lập các khu vực thao tác ảo (ROI - Region of Interest). Hệ thống liên tục đánh giá khoảng cách giữa thủ kho và hàng hóa. Nếu nhân viên đứng đúng vị trí thao tác, hệ thống báo "STOREKEEPER: NEAR" và cho phép quy trình xuất hàng diễn ra (TRIGGER: OK). Nếu sai vị trí, hệ thống lập tức cảnh báo "TOO FAR" và chặn quy trình (EXPORT: DISABLED).
+
+2. Đếm Số Lượng Hàng Hóa Tự Động (Inventory Counting)
+- Khi nhân viên dùng xe đẩy kéo một pallet hàng hóa qua camera, hệ thống sẽ tự động quét và đếm chính xác có bao nhiêu thùng hàng (VD: UNITS: 24) ngay trong lúc pallet đang di chuyển.
+
+3. Đọc Mã Sản Phẩm Bằng OCR (Product Code Recognition)
+- Tính năng mạnh mẽ nhất là khả năng dùng công nghệ OCR để đọc trực tiếp các dòng chữ/mã sản phẩm in trên sườn các thùng carton (VD: A32, A12, VBF, TEU, v.v.).
+- Bảng "Result Analysis Overlay" sẽ hiển thị trực quan các vùng đã nhận diện được ký tự trên từng thùng, giúp đối soát mã hàng xem có bị xếp nhầm loại hàng hóa lên xe đẩy hay không, mà không cần nhân viên phải cầm máy quét mã vạch bắn từng thùng một.
+
+TỔNG KẾT: Đây là một giải pháp quản lý kho bãi cực kỳ tiên tiến. Nó thay thế hoàn toàn các thao tác quét mã vạch thủ công, tự động đếm số lượng, kiểm tra chéo mã hàng xuất kho, và đảm bảo nhân viên tuân thủ tuyệt đối các bước trong quy trình an ninh kho bãi.

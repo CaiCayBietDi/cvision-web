@@ -1,0 +1,15 @@
+MÔ TẢ GIẢI PHÁP HỆ THỐNG KIỂM SOÁT GIAO THÔNG LOGISTICS (CẢNG BIỂN)
+(Dựa trên phân tích hình ảnh giao diện phần mềm thực tế - Thư mục "Đo tốc độ 2")
+
+Đây là một phiên bản mở rộng của hệ thống AI Counting, được áp dụng trực tiếp tại một khu vực bến bãi logistics/cảng biển quy mô lớn. Các tính năng nổi bật:
+
+1. Nhận diện Đa Đối Tượng Phức Tạp (Complex Multi-Object Tracking)
+- Hệ thống hoạt động tốt trong môi trường cực kỳ lộn xộn với số lượng xe khổng lồ. Nhận diện mượt mà các xe container dài, xe tải (truck) đang xếp hàng chờ hoặc di chuyển chậm.
+- Đáng chú ý, AI còn có khả năng nhận diện cả người đi bộ (nhãn "people" | 0.0 km/h) đang di chuyển xen kẽ giữa các làn xe tải, giúp cảnh báo an toàn lao động.
+
+2. Cấu hình Cổng Đếm Thông Minh (Smart Gate Counting & Speed Zoning)
+- Thay vì một cổng lớn, hệ thống chia nhỏ đường đi thành nhiều "Cổng thu phí/Cổng kiểm soát" ảo (Gate1, Gate2, Gate3, Gate4).
+- Mỗi cổng được vẽ một vùng giám sát màu sắc khác nhau, tự động đếm lưu lượng xe qua cổng (VD: Gate4: 13 xe).
+- Tích hợp biển cảnh báo giới hạn tốc độ ảo (VD: 30 km/h) rải rác ở các ngã rẽ và các cổng, ép phương tiện siêu trọng phải tuân thủ tốc độ để tránh tai nạn nội khu.
+
+TỔNG KẾT: Giải pháp mang tính ứng dụng cao cho bài toán vận hành cảng logistics, giúp điều phối hàng chục làn xe container ra vào nhịp nhàng, kiểm soát tốc độ nghiêm ngặt và bảo vệ người đi bộ trong khu vực nguy hiểm.

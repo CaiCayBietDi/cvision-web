@@ -1,0 +1,27 @@
+MÔ TẢ GIẢI PHÁP HỆ THỐNG GIAO THÔNG PHẠT NGUỘI TOÀN DIỆN (ITS ENFORCEMENT)
+(Dựa trên phân tích hình ảnh giao diện phần mềm thực tế)
+
+Hệ thống này là một giải pháp giám sát giao thông và xử lý vi phạm (Phạt nguội) cực kỳ đa năng, tích hợp nhiều module AI trên cùng một màn hình (MainWindow). Các tính năng nổi bật bao gồm:
+
+1. Tracking Đa phương tiện và Bắn tốc độ Real-time
+- Hệ thống tự động vẽ lưới tọa độ ảo (Virtual Grid) trên mặt đường để phân chia làn đường và vùng giám sát.
+- Nhận diện và dán nhãn đa dạng các loại phương tiện (Multi-class Detection), bao gồm cả những phương tiện đặc thù: car (ô tô), motorbike (xe máy), bus (xe buýt), truck (xe tải) và cả autorickshaw (xe túc túc).
+- Đo tốc độ liên tục: Hiển thị vận tốc di chuyển trực tiếp trên từng phương tiện đang chạy (VD: 25 km/h, 17 km/h, 29 km/h).
+
+2. Bảng Thống kê Lưu lượng Trực quan (Vehicle Counting)
+- Góc trên bên phải hiển thị một bảng Dashboard mini đếm số lượng xe đang lưu thông, phân loại rõ ràng bằng icon trực quan (VD: Car: 175, Motorbike: 75, Truck: 13, Autorickshaw: 7...).
+
+3. Nhận diện Biển số xe & Quản lý Sự kiện (ANPR & Event Log)
+- Hệ thống đọc và bóc tách biển số xe tự động (ANPR) với độ chính xác cao.
+- Bảng Event Log liên tục cập nhật các sự kiện bao gồm: Thời gian (Timestamp), Biển số xe (VD: MH04LH1465), Tốc độ (Speed), và đặc biệt là Trạng thái Vi phạm (Status: VIOLATED hoặc NOT VIOLATED).
+
+4. Giám sát Vi phạm Chuyên sâu theo Làn (Lane-wise Monitoring)
+- Màn hình phía dưới được chia thành 5 module giám sát cho 5 làn xe (LANE 1 - LANE 5).
+- Mỗi khi có xe đi qua, hệ thống sẽ tự động chụp lại ảnh phương tiện, bóc tách biển số, đo tốc độ và hiển thị ngay trên bảng điều khiển của làn đó. Khung màu của làn sẽ đổi sang Xanh (Bình thường) hoặc Đỏ (Có vi phạm) để cảnh báo tức thời.
+
+5. AI Nhận diện Hành vi Người Lái (Đội mũ bảo hiểm & Thắt dây an toàn)
+Đây là tính năng phạt nguội rất cao cấp nằm ở góc dưới bên phải:
+- Phát hiện Mũ bảo hiểm (Helmet Detection): Trích xuất ảnh phần đầu của người đi xe máy và tự động phân loại xem họ có đội mũ hay không (Gắn nhãn: "NO HELMETS" hoặc "HELMETS").
+- Phát hiện Dây an toàn (Seatbelt Detection): AI có khả năng nhìn xuyên qua kính lái ô tô để trích xuất hình ảnh tài xế và kiểm tra xem họ có thắt dây an toàn hay không (Gắn nhãn: "SEAT-BELT").
+
+TỔNG KẾT: Đây là một giải pháp ITS All-in-One, không chỉ dừng lại ở việc đọc biển số và đo tốc độ, mà còn vươn tới khả năng phạt nguội các lỗi vi phạm tinh vi như không đội mũ bảo hiểm hay không thắt dây an toàn, rất lý tưởng để triển khai tại các ngã tư thông minh.

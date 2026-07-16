@@ -1,0 +1,13 @@
+MÔ TẢ GIẢI PHÁP HỆ THỐNG GIÁM SÁT MÁY MÓC VÀ HIỆU SUẤT THI CÔNG
+(Dựa trên phân tích hình ảnh thực tế - Thư mục "Xe công trường")
+
+Đây là hệ thống quản lý năng suất dành riêng cho máy móc cơ giới hạng nặng tại các công trường san lấp, hầm mỏ hoặc bãi vật liệu. Tính năng cốt lõi:
+
+1. Nhận Diện Đa Phương Tiện Cơ Giới (Heavy Machinery Detection)
+- AI có khả năng phân biệt rõ ràng các loại xe chuyên dụng như máy xúc (crane/excavator), xe bồn trộn bê tông (truck) hay xe tải ben đang hoạt động trên công trường đầy đất đá.
+
+2. Đo Lường Thời Gian Chết / Hiệu Suất (Idle/Inactive Tracking)
+- Không chỉ nhận diện, hệ thống còn liên tục theo dõi trạng thái chuyển động của từng thiết bị.
+- Nếu phát hiện xe dừng hoạt động hoặc nổ máy nhưng không làm việc, AI sẽ hiển thị đồng hồ đếm ngược báo hiệu "Thời gian chết" (Ví dụ: Inactive: 14s, Inactive: 31s) ngay bên dưới khung nhận diện.
+
+TỔNG KẾT: Một giải pháp đột phá giúp các nhà thầu xây dựng chống thất thoát và gian lận. Hệ thống theo dõi chính xác thời gian hoạt động thực tế của máy móc thuê mướn, đánh giá hiệu suất làm việc của tài xế/thợ máy mà không cần người giám sát đứng túc trực tại công trường nắng bụi.

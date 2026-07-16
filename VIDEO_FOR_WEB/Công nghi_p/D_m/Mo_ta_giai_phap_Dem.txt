@@ -1,0 +1,18 @@
+MÔ TẢ GIẢI PHÁP HỆ THỐNG ĐẾM HÀNG HÓA TỰ ĐỘNG
+(Dựa trên phân tích hình ảnh thực tế)
+
+Đây là hệ thống thị giác máy tính dùng để tự động đếm số lượng hàng hóa trong quá trình xuất/nhập kho. Tính năng chính thể hiện trên màn hình:
+
+1. Nhận Diện và Phân Loại Hàng Hóa trên Băng Chuyền
+- Camera giám sát khu vực bốc xếp hàng từ xe tải xuống băng chuyền con lăn.
+- AI nhận diện chính xác từng vật thể di chuyển qua, đóng khung và gắn nhãn phân loại (Ví dụ: "THUNG CARTON" - Thùng carton, "CAM XI MANG" - Bao xi măng).
+- Hệ thống thiết lập một vùng đếm (ROI) - ranh giới màu xanh dương trên băng chuyền để xác định khi nào vật thể đi qua để tính là một lượt.
+
+2. Thống Kê Số Lượng Tức Thời (Real-time Counting)
+- Trên khung hình camera hiển thị trực tiếp các bộ đếm: IMP (Nhập), EXP (Xuất), TOT (Tổng số).
+- Bảng điều khiển phía trên góc phải tóm tắt số liệu tổng hợp trong ngày: IMPORT (Nhập), EXPORT (Xuất) và TODAY (Tổng cộng trong ngày).
+
+3. Nhật Ký Hình Ảnh Hàng Hóa (Live Detections)
+- Bên phải màn hình là thanh "LIVE DETECTIONS". Mỗi khi một kiện hàng (thùng carton, bao xi măng) đi qua vạch đếm, hệ thống tự động chụp lại một bức ảnh cắt cận cảnh kiện hàng đó, kèm theo thời gian (timestamp) để làm nhật ký đối soát chi tiết.
+
+TỔNG KẾT: Hệ thống tự động hóa khâu kiểm đếm hàng hóa khi xuất/nhập kho, cung cấp số liệu trực tiếp và lưu trữ hình ảnh từng kiện hàng đi qua băng chuyền để dễ dàng kiểm chứng.
