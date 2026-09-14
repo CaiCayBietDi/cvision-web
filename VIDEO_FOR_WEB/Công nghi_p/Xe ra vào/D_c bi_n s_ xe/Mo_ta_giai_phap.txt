@@ -1,0 +1,12 @@
+MÔ TẢ GIẢI PHÁP NHẬN DIỆN BIỂN SỐ VÀ CONTAINER (PORTLOGIX)
+(Dựa trên phân tích hình ảnh thực tế - Thư mục "Đọc biển số xe")
+
+Phần mềm "Ccvision PortLogix V1" với chức năng ALPR (Automatic License Plate Recognition) và nhận diện Container, tối ưu cho môi trường cảng biển hoặc trạm cân kiểm tra.
+
+1. Giám Sát Làn Xe và Trạm Cân
+- Giao diện hiển thị 3 luồng camera xếp dọc (CAMERA 1, CAMERA 2, CAMERA 3).
+- Camera 1 và 2 được bố trí góc quay từ trên cao rọi thẳng xuống làn đường/bàn cân xe để quan sát rõ nắp capo và nóc xe/container.
+- Camera 3 quay góc ngang để giám sát thân xe tải/container khi đi qua trạm.
+
+2. Vùng Nhận Diện Tự Động (ROI)
+- Trên các luồng hình ảnh có vẽ sẵn các khung nhận diện (màu xanh lá, vàng, đỏ) và các đường kẻ ngang để xác định ranh giới phương tiện đi qua, phục vụ cho việc kích hoạt thuật toán đọc biển số hoặc mã vùng container.

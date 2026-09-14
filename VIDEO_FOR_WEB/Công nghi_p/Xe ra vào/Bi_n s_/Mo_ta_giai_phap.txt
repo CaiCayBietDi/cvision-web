@@ -1,0 +1,15 @@
+MÔ TẢ GIẢI PHÁP HỆ THỐNG ĐỌC BIỂN SỐ VÀ QUẢN LÝ LƯỢT XE
+(Dựa trên phân tích hình ảnh thực tế - Thư mục "Biển số")
+
+Hệ thống camera giám sát kết hợp phần mềm nhận diện biển số chuyên dụng cho trạm kiểm soát xe tải/xe công trình (chạy cả ngày và đêm).
+
+1. Giám Sát Camera Đa Luồng (Ngày/Đêm)
+- Màn hình hiển thị cùng lúc 4 luồng camera ("CAMERA LIVE").
+- Hệ thống có khả năng hoạt động tốt trong cả điều kiện ánh sáng ban ngày và ban đêm (ảnh hiển thị 2 camera quay ngày và 2 camera quay đêm).
+
+2. Nhận Diện Biển Số Kép
+- Có 2 khung kết quả "BIỂN SỐ" riêng biệt, tự động cắt ảnh phần biển số từ camera và chuyển đổi thành văn bản (Ví dụ: 60H-082.06 và 60H-094.18).
+
+3. Quản Lý Lượt Xe Ra Vào (In/Out)
+- Hai bảng "LƯỢT XE GẦN ĐÂY" đếm tổng số xe chạy vào (IN) và chạy ra (OUT) theo từng cổng/luồng camera (Ví dụ: IN: 6, OUT: 6 và IN: 9, OUT: 4).
+- Bảng dữ liệu "DANH SÁCH XE GẦN ĐÂY" lưu trữ lịch sử chi tiết của từng chuyến xe bao gồm: Ngày, Giờ, Biển số xe, Hướng di chuyển (IN/OUT). Ngoài ra bảng còn có các cột phụ trợ như Lần xe, Đơn giá, Đơn vị, Lái xe, Địa chỉ.

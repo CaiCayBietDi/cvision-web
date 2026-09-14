@@ -1,0 +1,15 @@
+MÔ TẢ GIẢI PHÁP HỆ THỐNG GIÁM SÁT LƯU LƯỢNG VÀ TỐC ĐỘ KHU CÔNG NGHIỆP/CẢNG (AI COUNTING)
+(Dựa trên phân tích hình ảnh giao diện phần mềm thực tế - Thư mục "Đo tốc độ")
+
+Hệ thống trong khu vực này được tối ưu hóa cho môi trường công nghiệp nặng (Cảng biển, trạm thu phí, khu công nghiệp). Các tính năng chính bao gồm:
+
+1. Quản lý Tốc độ và Lưu lượng Xe Trọng tải lớn
+- Chuyên nhận diện các phương tiện siêu trường siêu trọng: Hệ thống bóc tách chính xác các loại xe như container, truck (xe tải đầu kéo), bên cạnh car (ô tô con).
+- Đo tốc độ thời gian thực (Real-time Speed Tracking): Mỗi phương tiện đi qua đều được gắn một nhãn ID (VD: #6 container) kèm theo vận tốc di chuyển (VD: 10.6 km/h) để giám sát tốc độ trong khu vực nội bộ.
+- Đếm lưu lượng qua cổng (Gate Counting): Tự động đếm số lượng xe đi vào (Gate IN) và đi ra (Gate out).
+
+2. Cấu hình Vùng Giám Sát Linh Hoạt (Intersection Editor)
+- Hệ thống cung cấp công cụ "Intersection Editor" cực kỳ trực quan, cho phép người quản trị dùng chuột vẽ các đa giác (Polygon Tool) trực tiếp lên video camera để phân chia các làn đường (VD: Làn xe tải, làn xe con).
+- Gắn biển báo tốc độ ảo (Speed Limit): Người dùng có thể thiết lập giới hạn tốc độ riêng cho từng làn (VD: 35 km/h) ngay trên phần mềm. Nếu xe chạy vượt mức thiết lập trong vùng Polygon này, hệ thống sẽ ghi nhận vi phạm.
+
+TỔNG KẾT: Đây là một giải pháp hoàn hảo để đảm bảo an toàn giao thông nội khu tại các khu công nghiệp hoặc cảng biển, nơi có lưu lượng xe tải trọng lớn qua lại dày đặc, cần kiểm soát gắt gao về tốc độ và phân làn.

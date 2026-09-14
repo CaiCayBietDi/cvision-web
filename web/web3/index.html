@@ -1,0 +1,1954 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CvisionAI - Giải Pháp Nhận Diện Thông Minh</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+<meta name="description" content="CvisionAI - Tiên phong giải pháp AI và xử lý ảnh chuyên sâu. Tối ưu hoá vận hành doanh nghiệp với nhận diện thông minh."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "background": "#111318", "surface-variant": "#333539", "outline-variant": "#3b494b",
+        "primary-fixed": "#7df4ff", "surface-container-low": "#1a1c20", "primary-container": "#00f0ff",
+        "on-primary": "#00363a", "inverse-on-surface": "#2f3035", "surface-container": "#1e2024",
+        "on-primary-fixed-variant": "#004f54", "surface-container-highest": "#333539",
+        "on-secondary-container": "#ddcdff", "surface-dim": "#111318",
+        "secondary-container": "#7000ff", "on-primary-fixed": "#002022",
+        "surface-container-lowest": "#0c0e12", "surface": "#111318",
+        "on-primary-container": "#006970", "secondary-fixed-dim": "#d1bcff",
+        "surface-tint": "#00dbe9", "on-background": "#e2e2e8", "primary": "#dbfcff",
+        "secondary-fixed": "#e9ddff", "surface-container-high": "#282a2e",
+        "primary-fixed-dim": "#00dbe9", "inverse-surface": "#e2e2e8", "tertiary": "#f6f5ff",
+        "outline": "#849495", "on-surface": "#e2e2e8", "on-surface-variant": "#b9cacb",
+        "secondary": "#d1bcff", "surface-bright": "#37393e", "tertiary-container": "#d0d8ff",
+        "stripe-light": "#141820", "stripe-dark": "#0c0e12"
+      },
+      borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+      spacing: { "stack-lg": "4rem", "container-max": "1280px", "stack-md": "2rem", "margin-x": "1.5rem", gutter: "2rem", "stack-xl": "8rem" },
+      fontFamily: { "body-md": ["Inter"], "label-caps": ["JetBrains Mono"], "headline-lg-mobile": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "body-lg": ["Inter"], "display-lg": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"] },
+      fontSize: {
+        "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+        "label-caps": ["12px", { lineHeight: "1.0", letterSpacing: "0.1em", fontWeight: "500" }],
+        "headline-lg-mobile": ["32px", { lineHeight: "1.2", fontWeight: "700" }],
+        "headline-md": ["32px", { lineHeight: "1.3", fontWeight: "600" }],
+        "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+        "display-lg": ["72px", { lineHeight: "1.1", letterSpacing: "-0.04em", fontWeight: "800" }],
+        "headline-lg": ["48px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }]
+      }
+    }
+  }
+}
+</script>
+<style>
+  body { background-color: #0c0e12; color: #e2e2e8; overflow-x: hidden; }
+  @keyframes lockScroll {
+    0%, 80% { overflow: hidden; }
+    100% { overflow: visible; }
+  }
+  body { animation: lockScroll 3.2s linear forwards; }
+
+  @keyframes introGlowPulse {
+    0% { transform: translate(-50%, -50%) scaleX(0) scaleY(0.01); opacity: 0; }
+    10% { transform: translate(-50%, -50%) scaleX(3) scaleY(0.02); opacity: 1; background-color: rgba(0, 240, 255, 0.9); }
+    18% { transform: translate(-50%, -50%) scaleX(1.5) scaleY(1.5); opacity: 0.4; background-color: rgba(0, 240, 255, 0.1); }
+    70% { transform: translate(-50%, -50%) scaleX(1.5) scaleY(1.5); opacity: 0.4; }
+    100% { transform: translate(-50%, -50%) scaleX(1) scaleY(1); opacity: 1; }
+  }
+  .animate-intro-glow {
+    animation: introGlowPulse 3.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+
+  @keyframes introMove {
+    0%, 9% { 
+      transform: translateY(18vh) scale(1.15); 
+      opacity: 0; 
+      clip-path: inset(50% 0 50% 0);
+      filter: blur(10px);
+    }
+    10% { 
+      transform: translateY(18vh) scale(1.15); 
+      opacity: 0; 
+      clip-path: inset(40% 0 40% 0); 
+    }
+    14% { 
+      transform: translateY(18vh) scale(1.15); 
+      opacity: 1; 
+      clip-path: inset(15% 0 15% 0); 
+      filter: blur(2px) drop-shadow(0 0 20px #00f0ff);
+    }
+    18% { 
+      transform: translateY(18vh) scale(1.15); 
+      opacity: 1; 
+      clip-path: inset(-20% -20% -20% -20%); 
+      filter: blur(0) drop-shadow(0 0 50px #00f0ff);
+    }
+    24% { 
+      transform: translateY(18vh) scale(1.15); 
+      opacity: 1; 
+      clip-path: inset(-20% -20% -20% -20%);
+      filter: blur(0) drop-shadow(0 0 0 transparent);
+    }
+    70% { 
+      transform: translateY(18vh) scale(1.15); 
+      opacity: 1; 
+      clip-path: inset(-20% -20% -20% -20%);
+    }
+    100% { 
+      transform: translateY(0) scale(1); 
+      opacity: 1; 
+      clip-path: inset(-20% -20% -20% -20%);
+    }
+  }
+  .animate-intro-text {
+    animation: introMove 3.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    transform-origin: center top;
+  }
+
+  @keyframes revealAfterIntro {
+    0%, 75% { opacity: 0; transform: translateY(20px); filter: blur(5px); pointer-events: none; }
+    100% { opacity: 1; transform: translateY(0); filter: blur(0); pointer-events: auto; }
+  }
+  .delayed-reveal {
+    opacity: 0;
+    animation: revealAfterIntro 3.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+
+  .glass-card {
+    background: rgba(26, 28, 32, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .glass-card:hover {
+    background: rgba(30, 32, 36, 0.6);
+    border-color: rgba(0, 219, 233, 0.4);
+    box-shadow: 0 0 25px rgba(0, 219, 233, 0.12);
+    transform: translateY(-4px);
+  }
+  .grid-pattern {
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .text-gradient-cyan {
+    background: linear-gradient(135deg, #7df4ff 0%, #00dbe9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .text-gradient {
+    background: linear-gradient(to right, #7df4ff, #d1bcff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .glow-icon { filter: drop-shadow(0 0 8px rgba(125, 244, 255, 0.4)); }
+  @keyframes scan {
+    0% { transform: translateY(-100%); opacity: 0; }
+    50% { opacity: 0.5; }
+    100% { transform: translateY(100vh); opacity: 0; }
+  }
+  .scan-line {
+    height: 2px;
+    background: linear-gradient(to right, transparent, #00dbe9, transparent);
+    animation: scan 8s linear infinite;
+  }
+
+  /* Marquee */
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .marquee-track {
+    display: flex;
+    animation: marquee 90s linear infinite;
+    width: max-content;
+  }
+  .marquee-track:hover { animation-play-state: paused; }
+
+  /* Counter */
+  .counter-value { font-variant-numeric: tabular-nums; }
+
+  /* Image glow */
+  .image-glow { box-shadow: 0 0 60px -15px rgba(0, 219, 233, 0.3); }
+
+  /* Hide data-reveal elements by default */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+
+  /* Removed old Stripe sections CSS to avoid conflicts with new Zebra Striping logic */
+
+  /* Mega Dropdown navigation */
+  .nav-dropdown { position: relative; padding-bottom: 16px; margin-bottom: -16px; }
+  .nav-dropdown .dropdown-trigger {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .nav-dropdown .dropdown-trigger .expand-icon {
+    transition: transform 0.3s;
+  }
+  .nav-dropdown:hover .dropdown-trigger .expand-icon {
+    transform: rotate(180deg);
+  }
+  .nav-dropdown .mega-menu {
+    position: absolute;
+    top: calc(100%);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    width: 720px;
+    background: rgba(16, 20, 28, 0.98);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 16px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+    z-index: 100;
+  }
+  .nav-dropdown:hover .mega-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+  .mega-menu .mega-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+  .mega-menu .mega-category {
+    padding: 8px;
+  }
+  .mega-menu .mega-category-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #7df4ff;
+    margin-bottom: 8px;
+    padding: 4px 0;
+    white-space: nowrap;
+  }
+  .mega-menu .mega-category-title .material-symbols-outlined {
+    font-size: 18px;
+  }
+  .mega-menu .mega-link {
+    display: block;
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #b9cacb;
+    transition: all 0.15s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mega-menu .mega-link:hover {
+    background: rgba(0, 219, 233, 0.1);
+    color: #ffffff;
+    padding-left: 12px;
+  }
+
+  /* Feature image overlay */
+  .feature-img-overlay {
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-img-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,219,233,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Animated border */
+  @keyframes borderGlow {
+    0%, 100% { border-color: rgba(0, 219, 233, 0.2); }
+    50% { border-color: rgba(0, 219, 233, 0.5); }
+  }
+
+  /* Mobile accordion */
+  .mobile-accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .mobile-accordion-content.open {
+    max-height: 500px;
+  }
+  /* AI Conveyor Belt Detection Styles */
+  @keyframes conveyorMove {
+    0% { background-position: 0 0; }
+    100% { background-position: -80px 0; }
+  }
+  .conveyor-bg-anim {
+    animation: conveyorMove 3s linear infinite;
+  }
+  
+  .partner-logo-wrapper .logo-inner {
+    filter: grayscale(100%) brightness(0.4) opacity(0.5);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .partner-logo-wrapper.detected .logo-inner {
+    filter: grayscale(0%) brightness(1) opacity(1) drop-shadow(0 0 10px rgba(0,240,255,0.4));
+    transform: scale(1.15);
+  }
+  .partner-logo-wrapper.detected .ai-box {
+    opacity: 1;
+  }
+  .partner-logo-wrapper.detected .label-text {
+    display: block;
+  }
+</style>
+
+  <style>
+    /* ZEBRA STRIPING BASE (Dark Mode Defaults) */
+    .section-dark { background-color: #0b1121; color: #ffffff; }
+    .section-light { background-color: #1e293b; color: #f8fafc; }
+
+            /* GLOBAL LIGHT THEME OVERRIDES */
+    html.light-theme body { background-color: #f8fafc; color: #0f172a; }
+    html.light-theme header { background: rgba(255, 255, 255, 0.95); border-bottom-color: rgba(0,0,0,0.1); }
+    html.light-theme footer { background-color: #f1f5f9 !important; border-top-color: rgba(0,0,0,0.1) !important; }
+    
+    /* Zebra Striping Light Mode (Only affects index.html sections) */
+    html.light-theme .section-dark { background-color: #f0f9ff; color: #0f172a; }
+    html.light-theme .section-light { background-color: #ffffff; color: #0f172a; }
+
+    /* Text Colors for Light theme */
+    html.light-theme .text-white,
+    html.light-theme .section-light .text-white,
+    html.light-theme .section-dark .text-white { color: #0f172a !important; }
+
+    html.light-theme .text-on-surface,
+    html.light-theme .section-light .text-on-surface,
+    html.light-theme .section-dark .text-on-surface { color: #0f172a !important; }
+
+    html.light-theme .text-on-surface-variant,
+    html.light-theme .section-light .text-on-surface-variant,
+    html.light-theme .section-dark .text-on-surface-variant { color: #475569 !important; }
+
+    html.light-theme p,
+    html.light-theme .section-light p,
+    html.light-theme .section-dark p { color: #334155 !important; }
+
+    html.light-theme h1,
+    html.light-theme h2,
+    html.light-theme h3 { color: #0f172a !important; }
+
+    /* Component Overrides for Light Mode */
+    html.light-theme .glass-card { background: rgba(255, 255, 255, 0.85); border-color: rgba(0, 0, 0, 0.12); box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+    html.light-theme .glass-card:hover { background: rgba(255, 255, 255, 0.98); box-shadow: 0 10px 30px rgba(0, 219, 233, 0.15); border-color: rgba(0, 219, 233, 0.4); }
+    html.light-theme .text-gradient-cyan { -webkit-text-fill-color: transparent; background: linear-gradient(135deg, #0284c7, #0369a1); -webkit-background-clip: text; }
+    
+    /* Logo light mode */
+    html.light-theme .logo-img { filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.3)); }
+    html.light-theme .logo-light-fix { filter: invert(1) hue-rotate(180deg) !important; mix-blend-mode: normal !important; opacity: 0.9 !important; }
+    html.light-theme .logo-light-fix:hover { opacity: 1 !important; }
+    
+    /* Nav Active / Primary Color contrast */
+    html.light-theme .text-primary { color: #0369a1 !important; }
+    html.light-theme .border-primary { border-color: #0369a1 !important; }
+    html.light-theme .text-primary-container { color: #0284c7 !important; }
+    html.light-theme .bg-primary-container { background-color: #0284c7 !important; color: #ffffff !important; }
+
+    /* Partners Marquee Fixes */
+    html.light-theme .marquee-track img { filter: none !important; mix-blend-mode: multiply; opacity: 0.9 !important; }
+    html.light-theme .marquee-track img:hover { opacity: 1 !important; }
+    html.light-theme .from-stripe-light { --tw-gradient-from: #ffffff !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme .via-stripe-light\/95 { --tw-gradient-stops: var(--tw-gradient-from), rgba(255,255,255,0.95), var(--tw-gradient-to) !important; }
+    html.light-theme .to-stripe-light\/70 { --tw-gradient-to: rgba(255,255,255,0.7) !important; }
+
+    /* Section Background Fixes */
+    html.light-theme .bg-surface-container-lowest,
+    html.light-theme .bg-surface-container-low,
+    html.light-theme .bg-surface-container { background-color: #ffffff !important; }
+    html.light-theme .border-outline-variant\/30,
+    html.light-theme .border-outline-variant\/20,
+    html.light-theme .border-outline-variant\/15 { border-color: rgba(0,0,0,0.1) !important; }
+    
+    html.light-theme #mobile-menu { background: rgba(255, 255, 255, 0.98) !important; border-left-color: rgba(0,0,0,0.1) !important; }
+    html.light-theme .grid-pattern { background-image: linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px) !important; }
+    html.light-theme .scan-line { display: none; }
+    html.light-theme .form-input { background: rgba(255,255,255,0.8); border-color: rgba(0,0,0,0.2); color: #0f172a; }
+    html.light-theme .form-input:focus { background: #ffffff; }
+    html.light-theme .bg-surface-variant { background-color: #e2e8f0; }
+    html.light-theme .mega-menu { background: rgba(255,255,255,0.98) !important; border-color: rgba(0,0,0,0.12) !important; box-shadow: 0 25px 60px rgba(0,0,0,0.15) !important; }
+    html.light-theme .mega-category-title { color: #0369a1 !important; }
+    html.light-theme .mega-link { color: #475569; }
+    html.light-theme .mega-link:hover { background: rgba(3, 105, 161, 0.08); color: #0f172a; }
+    html.light-theme .font-label-caps { color: #334155; }
+    html.light-theme .counter-value { color: #0369a1 !important; }
+    html.light-theme .glow-icon { filter: none; }
+    html.light-theme .image-glow { box-shadow: 0 0 60px -15px rgba(0,0,0,0.15); }
+    
+    /* Prevent animation before load */
+    .preload * {
+      animation-play-state: paused !important;
+      transition: none !important;
+    }
+  </style>
+</head>
+<body class="preload font-body-md selection:bg-primary-container selection:text-on-primary-container">
+
+<!-- Background -->
+<div class="fixed inset-0 z-0 grid-pattern pointer-events-none"></div>
+<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+  <div class="scan-line absolute w-full top-0 left-0"></div>
+</div>
+
+<!-- ========== HEADER ========== -->
+<header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm delayed-reveal">
+  <nav class="flex justify-between items-center px-margin-x py-3 max-w-container-max mx-auto">
+    <a href="index.html" class="flex items-center gap-2 group flex-shrink-0">
+      <img src="assets/img/logo.png" alt="Cvision AI Tech" class="logo-img h-16 w-auto transition-all">
+    </a>
+    <div class="hidden lg:flex items-center gap-8">
+      <a class="text-primary border-b-2 border-primary py-1 transition-colors font-body-md text-body-md font-semibold" href="index.html">Trang chủ</a>
+      
+      <!-- Dropdown: Giải pháp -->
+      <div class="nav-dropdown">
+        <span class="dropdown-trigger text-on-surface-variant border-b-2 border-transparent py-1 hover:text-primary transition-colors font-body-md text-body-md font-medium">
+          Giải pháp
+          <span class="material-symbols-outlined text-sm expand-icon">expand_more</span>
+        </span>
+        <div class="mega-menu">
+          <div class="mega-grid">
+            <!-- Sản Xuất & Công Nghiệp -->
+            <div class="mega-category">
+              <div class="mega-category-title"><span class="material-symbols-outlined">factory</span>Sản Xuất & Công Nghiệp</div>
+              <a href="giai-phap-cong-nghiep.html" class="mega-link">Đếm Sản Phẩm Băng Chuyền</a>
+              <a href="giai-phap-cong-nghiep.html" class="mega-link">Nhận Diện Khuôn Mặt (In/Out)</a>
+              <a href="giai-phap-cong-nghiep.html" class="mega-link">Kiểm Tra Ngoại Quan QA/QC</a>
+              <a href="giai-phap-cong-nghiep.html" class="mega-link">Quản Lý Xe Nhà Máy (ALPR)</a>
+            </div>
+            <!-- An Toàn Lao Động -->
+            <div class="mega-category">
+              <div class="mega-category-title"><span class="material-symbols-outlined">health_and_safety</span>An Toàn Lao Động</div>
+              <a href="giai-phap-an-toan-lao-dong.html" class="mega-link">Giám Sát Đồ Bảo Hộ (PPE)</a>
+            </div>
+            <!-- Cửa Hàng & Bán Lẻ -->
+            <div class="mega-category">
+              <div class="mega-category-title"><span class="material-symbols-outlined">storefront</span>Cửa Hàng & Bán Lẻ</div>
+              <a href="giai-phap-quan-ly-cua-hang.html" class="mega-link">Quản Lý & Phân Tích Cửa Hàng</a>
+              <a href="giai-phap-quy-trinh-lam-viec.html" class="mega-link">Giám Sát Quy Trình Phục Vụ</a>
+            </div>
+            <!-- Giao Thông -->
+            <div class="mega-category">
+              <div class="mega-category-title"><span class="material-symbols-outlined">traffic</span>Giao Thông</div>
+              <a href="giai-phap-phat-nguoi.html" class="mega-link">Phạt Nguội Thông Minh</a>
+              <a href="giai-phap-luu-luong.html" class="mega-link">Lưu Lượng & Đo Tốc Độ</a>
+              <a href="giai-phap-luu-luong.html" class="mega-link">Nhận Diện Biển Số (LPR)</a>
+            </div>
+            <!-- Logistics -->
+            <div class="mega-category">
+              <div class="mega-category-title"><span class="material-symbols-outlined">local_shipping</span>Logistics</div>
+              <a href="giai-phap-kiem-soat-xe.html" class="mega-link">Kiểm Soát Xe Ra Vào Bến Bãi</a>
+              <a href="giai-phap-xuat-nhap-kho.html" class="mega-link">Giám Sát Xuất Nhập Kho</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a class="text-on-surface-variant border-b-2 border-transparent py-1 hover:text-primary transition-colors font-body-md text-body-md font-medium" href="quy-trinh.html">Quy trình</a>
+      <a class="text-on-surface-variant border-b-2 border-transparent py-1 hover:text-primary transition-colors font-body-md text-body-md font-medium" href="doi-tac.html">Đối tác</a>
+      <a class="text-on-surface-variant border-b-2 border-transparent py-1 hover:text-primary transition-colors font-body-md text-body-md font-medium" href="hoat-dong.html">Hoạt động</a>
+      <a class="text-on-surface-variant border-b-2 border-transparent py-1 hover:text-primary transition-colors font-body-md text-body-md font-medium" href="lien-he.html">Liên hệ</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <button id="theme-toggle" class="w-10 h-10 rounded-lg border border-outline-variant/50 flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary/50 transition-all">
+        <span class="material-symbols-outlined text-xl">dark_mode</span>
+      </button>
+      <a href="lien-he.html" class="hidden lg:inline-flex items-center gap-2 bg-gradient-to-r from-primary-fixed-dim to-primary-container text-on-primary font-semibold text-sm px-5 py-2.5 rounded-lg hover:shadow-lg hover:shadow-primary-fixed-dim/20 transition-all hover:scale-105">
+        Nhận tư vấn
+        <span class="material-symbols-outlined text-lg">arrow_forward</span>
+      </a>
+      <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 rounded-lg border border-outline-variant/50 flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary/50 transition-all">
+        <span class="material-symbols-outlined text-xl">menu</span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div id="menu-overlay" class="fixed inset-0 bg-black/60 z-[55] hidden backdrop-blur-sm"></div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="fixed top-0 right-0 h-full w-72 bg-surface-container-lowest z-[60] transform translate-x-full transition-transform duration-300 border-l border-outline-variant/30 shadow-2xl">
+  <div class="p-6 flex flex-col h-full">
+    <div class="flex justify-between items-center mb-10">
+      <span class="font-headline-md text-lg font-bold text-on-surface">Menu</span>
+      <button id="mobile-menu-close" class="p-2 hover:bg-surface-variant/20 rounded-lg"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div class="flex flex-col gap-2">
+      <a class="px-4 py-3 rounded-lg bg-primary/10 text-primary font-semibold" href="index.html">Trang chủ</a>
+      
+      <!-- Mobile Accordion: Giải pháp -->
+      <button id="mobile-solutions-toggle" class="px-4 py-3 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant transition-colors flex items-center justify-between w-full text-left">
+        <span>Giải pháp</span>
+        <span class="material-symbols-outlined text-sm transition-transform" id="mobile-solutions-arrow">expand_more</span>
+      </button>
+      <div class="mobile-accordion-content pl-4" id="mobile-solutions-content">
+        <a class="block px-4 py-2.5 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant/80 text-sm transition-colors" href="giai-phap-chi-tiet.html">Giám sát An Ninh</a>
+        <a class="block px-4 py-2.5 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant/80 text-sm transition-colors" href="giai-phap-luu-luong.html">Phân Tích Giao Thông</a>
+        <a class="block px-4 py-2.5 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant/80 text-sm transition-colors" href="giai-phap-cong-nghiep.html">Sản Xuất & Công Nghiệp</a>
+        <a class="block px-4 py-2.5 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant/80 text-sm transition-colors" href="giai-phap-cong-nghiep.html">Giải Pháp Đếm</a>
+        <a class="block px-4 py-2.5 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant/80 text-sm transition-colors" href="giai-phap-quan-ly-cua-hang.html">Quản Lý Cửa Hàng</a>
+        <a class="block px-4 py-2.5 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant/80 text-sm transition-colors" href="giai-phap-an-toan-lao-dong.html">An Toàn Lao Động</a>
+      </div>
+      
+      <a class="px-4 py-3 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant transition-colors" href="quy-trinh.html">Quy trình</a>
+      <a class="px-4 py-3 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant transition-colors" href="doi-tac.html">Đối tác</a>
+      <a class="px-4 py-3 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant transition-colors" href="hoat-dong.html">Hoạt động</a>
+      <a class="px-4 py-3 rounded-lg hover:bg-surface-variant/20 text-on-surface-variant transition-colors" href="lien-he.html">Liên hệ</a>
+    </div>
+    <div class="mt-auto">
+      <a href="lien-he.html" class="w-full flex items-center justify-center gap-2 bg-primary-container text-on-primary px-6 py-3 rounded-lg font-bold shadow-[0_0_15px_rgba(0,219,233,0.3)]">
+        Nhận tư vấn
+        <span class="material-symbols-outlined text-lg">arrow_forward</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MAIN ========== -->
+<main class="relative pt-20">
+
+  <!-- Full Screen Wrapper for First Viewport -->
+  <div class="flex flex-col min-h-[calc(100vh-80px)] w-full js-snap-section scroll-mt-20">
+
+<!-- ===== SECTION 1: HERO (Dark) ===== -->
+<section class="relative px-margin-x pt-8 pb-4 flex flex-col items-center justify-center text-center max-w-5xl mx-auto w-full flex-1">
+  <!-- Background Glow -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-primary-container/10 rounded-full blur-[150px] -z-10 pointer-events-none animate-intro-glow"></div>
+  <!-- Center Headline -->
+  <div class="w-full text-center mb-8 sm:mb-12 animate-intro-text">
+    <h1 class="font-display-lg text-[32px] sm:text-[44px] md:text-[56px] lg:text-[72px] text-white leading-tight tracking-tight">
+      Tiên phong AI giám sát <br/>
+      <span class="text-gradient-cyan">Cho Doanh Nghiệp Của Bạn</span>
+    </h1>
+  </div>
+  
+  <!-- 2-Column Split -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start w-full max-w-7xl delayed-reveal">
+    
+    <!-- LEFT: Paragraph and Badge -->
+    <div class="flex flex-col items-start text-left order-2 lg:order-1">
+      <!-- Badge moved ABOVE paragraph -->
+      <div class="mb-6 px-4 py-1.5 glass-card rounded-full inline-flex items-center gap-2.5">
+        <span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+        <span class="font-label-caps text-[13px] text-[#00f0ff] uppercase tracking-[0.2em] font-bold">Tiên phong công nghệ AI & Xử lý ảnh</span>
+      </div>
+      <!-- Subtitle -->
+      <p class="font-body-lg text-body-lg text-on-surface-variant/90 leading-relaxed mb-8">
+        Nền tảng AI thị giác máy tính toàn diện, biến hệ thống camera sẵn có thành bộ não thông minh giúp tự động hóa <strong>An toàn lao động</strong>, <strong>Kiểm tra ngoại quan</strong>, và tối ưu hóa <strong>Sản xuất (Đếm)</strong>.
+      </p>
+
+      <!-- Stats (2x2 Grid) -->
+      <div class="grid grid-cols-2 gap-y-8 gap-x-12 mt-4 delayed-reveal delay-2">
+        <!-- Row 1 -->
+        <div class="text-left relative">
+          <div class="text-[28px] sm:text-[36px] font-bold text-primary-container counter-value leading-none" data-target="200" data-suffix="+">0</div>
+          <div class="text-[10px] sm:text-xs text-on-surface-variant/70 font-label-caps tracking-wider mt-2">AI MODULES</div>
+          <!-- Divider -->
+          <div class="absolute -right-6 top-1/2 -translate-y-1/2 w-px h-10 bg-outline-variant/30 hidden sm:block"></div>
+        </div>
+        <div class="text-left sm:pl-2">
+          <div class="text-[28px] sm:text-[36px] font-bold text-primary-container counter-value leading-none" data-target="99" data-suffix="%">0</div>
+          <div class="text-[10px] sm:text-xs text-on-surface-variant/70 font-label-caps tracking-wider mt-2">ĐỘ CHÍNH XÁC</div>
+        </div>
+        <!-- Row 2 -->
+        <div class="text-left relative">
+          <div class="text-[28px] sm:text-[36px] font-bold text-primary-container leading-none">24/7</div>
+          <div class="text-[10px] sm:text-xs text-on-surface-variant/70 font-label-caps tracking-wider mt-2">GIÁM SÁT LIÊN TỤC</div>
+          <!-- Divider -->
+          <div class="absolute -right-6 top-1/2 -translate-y-1/2 w-px h-10 bg-outline-variant/30 hidden sm:block"></div>
+        </div>
+        <div class="text-left sm:pl-2">
+          <div class="text-[28px] sm:text-[36px] font-bold text-primary-container counter-value leading-none" data-target="15" data-suffix="ms">0</div>
+          <div class="text-[10px] sm:text-xs text-on-surface-variant/70 font-label-caps tracking-wider mt-2">TỐC ĐỘ XỬ LÝ</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- RIGHT: Video and Buttons -->
+    <div class="flex flex-col items-center lg:items-end w-full order-1 lg:order-2">
+      <!-- Video Container -->
+      <div class="w-full relative rounded-xl overflow-hidden border border-outline-variant/30 shadow-[0_0_30px_rgba(0,240,255,0.15)] bg-surface-container-low aspect-video mb-6">
+         <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-80 mix-blend-screen">
+           <source src="video/luu_luong_web.mp4" type="video/mp4" />
+         </video>
+         <!-- Scanline overlay effect -->
+         <div class="absolute inset-0 bg-[linear-gradient(rgba(0,240,255,0.1)_1px,transparent_1px)] bg-[size:100%_4px] pointer-events-none opacity-30"></div>
+      </div>
+      
+      <!-- CTA Buttons (Under Video, Horizontal) -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
+        <a href="lien-he.html" class="w-full sm:w-auto group flex items-center justify-center gap-3 bg-primary-container text-on-primary px-8 py-4 rounded-xl font-bold hover:scale-105 active:scale-95 transition-all shadow-[0_0_25px_rgba(0,219,233,0.2)]">
+          Đặt lịch Demo
+          <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
+        </a>
+        <a href="#giai-phap-cot-loi" class="w-full sm:w-auto glass-card text-white px-8 py-4 rounded-xl font-bold hover:bg-surface-variant/20 transition-all border border-outline-variant/50 text-center">
+          Khám phá giải pháp
+        </a>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- ===== SECTION 2: TRUSTED BY (AI Conveyor Belt) ===== -->
+<section id="trusted-by" class="py-6 sm:py-8 border-y border-outline-variant/30 overflow-hidden bg-surface-container-low delayed-reveal delay-3 relative flex flex-col justify-center min-h-[200px] w-full shrink-0">
+  <!-- Conveyor Pattern -->
+  <div class="absolute inset-0 bg-[repeating-linear-gradient(90deg,transparent,transparent_40px,var(--md-sys-color-on-surface-variant)_40px,var(--md-sys-color-on-surface-variant)_80px)] opacity-[0.03] pointer-events-none z-0 conveyor-bg-anim"></div>
+  <div class="absolute inset-x-0 bottom-0 h-1 bg-outline-variant/20 shadow-[0_-2px_15px_rgba(0,240,255,0.1)] z-0 pointer-events-none"></div>
+
+  <p class="font-label-caps text-label-caps text-on-surface-variant/60 text-center uppercase tracking-[0.25em] relative z-20 mb-12">Được tin tưởng bởi các đối tác chiến lược</p>
+
+  <!-- AI Scanner Area (Center Overlay) -->
+  <div class="absolute left-1/2 top-0 bottom-0 w-[240px] -translate-x-1/2 z-30 pointer-events-none flex flex-col items-center justify-center">
+    <!-- Camera icon -->
+    <div class="absolute top-12 bg-surface border border-outline-variant/50 rounded-xl px-4 py-2 flex items-center justify-center shadow-[0_5px_20px_rgba(0,240,255,0.15)] backdrop-blur-md">
+      <span class="material-symbols-outlined text-[#00f0ff] animate-pulse text-[20px]">videocam</span>
+      <span class="text-[10px] text-[#00f0ff] ml-2 font-mono uppercase tracking-widest opacity-80">AI Vision</span>
+    </div>
+    <!-- Laser Beam -->
+    <div class="absolute top-[84px] bottom-0 w-[2px] bg-[#00f0ff]/50 shadow-[0_0_15px_#00f0ff]"></div>
+    <div class="absolute top-[84px] bottom-0 w-full bg-gradient-to-r from-transparent via-[#00f0ff]/10 to-transparent"></div>
+  </div>
+
+  <div class="relative overflow-x-hidden z-10 w-full py-6 sm:py-8">
+    <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-surface-container-low to-transparent z-20 pointer-events-none"></div>
+    <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-surface-container-low to-transparent z-20 pointer-events-none"></div>
+    <div class="marquee-track conveyor-track flex items-center">
+      <!-- Block 1 -->
+      <div class="flex items-center gap-20 sm:gap-32 px-10 sm:px-16 shrink-0">
+        <div class="partner-logo-wrapper relative" data-partner="Trung Nam">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac1.png" alt="Trung Nam Express" class="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="Goodblend">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac2.png" alt="Goodblend" class="h-16 sm:h-20 w-auto object-contain" style="filter: invert(1) hue-rotate(180deg);" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="TG Fishery">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac3.png" alt="TG Fishery" class="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="Minh Viet">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac4.jpg" alt="Minh Viet Logistics" class="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="Trung Nam">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac1.png" alt="Trung Nam Express" class="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="Goodblend">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac2.png" alt="Goodblend" class="h-16 sm:h-20 w-auto object-contain" style="filter: invert(1) hue-rotate(180deg);" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="TG Fishery">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac3.png" alt="TG Fishery" class="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="Minh Viet">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac4.jpg" alt="Minh Viet Logistics" class="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="Trung Nam">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac1.png" alt="Trung Nam Express" class="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="Goodblend">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac2.png" alt="Goodblend" class="h-16 sm:h-20 w-auto object-contain" style="filter: invert(1) hue-rotate(180deg);" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="TG Fishery">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac3.png" alt="TG Fishery" class="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="Minh Viet">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac4.jpg" alt="Minh Viet Logistics" class="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Block 2 Duplicate -->
+      <div class="flex items-center gap-20 sm:gap-32 px-10 sm:px-16">
+        <div class="partner-logo-wrapper relative" data-partner="Trung Nam">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac1.png" alt="Trung Nam Express" class="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="Goodblend">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac2.png" alt="Goodblend" class="h-16 sm:h-20 w-auto object-contain" style="filter: invert(1) hue-rotate(180deg);" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="TG Fishery">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac3.png" alt="TG Fishery" class="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="Minh Viet">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac4.jpg" alt="Minh Viet Logistics" class="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="Trung Nam">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac1.png" alt="Trung Nam Express" class="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="Goodblend">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac2.png" alt="Goodblend" class="h-16 sm:h-20 w-auto object-contain" style="filter: invert(1) hue-rotate(180deg);" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="TG Fishery">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac3.png" alt="TG Fishery" class="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="Minh Viet">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac4.jpg" alt="Minh Viet Logistics" class="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="Trung Nam">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac1.png" alt="Trung Nam Express" class="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="Goodblend">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac2.png" alt="Goodblend" class="h-16 sm:h-20 w-auto object-contain" style="filter: invert(1) hue-rotate(180deg);" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="TG Fishery">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac3.png" alt="TG Fishery" class="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+        <div class="partner-logo-wrapper relative" data-partner="Minh Viet">
+          <div class="logo-inner">
+            <img src="assets/img/partners/logo_doitac4.jpg" alt="Minh Viet Logistics" class="h-16 sm:h-20 w-auto object-contain" />
+          </div>
+          <div class="ai-box absolute inset-[-15px] border border-[#00f0ff] bg-[#00f0ff]/5 opacity-0 transition-opacity duration-200 pointer-events-none">
+            <div class="absolute top-[-24px] left-[-1px] bg-[#00f0ff] text-[#0c0e12] text-[10px] sm:text-[12px] font-mono px-2 py-0.5 font-bold uppercase hidden label-text whitespace-nowrap"></div>
+            <div class="absolute top-[-2px] left-[-2px] w-4 h-4 border-t-2 border-l-2 border-white"></div><div class="absolute top-[-2px] right-[-2px] w-4 h-4 border-t-2 border-r-2 border-white"></div><div class="absolute bottom-[-2px] left-[-2px] w-4 h-4 border-b-2 border-l-2 border-white"></div><div class="absolute bottom-[-2px] right-[-2px] w-4 h-4 border-b-2 border-r-2 border-white"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===== SECTION 3: SOLUTIONS (Discrete 3D Auto-Swipe) ===== -->
+<section id="giai-phap-cot-loi" class="section-dark js-snap-section relative h-screen w-full overflow-hidden">
+  <div class="absolute inset-0 flex flex-col justify-start w-full pt-32 md:pt-40">
+    <div class="px-margin-x max-w-container-max mx-auto w-full">
+      <div class="text-center mb-8 md:mb-12" data-reveal>
+        <p class="font-label-caps text-label-caps text-primary tracking-[0.2em] mb-4 uppercase">Giải Pháp Cốt Lõi</p>
+        <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-white mb-4">Tự Động Hóa Mọi <span class="text-gradient-cyan">Quy Trình</span></h2>
+        <p class="text-on-surface-variant max-w-2xl mx-auto text-body-lg">Hệ sinh thái AI chuyên biệt được thiết kế để giải quyết các bài toán vận hành phức tạp nhất của doanh nghiệp.</p>
+      </div>
+      
+      <!-- Cards Wrapper -->
+      <div class="relative w-full max-w-6xl mx-auto h-[400px] lg:h-[450px]" id="cards-3d-wrapper">
+        
+        <!-- Card 1 -->
+        <div class="card-3d absolute inset-0 flex flex-col lg:flex-row bg-[#15171c] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.7)] border border-outline-variant/20 z-30 origin-bottom transition-all duration-[2000ms] ease-[cubic-bezier(0.25,1,0.5,1)]">
+          <div class="w-full lg:w-[55%] relative h-[200px] lg:h-full overflow-hidden border-b lg:border-b-0 lg:border-r border-outline-variant/10">
+            <img src="assets/img/card-an-toan-lao-dong.jpg" alt="An Toàn Lao Động" class="absolute inset-0 w-full h-full object-cover" />
+          </div>
+          <div class="w-full lg:w-[45%] p-6 lg:p-12 xl:p-16 flex flex-col justify-center text-left bg-[#15171c]">
+            <p class="font-label-caps text-[12px] text-white uppercase tracking-widest font-bold mb-3 opacity-60">CVISION PRODUCTS</p>
+            <h3 class="font-headline-md text-[32px] md:text-[36px] font-bold text-white mb-5 leading-tight">An Toàn Lao Động</h3>
+            <p class="text-on-surface-variant text-body-lg leading-relaxed mb-10">Giám sát tự động 24/7 việc tuân thủ trang bị đồ bảo hộ (mũ, áo, dây đai), phát hiện nhanh chóng các hành vi nguy hiểm để đưa ra cảnh báo kịp thời, bảo vệ tính mạng người lao động.</p>
+            <div>
+              <a href="giai-phap-an-toan-lao-dong.html" class="inline-flex items-center gap-2 bg-[#dcf6f9] text-[#006972] font-bold py-3.5 px-8 rounded-full hover:bg-white transition-all active:scale-95">
+                Xem chi tiết dự án
+                <span class="material-symbols-outlined text-lg">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Card 2 -->
+        <div class="card-3d absolute inset-0 flex flex-col lg:flex-row bg-[#1a1c22] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.7)] border border-outline-variant/20 z-20 origin-bottom transition-all duration-[2000ms] ease-[cubic-bezier(0.25,1,0.5,1)]">
+          <div class="w-full lg:w-[55%] relative h-[200px] lg:h-full overflow-hidden border-b lg:border-b-0 lg:border-r border-outline-variant/10">
+            <img src="assets/img/card-kiem-tra-linh-kien.jpg" alt="Kiểm Tra Ngoại Quan" class="absolute inset-0 w-full h-full object-cover" />
+          </div>
+          <div class="w-full lg:w-[45%] p-6 lg:p-12 xl:p-16 flex flex-col justify-center text-left bg-[#1a1c22]">
+            <p class="font-label-caps text-[12px] text-white uppercase tracking-widest font-bold mb-3 opacity-60">CVISION PRODUCTS</p>
+            <h3 class="font-headline-md text-[32px] md:text-[36px] font-bold text-white mb-5 leading-tight">Kiểm Tra Ngoại Quan</h3>
+            <p class="text-on-surface-variant text-body-lg leading-relaxed mb-10">Ứng dụng Machine Vision tiên tiến để tự động phân tích và phát hiện lỗi bề mặt, nứt vỡ hay sai lệch kích thước linh kiện với độ chính xác và tốc độ vượt trội so với mắt thường.</p>
+            <div>
+              <a href="giai-phap-cong-nghiep.html" class="inline-flex items-center gap-2 bg-[#dcf6f9] text-[#006972] font-bold py-3.5 px-8 rounded-full hover:bg-white transition-all active:scale-95">
+                Xem chi tiết dự án
+                <span class="material-symbols-outlined text-lg">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Card 3 -->
+        <div class="card-3d absolute inset-0 flex flex-col lg:flex-row bg-[#21242b] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.7)] border border-outline-variant/20 z-10 origin-bottom transition-all duration-[2000ms] ease-[cubic-bezier(0.25,1,0.5,1)]">
+          <div class="w-full lg:w-[55%] relative h-[200px] lg:h-full overflow-hidden border-b lg:border-b-0 lg:border-r border-outline-variant/10">
+            <img src="assets/img/card-kiem-tra-so-luong.jpg" alt="Kiểm Tra Số Lượng" class="absolute inset-0 w-full h-full object-cover object-top" />
+          </div>
+          <div class="w-full lg:w-[45%] p-6 lg:p-12 xl:p-16 flex flex-col justify-center text-left bg-[#21242b]">
+            <p class="font-label-caps text-[12px] text-white uppercase tracking-widest font-bold mb-3 opacity-60">CVISION PRODUCTS</p>
+            <h3 class="font-headline-md text-[32px] md:text-[36px] font-bold text-white mb-5 leading-tight">Kiểm Tra Số Lượng</h3>
+            <p class="text-on-surface-variant text-body-lg leading-relaxed mb-10">Tự động hóa quá trình đếm số lượng sản phẩm trên băng chuyền với tốc độ cao. Cung cấp dữ liệu chính xác, liên tục về sản lượng theo thời gian thực để tối ưu năng suất thiết bị tổng thể (OEE).</p>
+            <div>
+              <a href="giai-phap-cong-nghiep.html" class="inline-flex items-center gap-2 bg-[#dcf6f9] text-[#006972] font-bold py-3.5 px-8 rounded-full hover:bg-white transition-all active:scale-95">
+                Xem chi tiết dự án
+                <span class="material-symbols-outlined text-lg">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 4: ABOUT CVISIONAI (Light stripe + Traffic BG) ===== -->
+<section class="section-light relative py-stack-xl z-10 overflow-hidden js-snap-section scroll-mt-20">
+  <div class="px-margin-x max-w-container-max mx-auto">
+  <!-- Background Image -->
+  <div class="absolute inset-0 -z-10">
+    <img src="assets/img/traffic-flycam-bg.jpg" alt="" class="w-full h-full object-cover opacity-[0.07]"/>
+    <div class="absolute inset-0 bg-gradient-to-r from-stripe-light via-stripe-light/95 to-stripe-light/70"></div>
+  </div>
+  
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+    <!-- Content -->
+    <div class="lg:col-span-5 space-y-8" data-reveal>
+      <div class="inline-flex items-center px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20">
+        <span class="font-label-caps text-label-caps text-primary tracking-widest uppercase">Về Cvision</span>
+      </div>
+      <div class="space-y-5">
+        <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface leading-tight">
+          Hơn cả công nghệ, chúng tôi mang đến <span class="text-gradient-cyan">giá trị thực tế.</span>
+        </h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl leading-relaxed">
+          Cvision AI Tech biến hệ thống camera CCTV hiện có thành nền tảng giám sát thông minh. Lắp đặt nhanh chóng (Plug & Play), không cần cấu hình phức tạp.
+        </p>
+      </div>
+      <!-- Feature Cards -->
+      <div class="space-y-4 pt-2">
+        <div class="glass-card p-5 rounded-xl flex items-start gap-4">
+          <div class="w-11 h-11 flex-shrink-0 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20">
+            <span class="material-symbols-outlined text-primary text-xl">monitoring</span>
+          </div>
+          <div>
+            <h3 class="text-body-lg font-bold text-on-surface mb-1">Dữ Liệu Hình Ảnh Thời Gian Thực</h3>
+            <p class="text-body-md text-on-surface-variant">Công cụ giúp cấp quản lý ra quyết định nhanh chóng, chính xác dựa trên data trực quan.</p>
+          </div>
+        </div>
+        <!-- Interactive RTSP Simulator Guide -->
+        <div class="glass-card p-5 rounded-xl flex flex-col gap-3 relative overflow-hidden border border-outline-variant/30">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="material-symbols-outlined text-secondary text-[20px]">settings_input_component</span>
+            <h3 class="text-body-lg font-bold text-on-surface">Tích Hợp Camera RTSP Có Sẵn</h3>
+          </div>
+          <p class="text-body-md text-on-surface-variant mb-1">Cắm và Chạy (Plug & Play) với mọi hệ thống IP/CCTV hiện tại mà không cần thiết bị mới.</p>
+          
+          <!-- Mock Input Form -->
+          <div class="flex items-center bg-surface-container-high border border-outline-variant/50 rounded-lg p-1.5 mt-2 shadow-inner">
+            <div class="flex-grow flex items-center px-3 bg-[#0a0a0a] rounded-md h-9 overflow-hidden relative font-mono text-sm text-[#00e676]">
+              <span class="material-symbols-outlined text-outline text-[16px] mr-2">link</span>
+              <span id="rtsp-typewriter-text" class="whitespace-nowrap overflow-hidden"></span><span id="rtsp-cursor" class="w-1.5 h-4 bg-[#00e676] animate-pulse ml-0.5 inline-block"></span>
+            </div>
+            <button id="rtsp-connect-btn" class="ml-2 px-4 h-9 bg-surface-container border border-outline-variant/30 text-on-surface-variant font-bold text-xs rounded-md uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 whitespace-nowrap">
+              <span class="material-symbols-outlined text-[16px]">sensors</span>
+              Connect
+            </button>
+          </div>
+          
+          <!-- Mock Status Text -->
+          <div class="h-4 flex items-center">
+            <span id="rtsp-status-text" class="font-mono text-xs text-on-surface-variant opacity-0 transition-opacity duration-300"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Image -->
+    <div class="lg:col-span-7 relative" data-reveal>
+      <div class="relative group">
+        <div id="rtsp-video-container" class="image-glow rounded-[2rem] overflow-hidden border border-white/10 p-1.5 backdrop-blur-sm bg-[#0a0a0a] transition-all duration-500 relative">
+          <!-- Static noise or empty background can go here, but a black bg is fine -->
+          <video id="rtsp-video-element" class="w-full h-auto rounded-[1.7rem] object-cover transition-all duration-700 aspect-video pointer-events-none opacity-0" autoplay muted loop playsinline>
+            <source src="video/luu_luong_web.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div id="rtsp-tag" class="absolute -bottom-3 left-2 sm:-bottom-5 sm:-left-5 glass-card p-3 sm:p-4 rounded-xl flex items-center gap-3 shadow-2xl bg-surface-container-low border-primary/30 transition-all duration-500">
+          <div id="rtsp-tag-dot" class="w-2.5 h-2.5 rounded-full bg-outline animate-pulse"></div>
+          <span id="rtsp-tag-text" class="font-label-caps text-label-caps text-on-surface tracking-wider font-bold">AI STANDBY</span>
+        </div>
+        
+        <!-- Connecting Overlay overlay -->
+        <div id="rtsp-overlay" class="absolute inset-0 m-1.5 rounded-[1.7rem] bg-[#000000b0] flex flex-col items-center justify-center backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+          <span class="material-symbols-outlined text-white text-4xl animate-spin mb-3">autorenew</span>
+          <p class="font-mono text-white text-sm tracking-widest uppercase">Initializing Inference Engine...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 5: HOW IT WORKS (Dark stripe) ===== -->
+<section id="section-deploy" class="section-dark py-stack-xl px-margin-x js-snap-section scroll-mt-20">
+  <style>
+    /* Scene 1: Radar Scanner */
+    .radar-container {
+      position: relative; width: 64px; height: 64px; border-radius: 50%;
+      background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.2);
+      overflow: hidden; opacity: 0.3; transition: all 0.5s ease; margin: 0 auto;
+    }
+    .radar-sweep {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: conic-gradient(from 0deg, transparent 60%, rgba(0, 212, 255, 0.6) 100%);
+      transform-origin: center;
+    }
+    .step-active .radar-container { opacity: 1; border-color: rgba(0, 212, 255, 0.8); box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+    .step-active .radar-sweep { animation: radarScan 2s linear infinite; }
+    @keyframes radarScan { 100% { transform: rotate(360deg); } }
+
+    /* Scene 2: Data Flow */
+    .data-flow-container {
+      display: flex; justify-content: space-between; align-items: center;
+      width: 64px; height: 64px; margin: 0 auto;
+      opacity: 0.3; transition: all 0.5s ease; color: #fff;
+    }
+    .data-flow-line-wrap { flex-grow: 1; height: 2px; margin: 0 4px; background: rgba(255,255,255,0.1); position: relative; overflow:hidden; }
+    .data-flow-line-beam { position: absolute; top:0; left:-100%; width:100%; height:100%; background: linear-gradient(90deg, transparent, #00d4ff, transparent); }
+    .step-active .data-flow-container { opacity: 1; color: #00d4ff; text-shadow: 0 0 10px #00d4ff; }
+    .step-active .data-flow-line-beam { animation: dataFlowAnim 1s linear infinite; }
+    @keyframes dataFlowAnim { 100% { left: 100%; } }
+
+    /* Scene 3: Heartbeat */
+    .heartbeat-container {
+      display: flex; justify-content: center; align-items: flex-end; gap: 4px;
+      width: 64px; height: 64px; margin: 0 auto; padding-bottom: 12px;
+      opacity: 0.3; transition: all 0.5s ease;
+    }
+    .beat-bar { width: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; height: 10px; transition: all 0.3s; }
+    .step-active .heartbeat-container { opacity: 1; }
+    .step-active .beat-bar { background: #00d4ff; box-shadow: 0 0 10px #00d4ff; animation: beatAnim 1s ease-in-out infinite alternate; }
+    .step-active .beat-bar:nth-child(1) { animation-delay: 0s; height: 15px;}
+    .step-active .beat-bar:nth-child(2) { animation-delay: 0.2s; height: 30px;}
+    .step-active .beat-bar:nth-child(3) { animation-delay: 0.4s; height: 45px;}
+    .step-active .beat-bar:nth-child(4) { animation-delay: 0.2s; height: 30px;}
+    .step-active .beat-bar:nth-child(5) { animation-delay: 0s; height: 15px;}
+    @keyframes beatAnim { 0% { transform: scaleY(0.7); } 100% { transform: scaleY(1.3); } }
+
+    /* Connecting lines between steps */
+    .step-connect-line { position: absolute; top: 64px; height: 2px; background: rgba(255,255,255,0.1); z-index: 0; }
+    .step-connect-beam { position: absolute; top: 0; left: 0; height: 100%; width: 0; background: #00d4ff; box-shadow: 0 0 10px #00d4ff; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); }
+    .beam-active .step-connect-beam { width: 100%; }
+    
+    /* Card Dimming */
+    .step-card { transition: all 0.5s ease; border: 1px solid rgba(255,255,255,0.05); }
+    .step-card.step-active { border-color: rgba(0, 212, 255, 0.4); background: rgba(0, 212, 255, 0.05); box-shadow: 0 20px 40px -10px rgba(0, 212, 255, 0.15); transform: translateY(-4px); }
+    
+    /* Terminal logs */
+    .step-term { font-family: monospace; font-size: 11px; color: #00d4ff; opacity: 0; margin-top: 16px; min-height: 16px; transition: opacity 0.3s; font-weight: bold; }
+    .step-card.step-active .step-term { opacity: 1; }
+  </style>
+
+  <div class="max-w-container-max mx-auto">
+    <div class="text-center mb-8 md:mb-16" data-reveal>
+      <p class="font-label-caps text-label-caps text-primary-fixed tracking-[0.2em] mb-4 uppercase">Quy trình triển khai</p>
+      <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-white mb-4">Triển khai <span class="text-gradient-cyan">Chỉ 3 Bước</span></h2>
+      <p class="text-on-surface-variant max-w-2xl mx-auto">Hệ thống AI của CvisionAI được thiết kế để tích hợp nhanh chóng, không gián đoạn hoạt động kinh doanh.</p>
+    </div>
+    <div class="relative">
+      <!-- Connecting Line 1-2 (Desktop Only) -->
+      <div class="hidden md:block step-connect-line step-connect-beam-wrap left-[16%] w-[34%]">
+         <div class="step-connect-beam"></div>
+      </div>
+      <!-- Connecting Line 2-3 (Desktop Only) -->
+      <div class="hidden md:block step-connect-line step-connect-beam-wrap left-[50%] w-[34%]">
+         <div class="step-connect-beam"></div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+        <!-- Step 1 -->
+        <div data-reveal style="transition-delay: 0ms">
+          <div class="glass-card step-card rounded-2xl p-8 text-center relative h-full cursor-default">
+            <div class="radar-container mb-6">
+               <div class="radar-sweep"></div>
+               <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-[24px] text-[#00d4ff]">my_location</span>
+               </div>
+            </div>
+            <h3 class="font-headline-md text-xl font-bold text-white mb-3">Khảo Sát & Tư Vấn</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Đội ngũ kỹ sư khảo sát hiện trường, đánh giá hạ tầng camera và đề xuất giải pháp tối ưu.</p>
+            <div class="step-term"><span class="step-term-text"></span><span class="animate-pulse">_</span></div>
+          </div>
+        </div>
+        
+        <!-- Step 2 -->
+        <div data-reveal style="transition-delay: 150ms">
+          <div class="glass-card step-card rounded-2xl p-8 text-center relative h-full cursor-default">
+            <div class="data-flow-container mb-6">
+               <span class="material-symbols-outlined text-[20px] data-icon">videocam</span>
+               <div class="data-flow-line-wrap"><div class="data-flow-line-beam"></div></div>
+               <span class="material-symbols-outlined text-[20px] data-icon">dns</span>
+            </div>
+            <h3 class="font-headline-md text-xl font-bold text-white mb-3">Cài Đặt & Tinh Chỉnh</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Kết nối camera qua RTSP, cài đặt modules AI phù hợp và tinh chỉnh model cho ngành nghề cụ thể.</p>
+            <div class="step-term"><span class="step-term-text"></span><span class="animate-pulse">_</span></div>
+          </div>
+        </div>
+        
+        <!-- Step 3 -->
+        <div data-reveal style="transition-delay: 300ms">
+          <div class="glass-card step-card rounded-2xl p-8 text-center relative h-full cursor-default">
+            <div class="heartbeat-container mb-6">
+               <div class="beat-bar"></div>
+               <div class="beat-bar"></div>
+               <div class="beat-bar"></div>
+               <div class="beat-bar"></div>
+               <div class="beat-bar"></div>
+            </div>
+            <h3 class="font-headline-md text-xl font-bold text-white mb-3">Vận Hành & Hỗ Trợ</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Hệ thống hoạt động 24/7 với dashboard trực quan. Đội ngũ hỗ trợ kỹ thuật liên tục qua hotline.</p>
+            <div class="step-term"><span class="step-term-text"></span><span class="animate-pulse">_</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 6: FEATURED SOLUTIONS (Light stripe) ===== -->
+<section class="section-light py-stack-xl js-snap-section scroll-mt-20">
+  <div class="max-w-container-max mx-auto px-margin-x">
+    <div class="text-center mb-8 md:mb-16" data-reveal>
+      <p class="font-label-caps text-label-caps text-primary-fixed tracking-[0.2em] mb-4 uppercase">Triển Khai Thực Tế</p>
+      <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-white mb-4">Các Giải Pháp <span class="text-gradient-cyan">Tiêu Biểu</span></h2>
+      <p class="text-on-surface-variant max-w-2xl mx-auto">Tham khảo các giải pháp AI và Xử lý ảnh mà CvisionAI Tech đã triển khai thành công cho khách hàng.</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Feature Card 1 -->
+      <div class="glass-card rounded-2xl overflow-hidden group hover:border-primary/50 transition-all flex flex-col h-full" data-reveal>
+        <div class="relative w-full aspect-video overflow-hidden">
+          <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10"></div>
+          <video class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" autoplay muted loop playsinline>
+            <source src="video/Nhandienkhuonmat.mp4" type="video/mp4">
+          </video>
+          <div class="absolute top-4 left-4 z-20">
+            <span class="px-3 py-1 bg-primary-container/80 backdrop-blur-md text-on-primary-container text-xs font-bold rounded-full">An Ninh</span>
+          </div>
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
+          <h3 class="font-headline-md text-xl font-bold text-white mb-3 group-hover:text-primary-container transition-colors">Hệ Thống Nhận Diện Khuôn Mặt</h3>
+          <p class="text-on-surface-variant text-sm mb-6 flex-grow">Kiểm soát ra vào, chấm công tự động và cảnh báo xâm nhập theo thời gian thực với độ chính xác cao.</p>
+          <a href="giai-phap-chi-tiet.html" class="inline-flex items-center gap-2 text-primary-fixed-dim hover:text-primary-container font-medium text-sm mt-auto group/link">
+            Xem chi tiết giải pháp <span class="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Feature Card 2 -->
+      <div class="glass-card rounded-2xl overflow-hidden group hover:border-primary/50 transition-all flex flex-col h-full" data-reveal>
+        <div class="relative w-full aspect-video overflow-hidden">
+          <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10"></div>
+          <video class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" autoplay muted loop playsinline>
+            <source src="video/giaothong.mp4" type="video/mp4">
+          </video>
+          <div class="absolute top-4 left-4 z-20">
+            <span class="px-3 py-1 bg-secondary-container/80 backdrop-blur-md text-on-secondary-container text-xs font-bold rounded-full">Giao Thông</span>
+          </div>
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
+          <h3 class="font-headline-md text-xl font-bold text-white mb-3 group-hover:text-secondary-container transition-colors">Phân Tích Giao Thông AI</h3>
+          <p class="text-on-surface-variant text-sm mb-6 flex-grow">Giám sát lưu lượng, đếm phương tiện và phân loại tự động phục vụ cho quản lý giao thông thông minh.</p>
+          <a href="giai-phap-luu-luong.html" class="inline-flex items-center gap-2 text-primary-fixed-dim hover:text-primary-container font-medium text-sm mt-auto group/link">
+            Xem chi tiết giải pháp <span class="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Feature Card 3 -->
+      <div class="glass-card rounded-2xl overflow-hidden group hover:border-primary/50 transition-all flex flex-col h-full" data-reveal>
+        <div class="relative w-full aspect-video overflow-hidden">
+          <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10"></div>
+          <video id="qaqc-video" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" autoplay muted loop playsinline>
+            <source src="video/kiemtra-ngoaiquang.mp4#t=30" type="video/mp4">
+          </video>
+          <div class="absolute top-4 left-4 z-20">
+            <span class="px-3 py-1 bg-tertiary-container/80 backdrop-blur-md text-on-tertiary-container text-xs font-bold rounded-full">Sản Xuất</span>
+          </div>
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
+          <h3 class="font-headline-md text-xl font-bold text-white mb-3 group-hover:text-tertiary-container transition-colors">Hệ Thống Tự Động Hóa QA/QC</h3>
+          <p class="text-on-surface-variant text-sm mb-6 flex-grow">Nhận diện lỗi vi mô trên bề mặt vật liệu và kiểm soát quy trình tự động hóa dây chuyền sản xuất.</p>
+          <a href="giai-phap-cong-nghiep.html" class="inline-flex items-center gap-2 text-primary-fixed-dim hover:text-primary-container font-medium text-sm mt-auto group/link">
+            Xem chi tiết giải pháp <span class="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-12 text-center">
+      <a href="#giai-phap-cot-loi" class="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-primary-container/30 text-primary-container hover:bg-primary-container/10 transition-colors font-semibold text-sm">
+        Xem tất cả giải pháp
+        <span class="material-symbols-outlined text-[18px]">grid_view</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 7: WHY CVISIONAI (Dark stripe) ===== -->
+<section class="section-dark py-stack-xl px-margin-x js-snap-section scroll-mt-20">
+  <div class="max-w-container-max mx-auto">
+    <div class="text-center mb-8 md:mb-16" data-reveal>
+      <p class="font-label-caps text-label-caps text-primary-fixed tracking-[0.2em] mb-4 uppercase">Tại sao chọn CvisionAI</p>
+      <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-white mb-4">Lợi Thế <span class="text-gradient-cyan">Vượt Trội</span></h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="glass-card rounded-2xl p-6 text-center group hover:border-primary/40 transition-all" data-reveal>
+        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform border border-primary/15">
+          <span class="material-symbols-outlined text-primary-container text-3xl">speed</span>
+        </div>
+        <h3 class="font-bold text-white text-lg mb-2">Xử Lý Siêu Nhanh</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed">Phản hồi trong 15ms, nhanh gấp 10 lần so với giải pháp truyền thống.</p>
+      </div>
+      <div class="glass-card rounded-2xl p-6 text-center group hover:border-primary/40 transition-all" data-reveal>
+        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform border border-primary/15">
+          <span class="material-symbols-outlined text-primary-container text-3xl">videocam</span>
+        </div>
+        <h3 class="font-bold text-white text-lg mb-2">Tận Dụng Camera Cũ</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed">Kết nối với mọi camera IP/CCTV qua RTSP — giảm 80% chi phí đầu tư.</p>
+      </div>
+      <div class="glass-card rounded-2xl p-6 text-center group hover:border-primary/40 transition-all" data-reveal>
+        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform border border-primary/15">
+          <span class="material-symbols-outlined text-primary-container text-3xl">hub</span>
+        </div>
+        <h3 class="font-bold text-white text-lg mb-2">Dashboard Tập Trung</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed">Quản lý đa chi nhánh trên một nền tảng duy nhất, mọi lúc mọi nơi.</p>
+      </div>
+      <div class="glass-card rounded-2xl p-6 text-center group hover:border-primary/40 transition-all" data-reveal>
+        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform border border-primary/15">
+          <span class="material-symbols-outlined text-primary-container text-3xl">support_agent</span>
+        </div>
+        <h3 class="font-bold text-white text-lg mb-2">Hỗ Trợ 24/7</h3>
+        <p class="text-on-surface-variant text-sm leading-relaxed">Đội ngũ kỹ thuật sẵn sàng hỗ trợ xuyên suốt, bảo trì và cập nhật liên tục.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 8: CTA BANNER (Light stripe) ===== -->
+<section class="section-light relative py-stack-xl px-margin-x overflow-hidden js-snap-section scroll-mt-20">
+  <div class="absolute inset-0 -z-10 opacity-10 bg-cover bg-center" style="background-image: url('assets/img/traffic-flycam-bg.jpg')"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-stripe-light via-stripe-light/90 to-stripe-light/70 -z-10"></div>
+  <div class="max-w-container-max mx-auto" data-reveal>
+    <div class="glass-card p-6 sm:p-10 md:p-16 rounded-2xl sm:rounded-[2rem] relative overflow-hidden group border-outline-variant/20">
+      <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary-container to-transparent"></div>
+      <div class="absolute -right-20 -top-20 w-80 h-80 bg-secondary-container/15 rounded-full blur-[100px] transition-transform duration-700 group-hover:scale-110"></div>
+      <div class="relative z-10 grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div class="space-y-6">
+          <div class="flex items-center gap-3">
+            <span class="h-[1px] w-12 bg-primary-container"></span>
+            <span class="font-label-caps text-label-caps text-primary-container tracking-wider">SẴN SÀNG BẮT ĐẦU?</span>
+          </div>
+          <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg leading-tight text-white">Đặt lịch Demo miễn phí ngay hôm nay</h2>
+          <p class="text-on-surface-variant font-body-lg text-body-lg max-w-lg leading-relaxed">
+            Liên hệ với chuyên gia của CvisionAI để nhận tư vấn giải pháp phù hợp và xem demo công nghệ trực tiếp tại hiện trường.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 pt-2">
+            <a href="lien-he.html" class="bg-gradient-to-r from-primary-fixed-dim to-primary-container text-on-primary font-bold px-6 sm:px-10 py-4 rounded-xl flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(0,219,233,0.3)] group/btn">
+              <span>Đặt lịch Demo</span>
+              <span class="material-symbols-outlined group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+            </a>
+            <a href="giai-phap.html" class="glass-card hover:bg-surface-variant/30 text-white border-outline-variant px-6 sm:px-10 py-4 rounded-xl font-bold flex items-center justify-center gap-3 transition-all active:scale-95">
+              Xem giải pháp
+            </a>
+          </div>
+        </div>
+        <!-- Terminal Visual -->
+        <div class="hidden lg:flex justify-end">
+          <div class="relative w-full max-w-sm aspect-square glass-card rounded-[2rem] p-6 flex items-center justify-center border-primary-container/20 overflow-hidden">
+            <div class="w-full h-full p-4 font-mono text-[10px] space-y-3">
+              <div class="flex justify-between items-center border-b border-primary/20 pb-2">
+                <span class="text-primary-container">SYSTEM_DEPLOYMENT</span>
+                <div class="flex gap-1.5 items-center">
+                  <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                  <span class="text-green-500 uppercase text-[9px]">Online</span>
+                </div>
+              </div>
+              <div class="space-y-1.5 opacity-80">
+                <div class="flex justify-between"><span>&gt; INITIALIZING_CORE...</span><span class="text-primary-container">[OK]</span></div>
+                <div class="flex justify-between"><span>&gt; LOADING_CV_MODELS...</span><span class="text-primary-container">[OK]</span></div>
+                <div class="flex justify-between"><span>&gt; CALIBRATING_SENSORS...</span><span class="text-primary-container">[OK]</span></div>
+                <div class="flex justify-between"><span>&gt; NEURAL_LINK_ESTABLISHED</span><span class="text-primary-container">[TRUE]</span></div>
+              </div>
+              <div class="mt-3 p-3 bg-primary/5 border border-primary/10 rounded-lg">
+                <div class="text-primary-container mb-1.5 text-[9px]">ACTIVE_INFERENCE_ENGINE</div>
+                <div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-primary-fixed-dim to-primary-container w-3/4 rounded-full"></div>
+                </div>
+                <div class="flex justify-between mt-1.5 text-[8px] text-on-surface-variant">
+                  <span>CPU: 42%</span><span>GPU: 89%</span><span>LATENCY: 12ms</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant/20 w-full pt-16 pb-8">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-gutter px-margin-x max-w-container-max mx-auto">
+    <div class="sm:col-span-2 md:col-span-1 flex flex-col gap-4">
+      <div class="flex items-center gap-2.5 mb-4">
+        <img src="assets/img/logo.png" alt="Cvision AI Tech" class="logo-img h-16 w-auto transition-all -ml-3">
+      </div>
+      <p class="text-on-surface-variant text-body-md text-sm leading-relaxed">Tiên phong trong việc mang AI thực tế vào vận hành doanh nghiệp Việt Nam.</p>
+      <div class="space-y-2 text-sm text-on-surface-variant">
+        <p class="flex items-start gap-2"><span class="material-symbols-outlined text-primary-container text-base mt-0.5">location_on</span>357/2/5 Tân Hòa Đông, P. Bình Trị Đông, Q. Bình Tân, TP.HCM</p>
+        <p class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-container text-base">phone</span>070 4682 685</p>
+        <p class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-container text-base">mail</span>sales@cvision.com.vn</p>
+        <p class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-container text-base">badge</span>MST: 0319472342</p>
+      </div>
+      <div class="flex gap-3 mt-2">
+        <a class="w-9 h-9 rounded-lg bg-surface-variant/20 flex items-center justify-center text-on-surface-variant hover:text-[#1877F2] hover:bg-[#1877F2]/10 transition-all" href="https://www.facebook.com/profile.php?id=61565795999453" target="_blank" aria-label="Facebook">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a class="w-9 h-9 rounded-lg bg-surface-variant/20 flex items-center justify-center text-on-surface-variant hover:text-[#FF0000] hover:bg-[#FF0000]/10 transition-all" href="https://www.youtube.com/@cvsionaitech" target="_blank" aria-label="YouTube">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        <a class="w-9 h-9 rounded-lg bg-surface-variant/20 flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-white/10 transition-all" href="https://www.tiktok.com/@cvisionaitech.vi" target="_blank" aria-label="TikTok">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <h4 class="font-bold text-white mb-5 text-sm">Giải pháp</h4>
+      <ul class="flex flex-col gap-2.5">
+        <li><a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm" href="giai-phap-chi-tiet.html">Giám sát An Ninh</a></li>
+        <li><a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm" href="giai-phap-luu-luong.html">Phân Tích Giao Thông</a></li>
+        <li><a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm" href="giai-phap-cong-nghiep.html">Sản Xuất & Công Nghiệp</a></li>
+        <li><a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm" href="giai-phap.html#dem">Giải Pháp Đếm</a></li>
+        <li><a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm" href="giai-phap-quan-ly-cua-hang.html">Quản Lý Cửa Hàng</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-bold text-white mb-5 text-sm">Liên kết</h4>
+      <ul class="flex flex-col gap-2.5">
+        <li><a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm" href="quy-trinh.html">Quy trình</a></li>
+        <li><a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm" href="doi-tac.html">Đối tác</a></li>
+        <li><a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm" href="hoat-dong.html">Hoạt động</a></li>
+        <li><a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm" href="#">Chính sách bảo mật</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-bold text-white mb-5 text-sm">Bản tin</h4>
+      <p class="text-on-surface-variant text-sm mb-4 leading-relaxed">Đăng ký để nhận tin tức mới nhất về công nghệ AI.</p>
+      <div class="flex bg-surface-container rounded-lg p-1 border border-outline-variant/30">
+        <input class="bg-transparent border-none focus:ring-0 text-white px-3 flex-1 text-sm placeholder:text-on-surface-variant/50" placeholder="Email của bạn" type="email"/>
+        <button class="bg-primary-container text-on-primary px-4 py-2 rounded-md font-bold text-sm hover:scale-105 active:scale-95 transition-transform">Gửi</button>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-container-max mx-auto px-margin-x mt-12 pt-8 border-t border-outline-variant/15 flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="text-on-surface-variant text-sm">© 2026 CvisionAI.</p>
+    <div class="flex gap-6 text-sm">
+      <a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Chính sách bảo mật</a>
+      <a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Điều khoản sử dụng</a>
+      <a class="text-on-surface-variant hover:text-on-surface transition-colors" href="doi-tac.html">Hệ thống đối tác</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ========== SCRIPTS ========== -->
+<script>
+// Mobile menu
+const menuBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const menuOverlay = document.getElementById('menu-overlay');
+const menuClose = document.getElementById('mobile-menu-close');
+
+function openMenu() {
+  mobileMenu.classList.remove('translate-x-full');
+  menuOverlay.classList.remove('hidden');
+}
+function closeMenu() {
+  mobileMenu.classList.add('translate-x-full');
+  menuOverlay.classList.add('hidden');
+}
+menuBtn.addEventListener('click', openMenu);
+menuOverlay.addEventListener('click', closeMenu);
+menuClose.addEventListener('click', closeMenu);
+
+// Mobile accordion for Solutions
+const mobileSolutionsToggle = document.getElementById('mobile-solutions-toggle');
+const mobileSolutionsContent = document.getElementById('mobile-solutions-content');
+const mobileSolutionsArrow = document.getElementById('mobile-solutions-arrow');
+if (mobileSolutionsToggle) {
+  mobileSolutionsToggle.addEventListener('click', () => {
+    mobileSolutionsContent.classList.toggle('open');
+    mobileSolutionsArrow.style.transform = mobileSolutionsContent.classList.contains('open') ? 'rotate(180deg)' : '';
+  });
+}
+
+// Scroll reveal
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+          entry.target.classList.add('opacity-100', 'translate-y-0');
+          entry.target.classList.remove('opacity-0', 'translate-y-8');
+        } else {
+          entry.target.classList.remove('opacity-100', 'translate-y-0');
+          entry.target.classList.add('opacity-0', 'translate-y-8');
+        }
+  });
+}, { 
+  threshold: 0.1,
+  rootMargin: '0px 0px -15% 0px'
+});
+
+document.querySelectorAll('[data-reveal]').forEach(el => {
+  el.classList.add('opacity-0', 'translate-y-8', 'transition-all', 'duration-700');
+  revealObserver.observe(el);
+});
+
+// Counter animation
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseFloat(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const isDecimal = el.dataset.decimal === 'true';
+      const duration = 2000;
+      const startTime = performance.now();
+
+      function updateCounter(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = target * eased;
+
+        if (isDecimal) {
+          el.textContent = current.toFixed(1) + suffix;
+        } else {
+          el.textContent = Math.floor(current) + suffix;
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(updateCounter);
+        }
+      }
+      requestAnimationFrame(updateCounter);
+      counterObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.counter-value[data-target]').forEach(el => {
+  counterObserver.observe(el);
+});
+
+// Header scroll effect
+let lastScroll = 0;
+const header = document.querySelector('header');
+window.addEventListener('scroll', () => {
+  const currentScroll = window.scrollY;
+  if (currentScroll > 100) {
+    header.classList.add('shadow-lg');
+  } else {
+    header.classList.remove('shadow-lg');
+  }
+  lastScroll = currentScroll;
+});
+
+// QA/QC video: loop between 30s and 70s
+const qaqcVideo = document.getElementById('qaqc-video');
+if (qaqcVideo) {
+  qaqcVideo.addEventListener('loadedmetadata', () => { qaqcVideo.currentTime = 30; });
+  qaqcVideo.addEventListener('timeupdate', () => {
+    if (qaqcVideo.currentTime >= 70) { qaqcVideo.currentTime = 30; }
+  });
+}
+</script>
+
+</script>
+
+<script id="ai-detection-logic">
+document.addEventListener('DOMContentLoaded', () => {
+  const wrappers = document.querySelectorAll('.partner-logo-wrapper');
+  
+  function checkAI() {
+    const screenCenter = window.innerWidth / 2;
+    // The detection zone is center +/- 120px
+    const detectZoneLeft = screenCenter - 120;
+    const detectZoneRight = screenCenter + 120;
+    
+    wrappers.forEach(wrapper => {
+      const rect = wrapper.getBoundingClientRect();
+      const elementCenter = rect.left + rect.width / 2;
+      
+      if (elementCenter > detectZoneLeft && elementCenter < detectZoneRight) {
+        if (!wrapper.classList.contains('detected')) {
+          wrapper.classList.add('detected');
+          const label = wrapper.querySelector('.label-text');
+          const confidence = (98 + Math.random() * 1.9).toFixed(1);
+          label.textContent = `[${wrapper.dataset.partner}: ${confidence}%]`;
+        }
+      } else {
+        wrapper.classList.remove('detected');
+      }
+    });
+    
+    requestAnimationFrame(checkAI);
+  }
+  
+  requestAnimationFrame(checkAI);
+});
+</script>
+
+<script id="light-mode-logic">
+  document.addEventListener('DOMContentLoaded', () => {
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    if (themeToggleBtn) {
+      const themeIcon = themeToggleBtn.querySelector('span');
+      
+      if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.add('light-theme');
+        if(themeIcon) themeIcon.textContent = 'light_mode';
+      } else {
+        if(themeIcon) themeIcon.textContent = 'dark_mode';
+      }
+
+      themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light-theme');
+        if (document.documentElement.classList.contains('light-theme')) {
+          if(themeIcon) themeIcon.textContent = 'light_mode';
+          localStorage.setItem('theme', 'light');
+        } else {
+          if(themeIcon) themeIcon.textContent = 'dark_mode';
+          localStorage.setItem('theme', 'dark');
+        }
+      });
+    }
+  });
+</script>
+
+<script>
+  // Prevent animations from firing before all resources (video, images, fonts) are fully loaded
+  const initAnimations = () => {
+    // requestAnimationFrame ensures the browser has processed the CSS before unpausing
+    requestAnimationFrame(() => {
+      document.body.classList.remove('preload');
+    });
+  };
+
+  if (document.readyState === 'complete') {
+    initAnimations();
+  } else {
+    window.addEventListener('load', initAnimations);
+  }
+</script>
+<script>
+  // Discrete 3D Card Auto-Swipe & Touch Swipe Logic
+  (function() {
+    const section3 = document.getElementById('giai-phap-cot-loi');
+    if (!section3) return;
+    
+    const cards = Array.from(section3.querySelectorAll('.card-3d'));
+    if(cards.length === 0) return;
+
+    let currentCardIdx = 0;
+
+    const updateCards = () => {
+      const isMobile = window.innerWidth <= 1024;
+      cards.forEach((card, idx) => {
+        if (idx < currentCardIdx) {
+          // Discarded cards
+          if (isMobile) {
+            // Swipe Left for mobile
+            card.style.transform = `translateX(-120vw) rotateZ(-20deg) scale(0.8)`;
+          } else {
+            // Drop down for desktop
+            card.style.transform = `translateY(120vh) rotateZ(-15deg) scale(0.8)`;
+          }
+          card.style.opacity = '0';
+          card.style.pointerEvents = 'none';
+        } else {
+          // Active or upcoming cards
+          card.style.transform = `translate(0px, 0px) rotateZ(0deg) scale(1)`;
+          card.style.opacity = '1';
+          card.style.pointerEvents = 'auto';
+        }
+      });
+    };
+
+    window.cardSliderAPI = {
+      next: () => {
+        if (currentCardIdx < cards.length - 1) {
+          currentCardIdx++;
+          updateCards();
+          return true; // handled
+        }
+        return false;
+      },
+      prev: () => {
+        if (currentCardIdx > 0) {
+          currentCardIdx--;
+          updateCards();
+          return true; // handled
+        }
+        return false;
+      },
+      resetTop: () => { currentCardIdx = 0; updateCards(); },
+      resetBottom: () => { currentCardIdx = cards.length - 1; updateCards(); }
+    };
+
+    // Touch Swipe Logic for Mobile
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    section3.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    section3.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].screenX;
+      const touchEndY = e.changedTouches[0].screenY;
+      
+      const deltaX = touchEndX - touchStartX;
+      const deltaY = touchEndY - touchStartY;
+      
+      // Horizontal swipe must be stronger than vertical swipe (to preserve vertical native scrolling)
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+        if (deltaX < 0) {
+          window.cardSliderAPI.next(); // Swipe Left
+        } else {
+          window.cardSliderAPI.prev(); // Swipe Right
+        }
+      }
+    }, { passive: true });
+
+    updateCards();
+  })();
+
+  // JS-Driven Smooth Full-Page Scroll (Desktop Only) with Internal Logic Interceptor
+  (function() {
+    if (window.innerWidth <= 1024) return;
+
+    const sections = Array.from(document.querySelectorAll('.js-snap-section'));
+    if (sections.length === 0) return;
+
+    let isScrolling = false;
+
+    window.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.ctrlKey || e.metaKey) return;
+      
+      if (isScrolling) {
+        e.preventDefault();
+        return;
+      }
+
+      const viewportTop = window.scrollY;
+      const viewportBottom = viewportTop + window.innerHeight;
+      const viewportCenter = viewportTop + window.innerHeight / 2;
+      const direction = e.deltaY > 0 ? 1 : -1;
+
+      let currentIdx = -1;
+      sections.forEach((sec, idx) => {
+        const top = sec.offsetTop;
+        const bottom = top + sec.offsetHeight;
+        if (viewportCenter >= top && viewportCenter <= bottom) {
+          currentIdx = idx;
+        }
+      });
+      if (currentIdx === -1) return;
+
+      const currentSec = sections[currentIdx];
+      
+      // Card Slider Interception
+      if (currentSec.id === 'giai-phap-cot-loi' && window.cardSliderAPI) {
+        e.preventDefault();
+        
+        let handled = false;
+        if (direction === 1) {
+          handled = window.cardSliderAPI.next();
+        } else {
+          handled = window.cardSliderAPI.prev();
+        }
+
+        if (handled) {
+          isScrolling = true;
+          setTimeout(() => { isScrolling = false; }, 800);
+          return;
+        }
+      } else {
+        // Normal tall section check
+        const secTop = currentSec.offsetTop;
+        const secBottom = secTop + currentSec.offsetHeight;
+        if (direction === 1) {
+          if (viewportBottom < secBottom - 5) return;
+        } else {
+          if (viewportTop > secTop + 85) return;
+        }
+      }
+
+      e.preventDefault();
+
+      const nextIdx = currentIdx + direction;
+      if (nextIdx >= 0 && nextIdx < sections.length) {
+        isScrolling = true;
+        
+        // Setup card states if jumping into the card section
+        if (sections[nextIdx].id === 'giai-phap-cot-loi' && window.cardSliderAPI) {
+           if (direction === 1) window.cardSliderAPI.resetTop();
+           else window.cardSliderAPI.resetBottom();
+        }
+
+        const targetY = sections[nextIdx].offsetTop - 80;
+        window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+        
+        setTimeout(() => {
+          isScrolling = false;
+        }, 800); 
+      }
+    }, { passive: false });
+  })();
+  // RTSP Connection Simulator Auto-Guide
+  (function() {
+    const typewriterText = document.getElementById('rtsp-typewriter-text');
+    const cursor = document.getElementById('rtsp-cursor');
+    const connectBtn = document.getElementById('rtsp-connect-btn');
+    const statusText = document.getElementById('rtsp-status-text');
+    const videoContainer = document.getElementById('rtsp-video-container');
+    const videoElement = document.getElementById('rtsp-video-element');
+    const overlay = document.getElementById('rtsp-overlay');
+    const tagText = document.getElementById('rtsp-tag-text');
+    const tagDot = document.getElementById('rtsp-tag-dot');
+    
+    if (!typewriterText || !connectBtn) return;
+
+    const linkToType = "rtsp://admin:***@camera-khu-vuc-A/live";
+    let simulationRunId = 0; // Dùng để cancel các luồng (async) đang chạy khi bị reset
+
+    async function sleep(ms, runId) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          if (runId === simulationRunId) resolve(true);
+          else resolve(false); // aborted
+        }, ms);
+      });
+    }
+
+    async function typeText(text, runId) {
+      typewriterText.textContent = '';
+      cursor.style.display = 'inline-block';
+      for (let i = 0; i < text.length; i++) {
+        if (runId !== simulationRunId) return false;
+        typewriterText.textContent += text.charAt(i);
+        let ok = await sleep(Math.random() * 40 + 30, runId);
+        if (!ok) return false;
+      }
+      let ok = await sleep(300, runId);
+      if (!ok) return false;
+      cursor.style.display = 'none';
+      return true;
+    }
+
+    function forceReset() {
+      typewriterText.textContent = '';
+      cursor.style.display = 'inline-block';
+      connectBtn.innerHTML = '<span class="material-symbols-outlined text-[16px]">sensors</span>Connect';
+      connectBtn.className = "ml-2 px-4 h-9 bg-surface-container border border-outline-variant/30 text-on-surface-variant font-bold text-xs rounded-md uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 whitespace-nowrap";
+      statusText.style.opacity = '0';
+      statusText.className = "font-mono text-xs text-on-surface-variant transition-opacity duration-300";
+      
+      videoContainer.className = "image-glow rounded-[2rem] overflow-hidden border border-white/10 p-1.5 backdrop-blur-sm bg-[#0a0a0a] transition-all duration-500 relative";
+      videoElement.className = "w-full h-auto rounded-[1.7rem] object-cover transition-all duration-700 aspect-video pointer-events-none opacity-0";
+      overlay.style.opacity = '0';
+      
+      tagText.textContent = "AI STANDBY";
+      tagText.className = "font-label-caps text-label-caps text-on-surface tracking-wider font-bold";
+      tagDot.className = "w-2.5 h-2.5 rounded-full bg-outline animate-pulse";
+      tagDot.style.boxShadow = "none";
+    }
+
+    async function runSimulator(runId) {
+      forceReset();
+
+      let ok = await sleep(1500, runId);
+      if (!ok) return;
+
+      // 2. Type the link
+      ok = await typeText(linkToType, runId);
+      if (!ok) return;
+      
+      // 3. Click connect
+      connectBtn.className = "ml-2 px-4 h-9 bg-primary text-on-primary font-bold text-xs rounded-md uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 whitespace-nowrap scale-95";
+      ok = await sleep(150, runId); if (!ok) return;
+      connectBtn.className = "ml-2 px-4 h-9 bg-primary text-on-primary font-bold text-xs rounded-md uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 whitespace-nowrap scale-100";
+      connectBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] animate-spin">autorenew</span>Connecting...';
+      
+      statusText.textContent = "> Handshake establishing...";
+      statusText.style.opacity = '1';
+      
+      overlay.style.opacity = '1';
+
+      ok = await sleep(1000, runId); if (!ok) return;
+      statusText.textContent = "> Authenticating rtsp stream...";
+      
+      ok = await sleep(1200, runId); if (!ok) return;
+      statusText.textContent = "> Injecting CvisionAI Engine...";
+      
+      ok = await sleep(1200, runId); if (!ok) return;
+      
+      // 4. Success state
+      connectBtn.className = "ml-2 px-4 h-9 bg-[#00e676] text-black font-bold text-xs rounded-md uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 whitespace-nowrap";
+      connectBtn.innerHTML = '<span class="material-symbols-outlined text-[16px]">check_circle</span>Connected';
+      
+      statusText.className = "font-mono text-xs text-[#00e676] transition-opacity duration-300";
+      statusText.textContent = "> Connection established successfully!";
+      
+      overlay.style.opacity = '0';
+      videoContainer.className = "image-glow rounded-[2rem] overflow-hidden border border-[#00e676]/60 p-1.5 backdrop-blur-sm bg-surface-container transition-all duration-500 shadow-[0_0_30px_rgba(0,230,118,0.2)] relative";
+      videoElement.className = "w-full h-auto rounded-[1.7rem] object-cover transition-all duration-700 aspect-video pointer-events-none opacity-100";
+      
+      tagText.textContent = "RTSP LIVE: AI ACTIVE";
+      tagText.className = "font-label-caps text-label-caps text-[#00e676] tracking-wider font-bold";
+      tagDot.className = "w-2.5 h-2.5 rounded-full bg-[#00e676] animate-pulse";
+      tagDot.style.boxShadow = "0 0 10px #00e676";
+
+      // 5. Finished. Just let the video loop natively.
+      // Do nothing more. Wait for scroll away to reset.
+    }
+
+    // Start using IntersectionObserver to only run when visible
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        // Khi kéo tới section này: Tăng ID để tạo session mới, bắt đầu chạy
+        simulationRunId++;
+        runSimulator(simulationRunId);
+      } else {
+        // Khi kéo đi chỗ khác: Tăng ID để hủy bỏ tất cả các lệnh timeout/sleep đang treo, ép reset ngay lập tức
+        simulationRunId++;
+        forceReset();
+      }
+    }, { threshold: 0.3 });
+    
+    // observe section 4
+    const section4 = document.querySelector('section.section-light.py-stack-xl');
+    if (section4) observer.observe(section4);
+  })();
+  // 3-Step Deployment Simulator
+  (function() {
+    const section = document.getElementById('section-deploy');
+    if (!section) return;
+    
+    const steps = section.querySelectorAll('.step-card');
+    const terms = section.querySelectorAll('.step-term-text');
+    const beams = section.querySelectorAll('.step-connect-beam-wrap'); // wrappers for beam
+
+    let simId = 0;
+    async function sleep(ms, id) {
+        return new Promise(r => setTimeout(() => r(id === simId), ms));
+    }
+    
+    function resetAll() {
+        steps.forEach(s => s.classList.remove('step-active'));
+        beams.forEach(b => b.classList.remove('beam-active'));
+        terms.forEach(t => t.textContent = '');
+    }
+
+    async function typeText(el, text, id) {
+        el.textContent = '';
+        for(let i=0; i<text.length; i++){
+            if(id !== simId) return false;
+            el.textContent += text.charAt(i);
+            let ok = await sleep(40, id);
+            if(!ok) return false;
+        }
+        return true;
+    }
+
+    async function runSim(id) {
+        resetAll();
+        let ok = await sleep(800, id); if(!ok) return;
+
+        // Step 1
+        steps[0].classList.add('step-active');
+        ok = await typeText(terms[0], "> Quét 3D: Hoàn tất...", id); if(!ok) return;
+        ok = await sleep(1000, id); if(!ok) return;
+        
+        // Line 1-2
+        if(beams[0]) beams[0].classList.add('beam-active');
+        ok = await sleep(800, id); if(!ok) return;
+
+        // Step 2
+        steps[1].classList.add('step-active');
+        ok = await typeText(terms[1], "> Cài Module AI: OK...", id); if(!ok) return;
+        ok = await sleep(1000, id); if(!ok) return;
+        
+        // Line 2-3
+        if(beams[1]) beams[1].classList.add('beam-active');
+        ok = await sleep(800, id); if(!ok) return;
+
+        // Step 3
+        steps[2].classList.add('step-active');
+        ok = await typeText(terms[2], "> Active: 100% Secure!", id); if(!ok) return;
+        
+        // Done - DO NOT LOOP
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        if(entries[0].isIntersecting) {
+            simId++; runSim(simId);
+        } else {
+            simId++; resetAll();
+        }
+    }, { threshold: 0.3 });
+    observer.observe(section);
+  })();
+</script>
+</body>
+</html>

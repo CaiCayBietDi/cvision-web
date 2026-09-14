@@ -1,0 +1,17 @@
+MÔ TẢ GIẢI PHÁP NHẬN DIỆN BIỂN SỐ KẾT HỢP ĐẾM XE VÀO RA BẾN BÃI
+(Dựa trên phân tích hình ảnh thực tế - Thư mục "Đọc biển số xe in out")
+
+Hệ thống phần mềm giám sát bến bãi kết hợp giữa việc theo dõi hình ảnh camera, đếm lưu lượng và nhận diện biển số xe tải.
+
+1. Đếm Lưu Lượng Ra Vào (IN/OUT)
+- Khung camera giám sát khu vực bãi đỗ/xuất nhập hàng hiển thị trực tiếp bộ đếm số lượng: IN (Vào), OUT (Ra) và TOT (Tổng số lượng). Ví dụ trên ảnh là IN: 63, OUT: 51, TOT: 114.
+
+2. Nhận Diện Biển Số Tự Động (LPR)
+- Cột bên phải "NHẬN DIỆN LPR" chuyên trách xử lý biển số.
+- Bảng thống kê tổng hiển thị con số lớn màu xanh/đỏ cho "LƯỢT VÀO" (Ví dụ: 304) và "LƯỢT RA" (Ví dụ: 340).
+- Khung "NHẬN DIỆN BIỂN SỐ TRỰC TIẾP" là luồng dữ liệu cuộn liên tục (Live feed). Mỗi khi có xe chạy qua, hệ thống sẽ:
+  + Chụp và cắt riêng hình ảnh đầu xe.
+  + Nhận diện ra chuỗi biển số (Ví dụ: 61K-589.51, 43H-026.74, 51D-248.76).
+  + Gắn nhãn loại phương tiện ("XE TẢI").
+  + Ghi nhận hướng di chuyển (Camera 1 [Vào]).
+  + Lưu thời gian (Timestamp) cụ thể của từng lượt xe.

@@ -1,0 +1,15 @@
+MÔ TẢ GIẢI PHÁP HỆ THỐNG KIỂM SOÁT PHƯƠNG TIỆN VÀO/RA BẾN BÃI (IN-OUT XE & LPR)
+(Dựa trên phân tích hình ảnh giao diện phần mềm thực tế - Thư mục "IN-OUT xe")
+
+Đây là một trạm kiểm soát an ninh đa năng dành cho lối ra vào nhà máy hoặc bến bãi logistics, kết hợp giữa việc đếm lưu lượng và nhận diện biển số tự động (LPR). Các tính năng nổi bật bao gồm:
+
+1. Đếm Lưu lượng Hai Chiều (In/Out Counting)
+- Trên luồng video trực tiếp, hệ thống thiết lập các vùng theo dõi (vùng màu xanh lá) để tự động đếm số lượng phương tiện đi vào (IN) và đi ra (OUT), đồng thời hiển thị tổng số lượt xe trong ngày (TOT).
+- Giao diện có khả năng kết nối nhiều camera (Cam 1, Cam 2, Cam 3, Cam 4) để giám sát đồng thời nhiều cổng kiểm soát.
+
+2. Nhận diện Biển số Phân loại Phương tiện (LPR & Vehicle Classification)
+- Bảng điều khiển "NHẬN DIỆN BIỂN SỐ TRỰC TIẾP" bên phải hoạt động liên tục, bắt trọn biển số của các phương tiện qua lại.
+- Hệ thống thông minh đến mức tự động phân loại chính xác đó là "XE TẢI" hay "XE MÁY" và ghi chú hướng di chuyển (Vào/Ra).
+- Cung cấp ảnh chụp toàn cảnh người lái/phương tiện và ảnh crop cực nét của biển số để làm bằng chứng đối soát. Trong trường hợp biển số bị mờ hoặc che khuất, hệ thống sẽ cảnh báo "KHÔNG ĐỌC ĐƯỢC" để nhân viên an ninh can thiệp thủ công.
+
+TỔNG KẾT: Giải pháp giúp tự động hóa hoàn toàn chốt bảo vệ, vừa thống kê chính xác lượng xe ra vào bến bãi để điều tiết kho, vừa thắt chặt an ninh, ngăn chặn thất thoát tài sản nhờ hệ thống lưu trữ nhận diện biển số chặt chẽ.

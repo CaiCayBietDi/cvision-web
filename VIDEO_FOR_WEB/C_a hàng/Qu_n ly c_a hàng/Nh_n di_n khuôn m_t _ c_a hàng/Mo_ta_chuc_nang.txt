@@ -1,0 +1,32 @@
+MÔ TẢ CHỨC NĂNG HỆ THỐNG NHẬN DIỆN KHUÔN MẶT (FACE RECOGNITION FEATURES)
+
+Dựa trên việc phân tích các hình ảnh trích xuất từ hệ thống thực tế tại cửa hàng, dưới đây là tổng hợp các chức năng cốt lõi của Hệ thống Nhận diện Khuôn mặt (Face Recognition & Monitor) đang được vận hành:
+
+1. Bảng theo dõi trực tiếp (Face Recognition Log)
+Hệ thống thu nhận và phân tích khuôn mặt theo thời gian thực từ luồng camera, hiển thị liên tục trên bảng điều khiển bên phải (Face Monitor tab).
+- Trích xuất ảnh khuôn mặt: Cắt ảnh khuôn mặt (crop) ngay khi người dùng bước vào khung hình.
+- Đánh giá tỷ lệ trùng khớp (Match Percentage): Hiển thị độ tin cậy của thuật toán (VD: Match: 91%, Match: 63%, Match: low).
+- Lưu vết thời gian và hướng di chuyển: Ghi nhận chính xác ngày giờ chụp (Captured) và hướng đi (IN hoặc OUT).
+
+2. Phân loại và cảnh báo đối tượng (Role & Intruder Management)
+Hệ thống có khả năng phân nhóm đối tượng rõ ràng để phục vụ an ninh và chăm sóc khách hàng:
+- Phân loại vai trò: Nhận diện và gán thẻ vai trò cho những người đã được đăng ký trong hệ thống như EMPLOYEE (Nhân viên), VIP (Khách quan trọng).
+- Cảnh báo người lạ (Intruder Alert): Những khuôn mặt chưa được đăng ký sẽ bị gán nhãn UNKNOWN PERSON với tỷ lệ khớp Match: low. Đồng thời hệ thống hiển thị icon cảnh báo ⚠ INTRUDER: Unknown Person để báo động cho bảo vệ/quản lý.
+- Thống kê tổng quan: Đếm tổng số lượng người IDENTIFIED (đã nhận diện) và UNKNOWN (không xác định) ngay trên cùng của giao diện.
+
+3. Quản lý Hồ sơ và Lịch sử ra vào (Profile & Access History)
+Hệ thống cho phép xem chi tiết từng cá nhân bằng cách nhấn vào bản ghi của họ:
+- Profile cá nhân: Hiển thị ảnh chụp lớn nhất, rõ nét nhất kèm tên (VD: Name: Hana, Name: Mr.B) và thẻ vai trò (Role: VIP, Role: EMPLOYEE).
+- Tra cứu lịch sử (Access History): Liệt kê toàn bộ các lần ra vào (IN/OUT) của cá nhân đó trong ngày cùng hình ảnh chụp tại từng thời điểm.
+- Quản lý danh sách ưu tiên (Whitelist): Hiển thị trạng thái Whitelist và thời hạn hiệu lực của tài khoản (VD: WHITELIST: 2026-05-04 to 2026-06-04).
+- Cài đặt nâng cao: Có các tab quản lý quyền truy cập (Access List) và Lịch trình (Schedule).
+
+4. Tích hợp Đếm người và Vẽ quỹ đạo di chuyển (Counting & Tracking)
+Tính năng nhận diện khuôn mặt được tích hợp chặt chẽ với module phân tích luồng người trên cùng một giao diện:
+- Đếm lưu lượng (People Counting): Bảng thống kê OSD hiển thị trực tiếp trên video số người đi vào (PERSON IN), số người đi ra (PERSON OUT) và tổng lượt (PERSON TOT).
+- Vẽ quỹ đạo (Trajectory Tracking): Vẽ các đường line theo sát bước chân di chuyển của đối tượng trong cửa hàng, đồng thời hiển thị thông tin nhận dạng sơ bộ ngay trên bounding box (VD: +1 In, [Mr.B] 50%).
+
+5. Nền tảng quản lý Camera Đa Năng (Multi-Camera & Multi-Feature Dashboard)
+Hệ thống không chỉ hoạt động đơn lẻ mà là một nền tảng quản trị AI tổng thể:
+- Hỗ trợ đa luồng (Multi-Camera): Quan sát và xử lý song song nhiều camera cùng lúc (VD: CAM 1 cho trong shop, CAM 2 cho bãi đỗ xe).
+- Tích hợp đa tính năng: Giao diện có sẵn tab chuyển đổi nhanh giữa FACE MONITOR (Nhận diện khuôn mặt) và LPR DETECTIONS (Nhận diện biển số xe), giúp bảo vệ kiểm soát toàn diện cả người đi bộ và phương tiện cơ giới trên cùng một màn hình.

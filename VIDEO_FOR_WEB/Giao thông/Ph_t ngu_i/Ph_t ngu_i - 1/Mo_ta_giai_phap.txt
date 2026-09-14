@@ -1,0 +1,28 @@
+MÔ TẢ GIẢI PHÁP HỆ THỐNG GIÁM SÁT VÀ XỬ LÝ VI PHẠM GIAO THÔNG (RED LIGHT & DASHBOARD)
+(Dựa trên phân tích hình ảnh giao diện phần mềm thực tế)
+
+Qua các hình ảnh trong thư mục "Phạt nguội - 1", hệ thống thể hiện sự chuyên sâu trong việc phát hiện vi phạm vượt đèn đỏ và cung cấp hệ thống báo cáo phân tích toàn diện (Dashboard). Các tính năng chính bao gồm:
+
+1. AI Nhận diện Trạng thái Đèn tín hiệu (Traffic Light Detection)
+- Hệ thống có khả năng tự động "đọc" và hiểu trạng thái của cột đèn tín hiệu giao thông (Xanh, Vàng, Đỏ) mà không cần can thiệp phần cứng vào tủ điều khiển đèn.
+
+2. Bắt Lỗi Vượt Đèn Đỏ Chính Xác (Red Light Violation Detection)
+- Khi đèn chuyển sang Đỏ, hệ thống tự động kích hoạt "hàng rào ảo" tại vạch kẻ đường.
+- Bất kỳ phương tiện nào (xe máy, ô tô) cố tình vượt qua vạch dừng sẽ lập tức bị khoanh đỏ (VD: nhãn "motorbike [Red Light]") và bị vẽ lại toàn bộ quỹ đạo vi phạm (Trajectory tracking) bằng các dải chấm tròn để làm bằng chứng.
+- Bảng sự kiện (ITS VIOLATIONS) bên phải sẽ lập tức chụp ảnh xe vi phạm, bóc tách biển số và gắn cờ cảnh báo "RED LIGHT".
+
+3. Xem lại Video Vi phạm Thông minh (Smart Record Playback)
+- Hệ thống cung cấp công cụ "Smart Record Playback" dưới dạng Pop-up, cho phép người dùng hoặc cán bộ xử lý vi phạm xem lại ngay đoạn video ngắn (Video clip) ghi lại đúng khoảnh khắc phương tiện vượt đèn đỏ, đảm bảo bằng chứng xác thực, rõ ràng và không thể chối cãi.
+
+4. Bảng Điều khiển Phân tích Dữ liệu Vĩ mô (Traffic Intersection Dashboard)
+Đây là màn hình dành cho cấp quản lý để nhìn bức tranh toàn cảnh về nút giao:
+- Thống kê Vi phạm (Top Violations): Biểu đồ trực quan xếp hạng các lỗi phổ biến nhất như: Chạy quá tốc độ (Speeding), Đi ngược chiều (Wrong-Way Entry), Quay đầu trái phép (Illegal U-Turn), Vượt đèn đỏ (Red Light Run), và Sai làn (Lane Violation).
+- Chỉ số KPI Giao thông: Báo cáo Lưu lượng tổng (Total Volume), Tốc độ trung bình (Avg Speed), và Lưu lượng đỉnh điểm (Peak Flow).
+- Hệ thống Bản đồ Nhiệt (Heatmaps): Cung cấp 4 loại bản đồ nâng cao:
+  + Trajectories: Vẽ đường đi của mọi phương tiện.
+  + Acceleration Heatmap: Điểm nóng về tăng tốc.
+  + Motion Heatmap: Điểm nóng về mật độ di chuyển.
+  + Hold-up Heatmap: Điểm nóng ùn tắc/chờ đèn đỏ.
+- Có khả năng trích xuất báo cáo ra file (Export Excel) phục vụ công tác quy hoạch.
+
+TỔNG KẾT: Phân hệ này là sự kết hợp hoàn hảo giữa công tác "Tiền kiểm" (Bắt lỗi, ghi hình, trích xuất biển số tức thời) và "Hậu kiểm" (Thống kê, phân tích dữ liệu nhiệt, đánh giá tình hình an toàn giao thông của toàn bộ nút giao).

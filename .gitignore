@@ -1,0 +1,6 @@
+
+# Ignore large files and backups
+cvision-web.zip
+cvision-web/
+Fix_UI.mp4
+lightmodebug.mp4

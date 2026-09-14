@@ -1,0 +1,15 @@
+MÔ TẢ GIẢI PHÁP HỆ THỐNG KIỂM SOÁT RA VÀO VÀ ĐẾM NGƯỜI
+(Dựa trên phân tích hình ảnh thực tế)
+
+Hệ thống giám sát an ninh tòa nhà/văn phòng thông qua hệ thống camera kết nối trực tiếp với nền tảng phần mềm (AiPi Platform). Chức năng chính thể hiện qua giao diện bao gồm:
+
+1. Đếm Lưu Lượng Người Ra Vào (In/Out Counting)
+- Trên màn hình hiển thị trực tiếp (Live Camera), hệ thống chia làm nhiều luồng camera giám sát các cổng cửa xoay (turnstiles) hoặc cửa ra vào.
+- AI tự động nhận diện người (đóng khung xanh) và đếm số lượng người đi qua các cổng này.
+- Hiển thị trực tiếp bộ đếm "IN" (Số người vào) và "OUT" (Số người ra) bằng các con số lớn màu xanh/đỏ ngay trên từng khung hình camera (Ví dụ: IN: 197, OUT: 0).
+
+2. Giám Sát Khu Vực Hạn Chế và Cảnh Báo Vi Phạm
+- Bảng điều khiển "LOGS EVENT" (Nhật ký sự kiện) bên phải màn hình hiển thị các vi phạm an ninh.
+- Khi một người (Ví dụ: EMPLOYEE 1) bước vào khu vực không được phép, hệ thống lập tức chụp lại ảnh, lưu thời gian và báo lỗi "RESTRICTED: VIOLATION!" (Vi phạm: Khu vực hạn chế).
+
+TỔNG KẾT: Đây là hệ thống giám sát người ra vào tự động, giúp thống kê chính xác lượng người lưu thông qua các cổng kiểm soát và lưu lại nhật ký hình ảnh khi có người xâm nhập sai quy định.

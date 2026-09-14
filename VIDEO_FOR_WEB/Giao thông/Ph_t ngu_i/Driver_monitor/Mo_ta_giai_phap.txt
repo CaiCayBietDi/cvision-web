@@ -1,0 +1,22 @@
+MÔ TẢ GIẢI PHÁP HỆ THỐNG GIÁM SÁT TÀI XẾ (DRIVER MONITORING SYSTEM - DMS)
+(Dựa trên phân tích hình ảnh giao diện thực tế)
+
+Hệ thống Driver Monitoring System (DMS) này là một giải pháp AI lắp đặt trong cabin xe (In-cabin AI) nhằm giám sát hành vi lái xe an toàn của tài xế theo thời gian thực. Bằng việc kết hợp nhiều công nghệ thị giác máy tính như nhận diện vật thể (Object Detection) và ước lượng tư thế (Pose Estimation), hệ thống cung cấp các tính năng chính sau:
+
+1. Giám sát Thao tác Lái xe (Hands on wheel Monitoring)
+- Nhận diện Vô lăng: Hệ thống tự động khoanh vùng (bounding box màu xanh) vị trí của vô lăng (Steering Wheel) trong khung hình.
+- Theo dõi Chuyển động tay (Pose Estimation): Trích xuất các điểm neo (keypoints) trên cơ thể tài xế, đặc biệt là vị trí cổ tay trái (L-Wrist) và cổ tay phải (R-Wrist).
+- Đếm số tay trên vô lăng: Dựa vào sự giao cắt giữa vị trí cổ tay và vùng vô lăng, hệ thống đếm chính xác số lượng tay đang cầm lái và hiển thị real-time ("Hands on wheel: 2", "1", hoặc "0").
+
+2. Phát hiện Thắt Dây an toàn (Seatbelt Detection)
+- Nhận diện trực quan xem tài xế có đang cài dây an toàn hay không.
+- Nếu có, hệ thống khoanh vùng dây an toàn bằng khung xanh lá và báo trạng thái "Seatbelt: Detected" (kèm độ tin cậy, VD: 0.84).
+- Nếu tài xế không thắt dây an toàn, hệ thống lập tức cảnh báo chữ đỏ "Seatbelt: Not Detected".
+
+3. Phân tích Góc mặt và Trạng thái tập trung (Head Pose Monitoring)
+- Hệ thống vẽ các đường trục (màu hồng) ngang qua khuôn mặt (từ tai đến mũi/mắt) để tính toán hướng nhìn và độ cúi/nghiêng của đầu. Điều này giúp phát hiện tài xế có đang nhìn thẳng đường hay không.
+
+4. Hệ thống Cảnh báo Nguy hiểm (Drowsiness/Distraction Warning)
+- Từ việc tổng hợp các hành vi bất thường (ví dụ: thả cả 2 tay khỏi vô lăng "Hands on wheel: 0", kết hợp với tư thế đầu cúi gục hoặc mắt nhắm), hệ thống sẽ kích hoạt còi/cảnh báo khẩn cấp trên màn hình: "WARNING: DROWSINESS!" (Cảnh báo Buồn ngủ/Mất tập trung) bằng banner màu đỏ nổi bật.
+
+TỔNG KẾT: Đây là một giải pháp an toàn chủ động cực kỳ hữu ích cho các doanh nghiệp vận tải (xe khách, container, taxi) để quản lý tài xế, ngăn ngừa tai nạn do ngủ gật, lướt điện thoại hay không thắt dây an toàn trong quá trình làm việc.

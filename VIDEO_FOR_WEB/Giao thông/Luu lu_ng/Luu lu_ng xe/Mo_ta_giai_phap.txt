@@ -1,0 +1,25 @@
+MÔ TẢ GIẢI PHÁP PHÂN TÍCH LƯU LƯỢNG VÀ BẢN ĐỒ NHIỆT GIAO THÔNG (AI COUNTING)
+(Dựa trên phân tích hình ảnh giao diện phần mềm thực tế)
+
+Qua quan sát giao diện "AI COUNTING" (của Cvision AI Tech) giám sát tại một nút giao thông phức tạp/công trường, đây là một giải pháp phân tích giao thông vĩ mô và vi mô cực kỳ chuyên sâu. Các module chức năng chính bao gồm:
+
+1. Phân tích Luồng Tuyến Giao thông (Flow Movement Analysis)
+Khác với việc chỉ đếm in/out đơn giản ở 1 vạch, hệ thống này quản lý cả một mạng lưới:
+- Khai báo Điểm nút (Nodes): Thiết lập và dán nhãn các cổng ra/vào của nút giao (VD: North, South, East, West, Tunnel IN, Tunnel OUT, CT01).
+- Định nghĩa Luồng tuyến (Flows): Vẽ các mũi tên định hướng (Flow Mov) để định nghĩa các luồng di chuyển hợp lệ giữa các nút (VD: Flow 1, Flow 2, Flow 5). Hệ thống đếm chính xác số lượng xe đi theo từng luồng cụ thể (VD: Flow 5 có 103 lượt xe đi qua).
+
+2. Theo dõi Quỹ đạo và Vệt bánh xe (Trajectories & Tracking Trails)
+Chức năng này giúp nghiên cứu hành vi lái xe thực tế:
+- Tracking Trails: Vẽ lại toàn bộ quỹ đạo di chuyển của từng chiếc xe dưới dạng các đường line nhiều màu sắc (Xanh, Cam, Trắng...).
+- Phân tích xung đột: Thông qua mạng lưới quỹ đạo chằng chịt này, các kỹ sư giao thông có thể nhìn thấy rõ các điểm giao cắt nguy hiểm, thói quen lấn làn, đi sai luồng hoặc cắt góc của phương tiện.
+
+3. Bản đồ Nhiệt Giao thông (Heatmap & Dwell Heatmap)
+Tính năng báo cáo trực quan và cao cấp nhất của hệ thống:
+- Sinh Bản đồ nhiệt: Chuyển đổi dữ liệu quỹ đạo thành biểu đồ nhiệt độ màu (Đỏ - Vàng - Xanh).
+- Đánh giá Mật độ & Ùn tắc: Vùng màu Đỏ/Cam rực cho biết mật độ lưu thông qua đó rất dày đặc, hoặc là điểm các phương tiện phải dừng chờ/di chuyển chậm (Dwell time lớn). Vùng màu Xanh là nơi lưu thông thoáng. Tính năng này vô cùng giá trị để quy hoạch lại làn đường hoặc điều phối đèn tín hiệu.
+
+4. Nhận diện Đa đối tượng và Đo tốc độ (Classification & Speed)
+- Bóc tách loại xe: Phân loại chi tiết và dán nhãn liên tục các phương tiện lưu thông (car, motorbike, truck, container).
+- Giám sát tốc độ & Vùng cấm: Đo tốc độ real-time của từng xe (VD: motorbike | 11.6 km/h) và hệ thống có thiết lập sẵn các Vùng Giới hạn Tốc độ (Speed Zone - vẽ các biển báo 50, 60 ngay trên mặt đường ảo) để cảnh báo vi phạm.
+
+TỔNG KẾT: Đây là công cụ đắc lực dành cho các Sở Giao thông, Ban Quản lý Dự án dùng để khảo sát, đo đạc lưu lượng, đánh giá tình trạng kẹt xe và nghiên cứu quy hoạch hạ tầng (bằng Trajectories và Heatmap) một cách hoàn toàn tự động nhờ AI.

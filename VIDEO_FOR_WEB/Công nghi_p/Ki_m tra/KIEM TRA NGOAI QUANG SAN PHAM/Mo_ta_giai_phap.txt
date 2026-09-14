@@ -1,0 +1,19 @@
+MÔ TẢ GIẢI PHÁP PHẦN MỀM KIỂM TRA NGOẠI QUAN SẢN PHẨM
+(Dựa trên phân tích hình ảnh thực tế)
+
+Phần mềm Inspection Software (VISION AITECH) chuyên dùng để kiểm tra lỗi ngoại quan (bề mặt, hình dáng) của sản phẩm trên dây chuyền. Các chức năng quan sát được:
+
+1. Giám Sát Hình Ảnh Trực Tiếp
+- Khung "Live camera" lớn bên trái hiển thị hình ảnh cận cảnh sản phẩm đang được chiếu sáng mạnh để kiểm tra bề mặt.
+- Hai khung "Result 1" và "Result 2" để hiển thị kết quả phân tích hình ảnh (Tên model, tọa độ Pox/Poy, và Trạng thái đánh giá).
+
+2. Điều Khiển Dây Chuyền và Cơ Cấu Chấp Hành
+- Tích hợp các nút điều khiển trực tiếp phần cứng: "Start conveyor" (Chạy băng tải), "Stop conveyor" (Dừng băng tải), "Start suck" (Bắt đầu hút), "Stop suck" (Dừng hút).
+- Giao diện "Port settings" cho phép cấu hình cổng kết nối (COM3 - Arduino) để giao tiếp với các thiết bị ngoại vi.
+
+3. Trạng Thái Hệ Thống (System Status)
+- Có một bảng điều khiển trực quan hiển thị trạng thái hoạt động của các cơ cấu cơ điện tử thông qua các biểu tượng: Cánh tay robot, Băng tải, Đèn chiếu sáng, và Rơ-le (Relay).
+
+4. Thống Kê Số Lượng
+- Bộ đếm sản phẩm Đạt (OK) và Lỗi (NG).
+- Mục "Count quantity setting" cho phép thiết lập định mức số lượng kiểm tra (Ví dụ: 10) và hiển thị số lượng đã hoàn thành (Quantity).

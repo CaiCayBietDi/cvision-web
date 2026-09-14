@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hoạt động — Cvision AI</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "tertiary-fixed-dim": "#b6c4ff",
+            "background": "#111318",
+            "surface-variant": "#333539",
+            "outline-variant": "#3b494b",
+            "primary-fixed": "#7df4ff",
+            "surface-container-low": "#1a1c20",
+            "primary-container": "#00f0ff",
+            "on-primary": "#00363a",
+            "on-tertiary-fixed": "#001550",
+            "inverse-on-surface": "#2f3035",
+            "error": "#ffb4ab",
+            "on-secondary-fixed-variant": "#5700c9",
+            "surface-container": "#1e2024",
+            "on-primary-fixed-variant": "#004f54",
+            "surface-container-highest": "#333539",
+            "on-secondary-container": "#ddcdff",
+            "on-error-container": "#ffdad6",
+            "surface-dim": "#111318",
+            "on-secondary-fixed": "#23005b",
+            "secondary-container": "#7000ff",
+            "on-primary-fixed": "#002022",
+            "surface-container-lowest": "#0c0e12",
+            "inverse-primary": "#006970",
+            "surface": "#111318",
+            "error-container": "#93000a",
+            "on-primary-container": "#006970",
+            "secondary-fixed-dim": "#d1bcff",
+            "on-error": "#690005",
+            "surface-tint": "#00dbe9",
+            "on-tertiary": "#00277f",
+            "on-background": "#e2e2e8",
+            "primary": "#dbfcff",
+            "secondary-fixed": "#e9ddff",
+            "on-tertiary-fixed-variant": "#003ab2",
+            "surface-container-high": "#282a2e",
+            "on-tertiary-container": "#004fe8",
+            "primary-fixed-dim": "#00dbe9",
+            "inverse-surface": "#e2e2e8",
+            "tertiary": "#f6f5ff",
+            "outline": "#849495",
+            "on-secondary": "#3c0090",
+            "on-surface": "#e2e2e8",
+            "on-surface-variant": "#b9cacb",
+            "tertiary-fixed": "#dce1ff",
+            "secondary": "#d1bcff",
+            "surface-bright": "#37393e",
+            "tertiary-container": "#d0d8ff"
+          },
+          borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+          spacing: { "stack-lg": "4rem", "container-max": "1280px", "stack-md": "2rem", "margin-x": "1.5rem", gutter: "2rem", "stack-xl": "8rem" },
+          fontFamily: { "body-md": ["Inter"], "label-caps": ["JetBrains Mono"], "headline-lg-mobile": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "body-lg": ["Inter"], "display-lg": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"] },
+          fontSize: {
+            "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+            "label-caps": ["12px", { lineHeight: "1.0", letterSpacing: "0.1em", fontWeight: "500" }],
+            "headline-lg-mobile": ["32px", { lineHeight: "1.2", fontWeight: "700" }],
+            "headline-md": ["32px", { lineHeight: "1.3", fontWeight: "600" }],
+            "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+            "display-lg": ["72px", { lineHeight: "1.1", letterSpacing: "-0.04em", fontWeight: "800" }],
+            "headline-lg": ["48px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0c0e12;
+      color: #e2e2e8;
+      overflow-x: hidden;
+    }
+    .glass-card {
+      background: rgba(26, 28, 32, 0.4);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card:hover {
+      background: rgba(30, 32, 36, 0.6);
+      border-color: rgba(0, 219, 233, 0.4);
+      box-shadow: 0 0 20px rgba(0, 219, 233, 0.1);
+      transform: translateY(-4px);
+    }
+    .grid-pattern {
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .text-gradient-cyan {
+      background: linear-gradient(135deg, #7df4ff 0%, #00dbe9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .text-gradient {
+      background: linear-gradient(to right, #7df4ff, #d1bcff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .glow-icon {
+      filter: drop-shadow(0 0 8px rgba(125, 244, 255, 0.4));
+    }
+    @keyframes scan {
+      0% { transform: translateY(-100%); opacity: 0; }
+      50% { opacity: 0.5; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+    .scan-line {
+      height: 2px;
+      background: linear-gradient(to right, transparent, #00dbe9, transparent);
+      animation: scan 8s linear infinite;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in-up {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+    @keyframes pageEnter {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    body { animation: pageEnter 0.5s ease-out; }
+
+    /* Featured article card */
+    .featured-card {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .featured-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(12, 14, 18, 0.95) 0%, rgba(12, 14, 18, 0.6) 40%, rgba(12, 14, 18, 0.2) 100%);
+      z-index: 1;
+      transition: all 0.5s ease;
+    }
+    .featured-card:hover::before {
+      background: linear-gradient(to top, rgba(12, 14, 18, 0.98) 0%, rgba(12, 14, 18, 0.5) 40%, rgba(12, 14, 18, 0.1) 100%);
+    }
+    .featured-card:hover {
+      border-color: rgba(0, 219, 233, 0.5);
+      box-shadow: 0 0 40px rgba(0, 219, 233, 0.15);
+    }
+    .featured-card:hover .featured-img {
+      transform: scale(1.05);
+    }
+
+    /* Tag colors */
+    .tag-cong-nghe { background: rgba(0, 219, 233, 0.15); color: #7df4ff; border: 1px solid rgba(0, 219, 233, 0.3); }
+    .tag-doi-tac { background: rgba(209, 188, 255, 0.15); color: #d1bcff; border: 1px solid rgba(209, 188, 255, 0.3); }
+    .tag-nghien-cuu { background: rgba(125, 244, 255, 0.15); color: #7df4ff; border: 1px solid rgba(125, 244, 255, 0.3); }
+    .tag-su-kien { background: rgba(255, 180, 171, 0.15); color: #ffb4ab; border: 1px solid rgba(255, 180, 171, 0.3); }
+    .tag-san-pham { background: rgba(182, 196, 255, 0.15); color: #b6c4ff; border: 1px solid rgba(182, 196, 255, 0.3); }
+    .tag-cong-dong { background: rgba(0, 240, 255, 0.15); color: #00f0ff; border: 1px solid rgba(0, 240, 255, 0.3); }
+
+    .article-card {
+      background: rgba(26, 28, 32, 0.4);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .article-card:hover {
+      background: rgba(30, 32, 36, 0.6);
+      border-color: rgba(0, 219, 233, 0.4);
+      box-shadow: 0 0 24px rgba(0, 219, 233, 0.12);
+      transform: translateY(-6px);
+    }
+    .article-card:hover .card-title {
+      color: #7df4ff;
+    }
+    .article-card:hover .read-more {
+      color: #00dbe9;
+      gap: 0.75rem;
+    }
+    /* Hide data-reveal elements by default to prevent flash of content */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(32px);
+    }
+  /* Mega Dropdown navigation */
+  .nav-dropdown { position: relative; padding-bottom: 16px; margin-bottom: -16px; }
+  .nav-dropdown .dropdown-trigger {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .nav-dropdown .dropdown-trigger .expand-icon {
+    transition: transform 0.3s;
+  }
+  .nav-dropdown:hover .dropdown-trigger .expand-icon {
+    transform: rotate(180deg);
+  }
+  .nav-dropdown .mega-menu {
+    position: absolute;
+    top: calc(100%);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    width: 720px;
+    background: rgba(16, 20, 28, 0.98);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 16px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+    z-index: 100;
+  }
+  .nav-dropdown:hover .mega-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+  .mega-menu .mega-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+  .mega-menu .mega-category {
+    padding: 8px;
+  }
+  .mega-menu .mega-category-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #7df4ff;
+    margin-bottom: 8px;
+    padding: 4px 0;
+    white-space: nowrap;
+  }
+  .mega-menu .mega-category-title .material-symbols-outlined {
+    font-size: 18px;
+  }
+  .mega-menu .mega-link {
+    display: block;
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #b9cacb;
+    transition: all 0.15s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mega-menu .mega-link:hover {
+    background: rgba(0, 219, 233, 0.1);
+    color: #ffffff;
+    padding-left: 12px;
+  }
+
+  /* Feature image overlay */
+</style>
+
+  <style>
+            /* GLOBAL LIGHT THEME OVERRIDES */
+    html.light-theme body { background-color: #f8fafc; color: #0f172a; }
+    html.light-theme header { background: rgba(255, 255, 255, 0.95); border-bottom-color: rgba(0,0,0,0.1); }
+    html.light-theme footer { background-color: #f1f5f9 !important; border-top-color: rgba(0,0,0,0.1) !important; }
+    
+    /* Zebra Striping Light Mode (Only affects index.html sections) */
+    html.light-theme .section-dark { background-color: #f0f9ff; color: #0f172a; }
+    html.light-theme .section-light { background-color: #ffffff; color: #0f172a; }
+
+    /* Text Colors for Light theme */
+    html.light-theme .text-white,
+    html.light-theme .section-light .text-white,
+    html.light-theme .section-dark .text-white { color: #0f172a !important; }
+
+    html.light-theme .text-on-surface,
+    html.light-theme .section-light .text-on-surface,
+    html.light-theme .section-dark .text-on-surface { color: #0f172a !important; }
+
+    html.light-theme .text-on-surface-variant,
+    html.light-theme .section-light .text-on-surface-variant,
+    html.light-theme .section-dark .text-on-surface-variant { color: #475569 !important; }
+
+    html.light-theme p,
+    html.light-theme .section-light p,
+    html.light-theme .section-dark p { color: #334155 !important; }
+
+    html.light-theme h1,
+    html.light-theme h2,
+    html.light-theme h3 { color: #0f172a !important; }
+
+    /* Component Overrides for Light Mode */
+    html.light-theme .glass-card { background: rgba(255, 255, 255, 0.85); border-color: rgba(0, 0, 0, 0.12); box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+    html.light-theme .glass-card:hover { background: rgba(255, 255, 255, 0.98); box-shadow: 0 10px 30px rgba(0, 219, 233, 0.15); border-color: rgba(0, 219, 233, 0.4); }
+    html.light-theme .text-gradient-cyan { -webkit-text-fill-color: transparent; background: linear-gradient(135deg, #0284c7, #0369a1); -webkit-background-clip: text; }
+    
+    /* Logo light mode */
+    html.light-theme .logo-img { filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.3)); }
+    html.light-theme .logo-light-fix { filter: invert(1) hue-rotate(180deg) !important; mix-blend-mode: normal !important; opacity: 0.9 !important; }
+    html.light-theme .logo-light-fix:hover { opacity: 1 !important; }
+    
+    /* Nav Active / Primary Color contrast */
+    html.light-theme .text-primary { color: #0369a1 !important; }
+    html.light-theme .border-primary { border-color: #0369a1 !important; }
+    html.light-theme .text-primary-container { color: #0284c7 !important; }
+    html.light-theme .bg-primary-container { background-color: #0284c7 !important; color: #ffffff !important; }
+
+    /* Partners Marquee Fixes */
+    html.light-theme .marquee-track img { filter: none !important; mix-blend-mode: multiply; opacity: 0.9 !important; }
+    html.light-theme .marquee-track img:hover { opacity: 1 !important; }
+    html.light-theme .from-stripe-light { --tw-gradient-from: #ffffff !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    html.light-theme .via-stripe-light\/95 { --tw-gradient-stops: var(--tw-gradient-from), rgba(255,255,255,0.95), var(--tw-gradient-to) !important; }
+    html.light-theme .to-stripe-light\/70 { --tw-gradient-to: rgba(255,255,255,0.7) !important; }
+
+    /* Section Background Fixes */
+    html.light-theme .bg-surface-container-lowest,
+    html.light-theme .bg-surface-container-low,
+    html.light-theme .bg-surface-container { background-color: #ffffff !important; }
+    html.light-theme .border-outline-variant\/30,
+    html.light-theme .border-outline-variant\/20,
+    html.light-theme .border-outline-variant\/15 { border-color: rgba(0,0,0,0.1) !important; }
+    
+    html.light-theme #mobile-menu { background: rgba(255, 255, 255, 0.98) !important; border-left-color: rgba(0,0,0,0.1) !important; }
+    html.light-theme .grid-pattern { background-image: linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px) !important; }
+    html.light-theme .scan-line { display: none; }
+    html.light-theme .form-input { background: rgba(255,255,255,0.8); border-color: rgba(0,0,0,0.2); color: #0f172a; }
+    html.light-theme .form-input:focus { background: #ffffff; }
+    html.light-theme .bg-surface-variant { background-color: #e2e8f0; }
+    html.light-theme .mega-menu { background: rgba(255,255,255,0.98) !important; border-color: rgba(0,0,0,0.12) !important; box-shadow: 0 25px 60px rgba(0,0,0,0.15) !important; }
+    html.light-theme .mega-category-title { color: #0369a1 !important; }
+    html.light-theme .mega-link { color: #475569; }
+    html.light-theme .mega-link:hover { background: rgba(3, 105, 161, 0.08); color: #0f172a; }
+    html.light-theme .font-label-caps { color: #334155; }
+    html.light-theme .counter-value { color: #0369a1 !important; }
+    html.light-theme .glow-icon { filter: none; }
+    html.light-theme .image-glow { box-shadow: 0 0 60px -15px rgba(0,0,0,0.15); }
+  </style>
+</head>
+<body class="font-body-md text-body-md antialiased">
+
+  <!-- Header -->
+  <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm">
+  <nav class="flex justify-between items-center px-margin-x py-3 max-w-container-max mx-auto">
+    <a href="index.html" class="flex items-center group flex-shrink-0">
+      <img src="assets/img/logo_transparent.png" alt="Cvision AI Tech" class="logo-img h-16 w-auto transition-all">
+    </a>
+    <div class="hidden lg:flex items-center gap-8">
+      <a class="text-on-surface-variant border-b-2 border-transparent py-1 hover:text-primary transition-colors font-body-md text-body-md font-medium" href="index.html">Trang chủ</a>
+      
+      <!-- Dropdown: Giải pháp -->
+      <div class="nav-dropdown">
+        <span class="dropdown-trigger text-on-surface-variant border-b-2 border-transparent py-1 hover:text-primary transition-colors font-body-md text-body-md font-medium">
+          Giải pháp
+          <span class="material-symbols-outlined text-sm expand-icon">expand_more</span>
+        </span>
+        <div class="mega-menu">
+          <div class="mega-grid">
+            <!-- Sản Xuất & Công Nghiệp -->
+            <div class="mega-category">
+              <div class="mega-category-title"><span class="material-symbols-outlined">factory</span>Sản Xuất & Công Nghiệp</div>
+              <a href="giai-phap-cong-nghiep.html" class="mega-link">Đếm Sản Phẩm Băng Chuyền</a>
+              <a href="giai-phap-cong-nghiep.html" class="mega-link">Nhận Diện Khuôn Mặt (In/Out)</a>
+              <a href="giai-phap-cong-nghiep.html" class="mega-link">Kiểm Tra Ngoại Quan QA/QC</a>
+              <a href="giai-phap-cong-nghiep.html" class="mega-link">Quản Lý Xe Nhà Máy (ALPR)</a>
+            </div>
+            <!-- An Toàn Lao Động -->
+            <div class="mega-category">
+              <div class="mega-category-title"><span class="material-symbols-outlined">health_and_safety</span>An Toàn Lao Động</div>
+              <a href="giai-phap-an-toan-lao-dong.html" class="mega-link">Giám Sát Đồ Bảo Hộ (PPE)</a>
+            </div>
+            <!-- Cửa Hàng & Bán Lẻ -->
+            <div class="mega-category">
+              <div class="mega-category-title"><span class="material-symbols-outlined">storefront</span>Cửa Hàng & Bán Lẻ</div>
+              <a href="giai-phap-quan-ly-cua-hang.html" class="mega-link">Quản Lý & Phân Tích Cửa Hàng</a>
+              <a href="giai-phap-quy-trinh-lam-viec.html" class="mega-link">Giám Sát Quy Trình Phục Vụ</a>
+            </div>
+            <!-- Giao Thông -->
+            <div class="mega-category">
+              <div class="mega-category-title"><span class="material-symbols-outlined">traffic</span>Giao Thông</div>
+              <a href="giai-phap-phat-nguoi.html" class="mega-link">Phạt Nguội Thông Minh</a>
+              <a href="giai-phap-luu-luong.html" class="mega-link">Lưu Lượng & Đo Tốc Độ</a>
+              <a href="giai-phap-luu-luong.html" class="mega-link">Nhận Diện Biển Số (LPR)</a>
+            </div>
+            <!-- Logistics -->
+            <div class="mega-category">
+              <div class="mega-category-title"><span class="material-symbols-outlined">local_shipping</span>Logistics</div>
+              <a href="giai-phap-kiem-soat-xe.html" class="mega-link">Kiểm Soát Xe Ra Vào Bến Bãi</a>
+              <a href="giai-phap-xuat-nhap-kho.html" class="mega-link">Giám Sát Xuất Nhập Kho</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a class="text-on-surface-variant border-b-2 border-transparent py-1 hover:text-primary transition-colors font-body-md text-body-md font-medium" href="quy-trinh.html">Quy trình</a>
+      <a class="text-on-surface-variant border-b-2 border-transparent py-1 hover:text-primary transition-colors font-body-md text-body-md font-medium" href="doi-tac.html">Đối tác</a>
+      <a class="text-primary border-b-2 border-primary py-1 transition-colors font-body-md text-body-md font-semibold" href="hoat-dong.html">Hoạt động</a>
+      <a class="text-on-surface-variant border-b-2 border-transparent py-1 hover:text-primary transition-colors font-body-md text-body-md font-medium" href="lien-he.html">Liên hệ</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <button id="theme-toggle" class="w-10 h-10 rounded-lg border border-outline-variant/50 flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary/50 transition-all">
+        <span class="material-symbols-outlined text-xl">dark_mode</span>
+      </button>
+      <a href="lien-he.html" class="hidden lg:inline-flex items-center gap-2 bg-gradient-to-r from-primary-fixed-dim to-primary-container text-on-primary font-semibold text-sm px-5 py-2.5 rounded-lg hover:shadow-lg hover:shadow-primary-fixed-dim/20 transition-all hover:scale-105">
+        Nhận tư vấn
+        <span class="material-symbols-outlined text-lg">arrow_forward</span>
+      </a>
+      <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 rounded-lg border border-outline-variant/50 flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary/50 transition-all">
+        <span class="material-symbols-outlined text-xl">menu</span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+  <!-- Mobile Menu Overlay -->
+  <div id="menu-overlay" class="fixed inset-0 bg-black/60 z-[60] hidden"></div>
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="fixed top-0 right-0 h-full w-72 z-[70] transform translate-x-full transition-transform duration-300 ease-in-out border-l border-outline-variant/30" style="background:rgba(17,19,24,0.97);backdrop-filter:blur(24px)">
+    <div class="flex items-center justify-between p-5 border-b border-outline-variant/30">
+      <span class="text-on-surface font-headline-lg font-semibold">Menu</span>
+      <button onclick="document.getElementById('mobile-menu').classList.add('translate-x-full');document.getElementById('menu-overlay').classList.add('hidden')" class="w-9 h-9 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <nav class="flex flex-col p-5 gap-1">
+      <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-xl">home</span>Trang chủ</a>
+      <a href="giai-phap.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-xl">widgets</span>Giải pháp</a>
+      <a href="quy-trinh.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-xl">account_tree</span>Quy trình</a>
+      <a href="doi-tac.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-xl">handshake</span>Đối tác</a>
+      <a href="hoat-dong.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary bg-surface-container-high"><span class="material-symbols-outlined text-xl">newspaper</span>Hoạt động</a>
+      <a href="lien-he.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-xl">mail</span>Liên hệ</a>
+      <div class="mt-4 pt-4 border-t border-outline-variant/30">
+        <a href="lien-he.html" class="flex items-center justify-center gap-2 bg-gradient-to-r from-primary-fixed-dim to-primary-container text-on-primary font-semibold text-sm px-5 py-3 rounded-lg w-full">Nhận tư vấn<span class="material-symbols-outlined text-lg">arrow_forward</span></a>
+      </div>
+    </nav>
+  </div>
+
+  <main>
+    <!-- ===== HERO SECTION ===== -->
+    <section class="relative pt-32 pb-20 overflow-hidden">
+      <!-- Background effects -->
+      <div class="absolute inset-0 grid-pattern opacity-40"></div>
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-b from-primary-fixed-dim/8 via-primary-container/4 to-transparent rounded-full blur-3xl"></div>
+      <div class="absolute top-0 left-0 right-0 scan-line"></div>
+
+      <div class="relative max-w-[1280px] mx-auto px-6 text-center">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary-fixed-dim/30 bg-primary-fixed-dim/5 mb-8 fade-in-up">
+          <span class="material-symbols-outlined text-primary-fixed-dim text-lg glow-icon">newspaper</span>
+          <span class="font-label-caps text-label-caps text-primary-fixed-dim tracking-widest">TIN TỨC & SỰ KIỆN</span>
+        </div>
+        <!-- Headline -->
+        <h1 class="font-headline-lg text-[28px] sm:text-[36px] md:text-[48px] lg:text-[60px] text-on-surface mb-6 fade-in-up" style="animation-delay:0.1s">
+          Hoạt động <span class="text-gradient-cyan">nổi bật</span>
+        </h1>
+        <!-- Description -->
+        <p class="text-body-lg text-on-surface-variant max-w-2xl mx-auto fade-in-up" style="animation-delay:0.2s">
+          Cập nhật những tin tức mới nhất, sự kiện nổi bật và các hoạt động đáng chú ý của Cvision AI trong lĩnh vực thị giác máy tính và trí tuệ nhân tạo.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== FEATURED ARTICLE ===== -->
+    <section class="relative pb-20">
+      <div class="max-w-[1280px] mx-auto px-6" data-reveal>
+        <div class="featured-card rounded-2xl border border-outline-variant/30 overflow-hidden cursor-pointer" style="min-height:480px">
+          <!-- Background Image -->
+          <img src="assets/img/activities/activity_3.jpg" alt="Khảo sát nhà máy LDC" class="featured-img absolute inset-0 w-full h-full object-cover transition-transform duration-700" />
+          <!-- Content overlay -->
+          <div class="relative z-10 flex flex-col justify-end h-full p-8 md:p-12" style="min-height:480px">
+            <div class="max-w-3xl">
+              <!-- Tag & Date -->
+              <div class="flex flex-wrap items-center gap-3 mb-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tag-cong-nghe">
+                  <span class="material-symbols-outlined text-sm">star</span>
+                  DỰ ÁN MỚI
+                </span>
+                <span class="flex items-center gap-1.5 text-on-surface-variant text-sm">
+                  <span class="material-symbols-outlined text-base">calendar_month</span>
+                  2026
+                </span>
+              </div>
+              <!-- Title -->
+              <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4 leading-tight">
+                Khảo sát nhà máy LDC - Triển khai giải pháp AI
+              </h2>
+              <!-- Description -->
+              <p class="text-body-md text-on-surface-variant mb-6 max-w-2xl">
+                Đội ngũ Cvision AI trực tiếp khảo sát nhà máy LDC để đánh giá hiện trạng và lên phương án triển khai giải pháp thị giác máy tính phù hợp với quy trình sản xuất.
+              </p>
+              <!-- CTA Button -->
+              <a href="#" class="inline-flex items-center gap-2 bg-gradient-to-r from-primary-fixed-dim to-primary-container text-on-primary font-semibold text-sm px-6 py-3 rounded-lg hover:shadow-lg hover:shadow-primary-fixed-dim/25 transition-all hover:scale-105 group">
+                Đọc thêm
+                <span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ACTIVITY CARDS GRID ===== -->
+    <section class="relative pb-24">
+      <div class="max-w-[1280px] mx-auto px-6">
+        <!-- Section header -->
+        <div class="flex items-center gap-4 mb-10" data-reveal>
+          <div class="w-1 h-8 rounded-full bg-gradient-to-b from-primary-fixed-dim to-primary-container"></div>
+          <h2 class="font-headline-md text-headline-md text-on-surface">Bài viết gần đây</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- Card 1: BÀN GIAO - Đếm bao đá -->
+          <article class="article-card rounded-xl overflow-hidden flex flex-col" data-reveal>
+            <div class="h-[200px] overflow-hidden">
+              <img src="assets/img/activities/activity_1.jpg" alt="Bàn giao hệ thống đếm bao đá tự động" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+            </div>
+            <div class="p-6 flex flex-col flex-1">
+              <div class="flex items-center justify-between mb-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tag-cong-nghe">
+                  <span class="material-symbols-outlined text-sm">check_circle</span>
+                  BÀN GIAO
+                </span>
+                <span class="text-outline text-xs font-label-caps flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">calendar_month</span>
+                  2025
+                </span>
+              </div>
+              <h3 class="card-title font-headline-md text-lg font-semibold text-on-surface mb-3 transition-colors leading-snug">
+                Bàn giao hệ thống đếm bao đá tự động
+              </h3>
+              <p class="text-on-surface-variant text-sm leading-relaxed mb-5 flex-1">
+                Triển khai hệ thống AI đếm bao đá tự động trên băng chuyền, thay thế hoàn toàn quy trình đếm thủ công, đạt tự động hóa 100%.
+              </p>
+              <a href="#" class="read-more inline-flex items-center gap-2 text-primary-fixed-dim text-sm font-medium transition-all duration-300 group">
+                Đọc thêm
+                <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 2: BÀN GIAO - Đếm dừa -->
+          <article class="article-card rounded-xl overflow-hidden flex flex-col" data-reveal>
+            <div class="h-[200px] overflow-hidden">
+              <img src="assets/img/activities/activity_2.jpg" alt="Bàn giao hệ thống đếm dừa đa camera" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+            </div>
+            <div class="p-6 flex flex-col flex-1">
+              <div class="flex items-center justify-between mb-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tag-cong-nghe">
+                  <span class="material-symbols-outlined text-sm">check_circle</span>
+                  BÀN GIAO
+                </span>
+                <span class="text-outline text-xs font-label-caps flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">calendar_month</span>
+                  2025
+                </span>
+              </div>
+              <h3 class="card-title font-headline-md text-lg font-semibold text-on-surface mb-3 transition-colors leading-snug">
+                Bàn giao hệ thống đếm dừa đa camera
+              </h3>
+              <p class="text-on-surface-variant text-sm leading-relaxed mb-5 flex-1">
+                Hệ thống đếm dừa tự động bằng AI camera kép, giám sát số lượng realtime trên dây chuyền với độ chính xác 99%+.
+              </p>
+              <a href="#" class="read-more inline-flex items-center gap-2 text-primary-fixed-dim text-sm font-medium transition-all duration-300 group">
+                Đọc thêm
+                <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 3: KHẢO SÁT - LDC -->
+          <article class="article-card rounded-xl overflow-hidden flex flex-col" data-reveal>
+            <div class="h-[200px] overflow-hidden">
+              <img src="assets/img/activities/activity_3.jpg" alt="Khảo sát nhà máy LDC" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+            </div>
+            <div class="p-6 flex flex-col flex-1">
+              <div class="flex items-center justify-between mb-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tag-nghien-cuu">
+                  <span class="material-symbols-outlined text-sm">search</span>
+                  KHẢO SÁT
+                </span>
+                <span class="text-outline text-xs font-label-caps flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">calendar_month</span>
+                  2026
+                </span>
+              </div>
+              <h3 class="card-title font-headline-md text-lg font-semibold text-on-surface mb-3 transition-colors leading-snug">
+                Khảo sát nhà máy LDC
+              </h3>
+              <p class="text-on-surface-variant text-sm leading-relaxed mb-5 flex-1">
+                Đội ngũ Cvision AI trực tiếp khảo sát nhà máy LDC để đánh giá hiện trạng và lên phương án triển khai giải pháp AI phù hợp.
+              </p>
+              <a href="#" class="read-more inline-flex items-center gap-2 text-primary-fixed-dim text-sm font-medium transition-all duration-300 group">
+                Đọc thêm
+                <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 4: LẮP ĐẶT - Goodblend -->
+          <article class="article-card rounded-xl overflow-hidden flex flex-col" data-reveal>
+            <div class="h-[200px] overflow-hidden">
+              <img src="assets/img/activities/activity_4.jpg" alt="Lắp đặt hệ thống ở Goodblend" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+            </div>
+            <div class="p-6 flex flex-col flex-1">
+              <div class="flex items-center justify-between mb-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tag-su-kien">
+                  <span class="material-symbols-outlined text-sm">build</span>
+                  LẮP ĐẶT
+                </span>
+                <span class="text-outline text-xs font-label-caps flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">calendar_month</span>
+                  2024
+                </span>
+              </div>
+              <h3 class="card-title font-headline-md text-lg font-semibold text-on-surface mb-3 transition-colors leading-snug">
+                Lắp đặt hệ thống ở Goodblend
+              </h3>
+              <p class="text-on-surface-variant text-sm leading-relaxed mb-5 flex-1">
+                Triển khai giải pháp giám sát và đếm sản phẩm tự động cho nhà máy Goodblend, vận hành 24/7 không gián đoạn.
+              </p>
+              <a href="#" class="read-more inline-flex items-center gap-2 text-primary-fixed-dim text-sm font-medium transition-all duration-300 group">
+                Đọc thêm
+                <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 5: ĐỐI TÁC - CP Food -->
+          <article class="article-card rounded-xl overflow-hidden flex flex-col" data-reveal>
+            <div class="h-[200px] overflow-hidden">
+              <img src="assets/img/activities/activity_5.jpg" alt="Trao đổi hợp tác với CP Food" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+            </div>
+            <div class="p-6 flex flex-col flex-1">
+              <div class="flex items-center justify-between mb-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tag-doi-tac">
+                  <span class="material-symbols-outlined text-sm">handshake</span>
+                  ĐỐI TÁC
+                </span>
+                <span class="text-outline text-xs font-label-caps flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">calendar_month</span>
+                  2026
+                </span>
+              </div>
+              <h3 class="card-title font-headline-md text-lg font-semibold text-on-surface mb-3 transition-colors leading-snug">
+                Trao đổi hợp tác với CP Food
+              </h3>
+              <p class="text-on-surface-variant text-sm leading-relaxed mb-5 flex-1">
+                Buổi trao đổi hợp tác giữa Cvision AI và CP Food nhằm triển khai giải pháp AI trong quy trình sản xuất và kiểm soát chất lượng.
+              </p>
+              <a href="#" class="read-more inline-flex items-center gap-2 text-primary-fixed-dim text-sm font-medium transition-all duration-300 group">
+                Đọc thêm
+                <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 6: CỘNG ĐỒNG -->
+          <article class="article-card rounded-xl overflow-hidden flex flex-col" data-reveal>
+            <div class="p-6 flex flex-col flex-1">
+              <div class="flex items-center justify-between mb-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tag-cong-dong">
+                  <span class="material-symbols-outlined text-sm">groups</span>
+                  CỘNG ĐỒNG
+                </span>
+                <span class="text-outline text-xs font-label-caps flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">calendar_month</span>
+                  2026
+                </span>
+              </div>
+              <h3 class="card-title font-headline-md text-lg font-semibold text-on-surface mb-3 transition-colors leading-snug">
+                Cvision AI mở rộng đội ngũ và nâng cấp hạ tầng
+              </h3>
+              <p class="text-on-surface-variant text-sm leading-relaxed mb-5 flex-1">
+                Cvision AI tiếp tục đầu tư mở rộng đội ngũ kỹ sư AI và nâng cấp hạ tầng máy chủ để đáp ứng nhu cầu triển khai ngày càng tăng từ các đối tác.
+              </p>
+              <a href="#" class="read-more inline-flex items-center gap-2 text-primary-fixed-dim text-sm font-medium transition-all duration-300 group">
+                Đọc thêm
+                <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA BANNER ===== -->
+    <section class="relative pb-24">
+      <div class="max-w-[1280px] mx-auto px-6" data-reveal>
+        <div class="relative overflow-hidden rounded-2xl border border-outline-variant/30" style="background: linear-gradient(135deg, rgba(0,219,233,0.08) 0%, rgba(112,0,255,0.06) 50%, rgba(0,219,233,0.04) 100%)">
+          <!-- Decorative elements -->
+          <div class="absolute top-0 right-0 w-80 h-80 bg-primary-fixed-dim/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"></div>
+          <div class="absolute bottom-0 left-0 w-64 h-64 bg-secondary-container/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4"></div>
+
+          <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 p-10 md:p-14">
+            <div class="text-center lg:text-left">
+              <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary-fixed-dim/30 bg-primary-fixed-dim/10 text-primary-fixed-dim font-label-caps text-label-caps mb-4">
+                <span class="material-symbols-outlined text-sm">campaign</span>
+                ĐĂNG KÝ NHẬN TIN
+              </span>
+              <h3 class="font-headline-md text-headline-md text-on-surface mb-3">
+                Không bỏ lỡ <span class="text-gradient-cyan">tin tức mới nhất</span>
+              </h3>
+              <p class="text-on-surface-variant max-w-lg">
+                Đăng ký nhận bản tin để cập nhật những xu hướng công nghệ, sự kiện và ưu đãi mới nhất từ Cvision AI.
+              </p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+              <input type="email" placeholder="Email của bạn..." class="px-5 py-3 rounded-lg bg-surface-container-low border border-outline-variant/50 text-on-surface placeholder:text-outline focus:border-primary-fixed-dim focus:ring-1 focus:ring-primary-fixed-dim/30 outline-none transition-all w-full sm:w-72" />
+              <button class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary-fixed-dim to-primary-container text-on-primary font-semibold text-sm px-6 py-3 rounded-lg hover:shadow-lg hover:shadow-primary-fixed-dim/25 transition-all hover:scale-105 whitespace-nowrap">
+                Đăng ký ngay
+                <span class="material-symbols-outlined text-lg">send</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="border-t border-outline-variant/30 bg-surface-container-lowest">
+    <div class="max-w-[1280px] mx-auto px-6 py-16">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <!-- Brand -->
+        <div>
+                    <div class="flex items-center gap-2.5 mb-4">
+            <img src="assets/img/logo_transparent.png" alt="Cvision AI Tech" class="logo-img h-16 w-auto transition-all -ml-3">
+          </div>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-5">Tiên phong giải pháp thị giác máy tính và trí tuệ nhân tạo cho doanh nghiệp Việt Nam.</p>
+          <div class="flex flex-col gap-2 text-sm text-on-surface-variant mb-5">
+            <div class="flex items-center gap-2"><span class="material-symbols-outlined text-base text-primary-fixed-dim">location_on</span>357/2/5 Tân Hòa Đông, P. Bình Trị Đông, Q. Bình Tân, TP.HCM</div>
+            <div class="flex items-center gap-2"><span class="material-symbols-outlined text-base text-primary-fixed-dim">phone</span>070 4682 685</div>
+            <div class="flex items-center gap-2"><span class="material-symbols-outlined text-base text-primary-fixed-dim">mail</span>sales@cvision.com.vn</div>
+            <div class="flex items-center gap-2"><span class="material-symbols-outlined text-base text-primary-fixed-dim">badge</span>MST: 0319472342</div>
+          </div>
+      <div class="flex gap-3 mt-2">
+        <!-- Facebook -->
+        <a class="w-9 h-9 rounded-lg bg-surface-variant/20 flex items-center justify-center text-on-surface-variant hover:text-[#1877F2] hover:bg-[#1877F2]/10 transition-all" href="https://www.facebook.com/profile.php?id=61565795999453" target="_blank" aria-label="Facebook">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <!-- YouTube -->
+        <a class="w-9 h-9 rounded-lg bg-surface-variant/20 flex items-center justify-center text-on-surface-variant hover:text-[#FF0000] hover:bg-[#FF0000]/10 transition-all" href="https://www.youtube.com/@cvsionaitech" target="_blank" aria-label="YouTube">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        <!-- TikTok -->
+        <a class="w-9 h-9 rounded-lg bg-surface-variant/20 flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-white/10 transition-all" href="https://www.tiktok.com/@cvisionaitech.vi" target="_blank" aria-label="TikTok">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+        </a>
+      </div>
+        </div>
+        <!-- Sản phẩm -->
+        <div>
+          <h4 class="text-on-surface font-semibold mb-5">Sản phẩm</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="#" class="text-on-surface-variant hover:text-primary-fixed-dim transition-colors">Giám sát an ninh</a></li>
+            <li><a href="#" class="text-on-surface-variant hover:text-primary-fixed-dim transition-colors">Tối ưu sản xuất</a></li>
+            <li><a href="#" class="text-on-surface-variant hover:text-primary-fixed-dim transition-colors">OCR & Số hóa</a></li>
+            <li><a href="#" class="text-on-surface-variant hover:text-primary-fixed-dim transition-colors">Phân tích bán lẻ</a></li>
+            <li><a href="#" class="text-on-surface-variant hover:text-primary-fixed-dim transition-colors">Edge AI</a></li>
+          </ul>
+        </div>
+        <!-- Liên kết -->
+        <div>
+          <h4 class="text-on-surface font-semibold mb-5">Liên kết</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="index.html" class="text-on-surface-variant hover:text-primary-fixed-dim transition-colors">Trang chủ</a></li>
+            <li><a href="giai-phap.html" class="text-on-surface-variant hover:text-primary-fixed-dim transition-colors">Giải pháp</a></li>
+            <li><a href="quy-trinh.html" class="text-on-surface-variant hover:text-primary-fixed-dim transition-colors">Quy trình</a></li>
+            <li><a href="doi-tac.html" class="text-on-surface-variant hover:text-primary-fixed-dim transition-colors">Đối tác</a></li>
+            <li><a href="hoat-dong.html" class="text-on-surface-variant hover:text-primary-fixed-dim transition-colors">Hoạt động</a></li>
+          </ul>
+        </div>
+        <!-- Bản tin -->
+        <div>
+          <h4 class="text-on-surface font-semibold mb-5">Bản tin</h4>
+          <p class="text-on-surface-variant text-sm mb-4">Nhận tin tức và cập nhật mới nhất từ chúng tôi.</p>
+          <form class="flex gap-2">
+            <input type="email" placeholder="Email của bạn" class="flex-1 px-3 py-2 rounded-lg bg-surface-container border border-outline-variant/50 text-on-surface text-sm placeholder:text-outline focus:border-primary-fixed-dim focus:ring-1 focus:ring-primary-fixed-dim/30 outline-none transition-all" />
+            <button type="submit" class="px-3 py-2 rounded-lg bg-primary-fixed-dim text-on-primary hover:bg-primary-container transition-colors">
+              <span class="material-symbols-outlined text-lg">send</span>
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- Copyright -->
+      <div class="border-t border-outline-variant/30 mt-12 pt-8 text-center">
+        <p class="text-outline text-sm">© 2026 Cvision AI.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('opacity-100', 'translate-y-0');
+          entry.target.classList.remove('opacity-0', 'translate-y-8');
+        } else {
+          entry.target.classList.remove('opacity-100', 'translate-y-0');
+          entry.target.classList.add('opacity-0', 'translate-y-8');
+        }
+      });
+    }, { 
+      threshold: 0.1,
+      rootMargin: '0px 0px -15% 0px'
+    });
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+      el.classList.add('opacity-0', 'translate-y-8', 'transition-all', 'duration-700');
+      observer.observe(el);
+    });
+
+    
+// Mobile menu toggle
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('translate-x-full');
+        menuOverlay.classList.toggle('hidden');
+      });
+      menuOverlay.addEventListener('click', () => {
+        mobileMenu.classList.add('translate-x-full');
+        menuOverlay.classList.add('hidden');
+      });
+    }
+  </script>
+
+<script id="light-mode-logic">
+  document.addEventListener('DOMContentLoaded', () => {
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    if (themeToggleBtn) {
+      const themeIcon = themeToggleBtn.querySelector('span');
+      
+      // Check local storage on load
+      if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.add('light-theme');
+        if(themeIcon) themeIcon.textContent = 'light_mode';
+      } else {
+        if(themeIcon) themeIcon.textContent = 'dark_mode';
+      }
+
+      themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light-theme');
+        if (document.documentElement.classList.contains('light-theme')) {
+          if(themeIcon) themeIcon.textContent = 'light_mode';
+          localStorage.setItem('theme', 'light');
+        } else {
+          if(themeIcon) themeIcon.textContent = 'dark_mode';
+          localStorage.setItem('theme', 'dark');
+        }
+      });
+    }
+  });
+</script>
+
+</body>
+</html>

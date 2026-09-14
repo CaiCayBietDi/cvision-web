@@ -1,0 +1,22 @@
+MÔ TẢ GIẢI PHÁP HỆ THỐNG NHẬN DIỆN BIỂN SỐ TỰ ĐỘNG TẠI TRẠM CÂN/CỔNG VÀO (INTERSECTION LPR)
+(Dựa trên phân tích hình ảnh giao diện phần mềm thực tế - Thư mục "Đo tốc độ 3")
+
+Hệ thống trong thư mục này rẽ hướng sang một chức năng hoàn toàn khác biệt nhưng cực kỳ quan trọng trong quản lý vận tải: Nhận diện và bóc tách biển số xe tại các cổng kiểm soát (Gate Access) hoặc trạm cân.
+
+Các tính năng chính:
+
+1. Giao diện Giám sát Biển số Trực tiếp (LPR Live Detections)
+- Giao diện tập trung vào việc đọc biển số xe tải trọng lớn khi chúng tiến vào cổng (Camera: CAM CONG VAO).
+- Hệ thống luôn ở trạng thái chờ (WAITING FOR TRIGGER...). Ngay khi có xe tiến vào vùng camera, AI sẽ kích hoạt chụp ảnh và phân tích.
+
+2. Trích xuất Dữ liệu Sự kiện Chính xác (LPR Event Details)
+- Khi một xe đi qua, phần mềm bật Pop-up chi tiết ghi nhận: 
+  + Ảnh toàn cảnh phương tiện.
+  + Ảnh crop phóng to sắc nét vào vị trí biển số xe.
+  + Dãy ký tự biển số được bóc tách hoàn toàn tự động (VD: 36C-281.34).
+  + Phân loại phương tiện và gắn cờ đã ghi nhận (TRIGGERED).
+
+3. Lưu trữ Lịch sử Tự động
+- Bảng điều khiển bên phải (LPR Detections) liệt kê toàn bộ lịch sử các xe đã đi qua theo mốc thời gian thực, có ảnh minh họa và biển số rõ ràng, phục vụ cho việc đối soát hàng hóa, kiểm tra xe ra vào bến bãi mà không cần bảo vệ ghi chép thủ công.
+
+TỔNG KẾT: Đây là mảnh ghép "Kiểm soát ra vào" (Access Control) bằng công nghệ LPR/ANPR, thay thế hoàn toàn sức người tại các trạm cân xe, cổng nhà máy hoặc bến cảng, giúp tự động hóa quy trình quản lý logistics.

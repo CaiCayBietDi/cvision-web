@@ -1,0 +1,20 @@
+MÔ TẢ GIẢI PHÁP PHẦN MỀM KIỂM TRA LINH KIỆN (INSPECTION SOFTWARE)
+(Dựa trên phân tích hình ảnh thực tế)
+
+Giao diện phần mềm thị giác máy tính chuyên dụng để kiểm tra linh kiện (điện tử/cơ khí). Các tính năng thể hiện trên màn hình bao gồm:
+
+1. So Sánh và Đánh Giá Hình Ảnh
+- Màn hình chia làm 2 khung chính: "Model original image" (Hình ảnh mẫu gốc) và "Image predict" (Hình ảnh dự đoán/chụp thực tế từ camera).
+- Bảng "Result" (Kết quả) và bộ đếm tổng số lượng sản phẩm đạt (OK - màu xanh) và lỗi (NG - màu đỏ).
+
+2. Cấu Hình Camera và Thiết Bị Ngoại Vi
+- Phần mềm kết nối trực tiếp với PLC (Hiển thị địa chỉ IP: 192.168.0.1 và Task time).
+- Cho phép chọn Camera (VD: acA3800-14uc).
+- Hiển thị trực tiếp thông số hiệu năng phần cứng máy tính: % CPU, % RAM và % GPU.
+
+3. Quản Lý Mẫu Kiểm Tra (Model)
+- Hỗ trợ lưu và chọn nhiều mẫu (Model) khác nhau (Ví dụ trong ảnh: BOARD 1, BOARD 2, BOARD 3).
+- Bảng thông số "Information model" cho phép thiết lập tên linh kiện (Components) và số lượng (Set Quantity).
+
+4. Bảng Dữ Liệu Tức Thời
+- Phía dưới cùng là bảng dữ liệu hiển thị chi tiết các thông số của linh kiện đang kiểm tra gồm: Tên (Components), Điểm số khớp (Score), Tọa độ (Pox, Poy), Số lượng (Quantity) và Trạng thái (Status). Một khung Live Camera nhỏ để theo dõi luồng hình ảnh trực tiếp.
